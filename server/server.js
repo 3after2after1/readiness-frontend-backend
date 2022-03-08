@@ -5,6 +5,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const uri = process.env.MONGO_URI;
+console.log(uri);
 const app = express();
 app.use(cors());
 
@@ -21,17 +22,22 @@ app.use("/watchlist", watchlist);
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri);
   try {
-    console.log(client);
     await client.connect();
     const database = client.db("app-data");
     const users = database.collection("users");
 
     const returnedUsers = await users.find().toArray();
     res.send(returnedUsers);
+  } catch (error) {
+    res.send(error);
   } finally {
     console.log(client);
     await client.close();
   }
+});
+
+app.get("/test", (req, res) => {
+  res.send({ Status: "Success" });
 });
 
 const PORT = process.env.PORT || 5000;

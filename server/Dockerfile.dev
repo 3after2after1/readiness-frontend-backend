@@ -4,6 +4,7 @@ LABEL description="Development image for the readiness-challenge-backend"
 WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
+
 RUN npm install && npm cache clean --force
 
 COPY . . 

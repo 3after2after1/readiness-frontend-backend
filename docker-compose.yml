@@ -14,72 +14,72 @@ services:
       # this a must for local development so that code changes are reflected real time
       # without the need to rebuild whole image
       # local:container
-    # ports:
-    # - 5000:5000
+    ports:
+      - 5000:5000
     # local:container
     depends_on:
-      - mongodb
+      # - mongodb
       - cache
     environment:
       NODE_ENV: ${NODE_ENV}
-      MONGO_URI: ${MONGO_URI}
+      # MONGO_URI: ${MONGO_URI}
       REDIS_HOST: cache
       REDIS_PORT: 6379
       REDIS_PASSWORD: ${REDIS_PASSWORD}
     networks:
       - library-mern-api
 
-  mongodb:
-    container_name: mongo-dev
-    image: mongo
-    restart: always
-    ports:
-      - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
-    volumes:
-      - mongodb-data:/data/db
-    networks:
-      - library-mern-api
+  # mongodb:
+  #   container_name: mongo-dev
+  #   image: mongo
+  #   restart: always
+  #   ports:
+  #     - 27017:27017
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+  #     MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+  #   volumes:
+  #     - mongodb-data:/data/db
+  #   networks:
+  #     - library-mern-api
 
   cache:
     image: redis:latest
     restart: always
     ports:
-      - "6379:6379"
+      - "6378:6379"
     volumes:
       - cache:/data
 
-  client:
-    restart: always
-    build:
-      context: ./client
-      dockerfile: Dockerfile.dev
+  # client:
+  #   restart: always
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile.dev
 
-    container_name: readiness-challenge-frontend
-    volumes:
-      - /app/node_modules
-      - ./client:/app
-    # ports:
-    #   - 3000:3000
-    depends_on:
-      - backend
-    networks:
-      - library-mern-api
+  #   container_name: readiness-challenge-frontend
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./client:/app
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - library-mern-api
 
-  nginx:
-    restart: always
-    depends_on:
-      - backend
-      - client
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile.dev
-    ports:
-      - 8080:80
-    networks:
-      - library-mern-api
+  # nginx:
+  #   restart: always
+  #   depends_on:
+  #     - backend
+  #     - client
+  #   build:
+  #     context: ./nginx
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - 8080:80
+  #   networks:
+  #     - library-mern-api
 
 networks:
   library-mern-api:
@@ -87,4 +87,6 @@ networks:
 
 volumes:
   mongodb-data:
+    driver: local
+  cache:
     driver: local
