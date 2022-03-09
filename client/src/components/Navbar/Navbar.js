@@ -15,9 +15,12 @@ import ListItemText from "@mui/material/ListItemText";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ListItemButton } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { createTheme, styled, ThemeProvider, useTheme } from "@mui/material";
+import { signOut } from "@firebase/auth";
+import { auth } from "../../services/firebase";
+import { UserState } from "../../contexts/UserContext";
 
 // const useStyles = makeStyles({
 //   text: {
@@ -39,6 +42,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const Navbar = () => {
   // const classes = useStyles();
   const theme = useTheme();
+  const navigate = useNavigate();
+  const { user } = UserState();
 
   const [state, setState] = React.useState({
     top: false,
@@ -46,6 +51,14 @@ const Navbar = () => {
     bottom: false,
     right: false,
   });
+
+  const handleLogin = () => {
+    navigate("/loginpage");
+  };
+
+  const handleLogout = () => {
+    signOut(auth);
+  };
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -88,7 +101,7 @@ const Navbar = () => {
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={handleLogin}>
             <ListItemText primary="Login" />
           </ListItemButton>
         </ListItem>
@@ -185,19 +198,37 @@ const Navbar = () => {
             >
               Crypto
             </Button>
-            <Button
-              id="loginButton"
-              color="inherit"
-              variant="outlined"
-              style={{
-                color: "#B33030",
-                fontSize: "1rem",
-                fontFamily: "Bree Serif",
-                fontWeight: "bold",
-              }}
-            >
-              Login
-            </Button>
+            {user === null ? (
+              <Button
+                id="loginButton"
+                color="inherit"
+                variant="outlined"
+                style={{
+                  color: "#B33030",
+                  fontSize: "1rem",
+                  fontFamily: "Bree Serif",
+                  fontWeight: "bold",
+                }}
+                onClick={handleLogin}
+              >
+                Login
+              </Button>
+            ) : (
+              <Button
+                id="loginButton"
+                color="inherit"
+                variant="outlined"
+                style={{
+                  color: "#B33030",
+                  fontSize: "0.8rem",
+                  fontFamily: "Bree Serif",
+                  fontWeight: "bold",
+                }}
+                onClick={handleLogout}
+              >
+                Log out
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

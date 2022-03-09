@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../services/firebase";
+import { rocketChatSSO } from "../services/rocketchat";
 import axios from "axios";
 
 const UserAccount = createContext();
@@ -24,16 +25,23 @@ const UserContext = ({ children }) => {
       .catch((error) => {});
   };
 
+  const automatedRocketChatSSO = (accountData) => {
+    rocketChatSSO(accountData);
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log("auth state change");
-      if (user) setUser(user);
-      else setUser(null);
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
     });
   }, []);
 
   useEffect(() => {
-    setUserRocketChatToken(rocketGetAuth());
+    rocketGetAuth();
   }, []);
 
   useEffect(() => {
@@ -58,6 +66,7 @@ const UserContext = ({ children }) => {
       value={{
         user,
         userRocketChatToken,
+        automatedRocketChatSSO,
       }}
     >
       {children}

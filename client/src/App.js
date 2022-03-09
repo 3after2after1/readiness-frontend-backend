@@ -17,23 +17,32 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 const App = () => {
   return (
     <BrowserRouter>
-      <Box style={{ minWidth: "300px" }}>
+      <Box
+        style={{
+          minWidth: "300px",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Navbar />
-        <Box style={{ height: "82vh" }}></Box>
-        <Routes>
-          <Route path="/authroute" element={<AuthRoute />}></Route>
-          <Route path="/loginpage" element={<LoginPage />}></Route>
-          <Route path="/signuppage" element={<SignUpPage />}></Route>
-          <Route path="/forgotpswd" element={<ForgotPassword />}></Route>
-          <Route path="/checkemail" element={<CheckEmailPage />}></Route>
-          <Route path="/resetpswd" element={<SetNewPassword />}></Route>
-          <Route
-            path="/successfulpasswordchange"
-            element={<PasswordChangeSuccessPage />}
-          ></Route>
-          <Route path="/emailverify" element={<EmailVerify />}></Route>
-          <Route path="/crypto" element={<CryptoPage />} />
-        </Routes>
+        {/* <Box style={{ height: "82vh" }}></Box> */}
+        <Box style={{ height: "100%" }}>
+          <Routes>
+            <Route path="/authroute" element={<AuthRoute />}></Route>
+            <Route path="/loginpage" element={<LoginPage />}></Route>
+            <Route path="/signuppage" element={<SignUpPage />}></Route>
+            <Route path="/forgotpswd" element={<ForgotPassword />}></Route>
+            <Route path="/checkemail" element={<CheckEmailPage />}></Route>
+            <Route path="/resetpswd" element={<SetNewPassword />}></Route>
+            <Route
+              path="/successfulpasswordchange"
+              element={<PasswordChangeSuccessPage />}
+            ></Route>
+            <Route path="/emailverify" element={<EmailVerify />}></Route>
+            <Route path="/crypto" element={<CryptoPage />} />
+          </Routes>
+        </Box>
         <Footer />
       </Box>
     </BrowserRouter>
