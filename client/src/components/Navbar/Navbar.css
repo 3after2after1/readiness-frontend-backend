@@ -1,0 +1,175 @@
+@media (min-width: 0px) {
+  #titleBox {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 75%;
+  }
+
+  #borderlesslogo {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    width: 50px;
+    height: 35px;
+  }
+  #title {
+    font-size: 1.7rem;
+    line-height: 1.6;
+    padding-right: 3px;
+    padding-left: 0;
+  }
+
+  #loginButton {
+    display: none;
+  }
+}
+
+@media (min-width: 320px) {
+  #titleBox {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 75%;
+  }
+
+  #borderlesslogo {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    width: 50px;
+    height: 35px;
+  }
+  #title {
+    font-size: 1.7rem;
+    line-height: 1.6;
+    padding-right: 3px;
+    padding-left: 0;
+  }
+
+  #loginButton {
+    display: none;
+  }
+}
+
+@media (min-width: 480px) {
+  #titleBox {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 75%;
+  }
+
+  #borderlesslogo {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    width: 60px;
+    height: 45px;
+  }
+  #title {
+    font-size: 2.5rem;
+    line-height: 1.6;
+    padding-right: 3px;
+    padding-left: 0;
+  }
+
+  #loginButton {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  #titleBox {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 80%;
+  }
+  #borderlesslogo {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    width: 50px;
+    height: 35px;
+  }
+  #title {
+    font-size: 2.5rem;
+    line-height: 1.6;
+    padding-right: 3px;
+    padding-left: 0;
+  }
+}
+
+@media (min-width: 750px) {
+  #menuIcon {
+    display: none;
+  }
+  #titleBox {
+    display: flex;
+    text-align: center;
+    justify-content: start;
+    width: 80%;
+  }
+  #borderlesslogo {
+    padding-top: 5px;
+    padding-bottom: 0;
+    width: 65px;
+    height: 50px;
+  }
+  #title {
+    font-size: 2.7rem;
+    line-height: 1.6;
+    padding-right: 3px;
+    padding-left: 0;
+  }
+
+  #loginButton {
+    display: initial;
+  }
+}
+
+@media (min-width: 1024px) {
+  #menuIcon {
+    display: none;
+  }
+  #titleBox {
+    display: flex;
+    text-align: center;
+    justify-content: start;
+    width: 80%;
+  }
+  #borderlesslogo {
+    width: 50px;
+    height: 35px;
+  }
+  #title {
+    font-size: 2rem;
+    line-height: 1.6;
+    padding-right: 3px;
+    padding-left: 0;
+  }
+  #loginButton {
+    display: flex;
+  }
+}
+@media (min-width: 1281px) {
+  #menuIcon {
+    display: none;
+  }
+  #titleBox {
+    display: flex;
+    text-align: center;
+    justify-content: start;
+    width: 80%;
+  }
+  #borderlesslogo {
+    width: 50px;
+    height: 35px;
+  }
+  #title {
+    font-size: 2rem;
+    line-height: 1.6;
+    padding-right: 3px;
+    padding-left: 0;
+  }
+  #loginButton {
+    display: initial;
+  }
+}
