@@ -3,8 +3,9 @@ import Chart from "../Chart";
 import DetailsComment from "./card-details-comment";
 import Box from "@mui/material/Box";
 import "./card-details.css";
+import { EuroSymbol } from "@mui/icons-material";
 
-export default function DetailsPage() {
+export default function DetailsPage({ market, symbol }) {
   return (
     <Box id="top-container-details" gap="20px">
       <div
@@ -30,7 +31,7 @@ export default function DetailsPage() {
             borderRadius: 2,
           }}
         >
-          <Chart symbol="R_50" market="forex" />
+          <Chart symbol={symbol} market={market} />
         </Box>
 
         <Box

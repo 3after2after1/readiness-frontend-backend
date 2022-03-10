@@ -6,17 +6,23 @@ import DetailsStats from "../../components/Details/card-details/card-details-sta
 // import DetailsStatsContent from "../../components/details-stats-content";
 // import Footer from "../../components/Footer";
 import Container from "@mui/material/Box";
+import { useParams } from "react-router";
+import { markets } from "../../utils/utils";
 
 import { getFrxInfo } from "../../utils/web-scrape-forex";
 
 function Details() {
   const [instrumentInfo, setInstrumentInfo] = useState({});
+  const { market, symbol } = useParams();
 
   // get forex information
   useEffect(() => {
-    getFrxInfo("eurusd").then((data) => {
-      setInstrumentInfo(data);
-    });
+    if (market === markets.forex) {
+      // example: eurusd
+      getFrxInfo(symbol).then((data) => {
+        setInstrumentInfo(data);
+      });
+    }
   }, []);
 
   return (
@@ -31,7 +37,7 @@ function Details() {
               <column>
                 <row>
                   <div id="company-name" className="company-name">
-                    AAPL | APPLE
+                    {symbol.toUpperCase()} | APPLE
                   </div>
                 </row>
                 <row>
@@ -61,7 +67,7 @@ function Details() {
         </div>
 
         <Container>
-          <DetailsPage />
+          <DetailsPage market={market} symbol={symbol} />
         </Container>
 
         <Container>
