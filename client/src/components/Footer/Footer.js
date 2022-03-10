@@ -7,6 +7,8 @@ const Footer = () => {
     <Box
       id="footer"
       style={{
+        boxShadow:
+          "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
         backgroundColor: "#F9F7F7",
         width: "100%",
         height: "170px",
@@ -33,7 +35,7 @@ const Footer = () => {
             TREX
           </Typography>
           <img
-            id="borderlesslogo"
+            id=""
             src={process.env.PUBLIC_URL + "/borderlesslogo.png"}
             style={{ width: "30px", height: "20px" }}
           />

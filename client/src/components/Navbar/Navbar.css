@@ -108,8 +108,8 @@
     width: 80%;
   }
   #borderlesslogo {
-    padding-top: 5px;
-    padding-bottom: 0;
+    padding-top: 0px;
+    padding-bottom: 10px;
     width: 65px;
     height: 50px;
   }
