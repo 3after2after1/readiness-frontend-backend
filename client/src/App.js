@@ -43,7 +43,7 @@ const App = () => {
             ></Route>
             <Route path="/emailverify" element={<EmailVerify />}></Route>
             <Route path="/crypto" element={<CryptoPage />} />
-            <Route path="/" element={<Details />} />
+            <Route path="/details" element={<Details />} />
           </Routes>
         </Box>
         <Footer />
