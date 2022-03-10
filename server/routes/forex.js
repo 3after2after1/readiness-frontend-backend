@@ -5,6 +5,7 @@ const hash = require("hash-it");
 
 // get forex tick
 router.get("/tick", (req, res) => {
+  console.log("getting ticks");
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
   const { symbol } = req.query;
   res.setHeader("Content-Type", "text/event-stream");

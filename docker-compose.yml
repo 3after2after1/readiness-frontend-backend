@@ -54,14 +54,16 @@ services:
       - library-mern-api
 
   web-scraper:
-    build: ./server/web-scraper
+    build: ./services/web-scraper
     depends_on:
       - cache
     networks:
       - library-mern-api
 
   deriv-data-processor:
-    build: ./server/deriv-data-processor
+    build:
+      context: ./services/deriv-data-processor
+      dockerfile: Dockerfile.dev
     depends_on:
       - cache
     networks:

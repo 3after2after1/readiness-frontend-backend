@@ -1,10 +1,5 @@
-const { WebSocket } = require("ws");
 const Redis = require("ioredis");
-
-const app_id = 1089;
-const ws = new WebSocket(
-  "wss://ws.binaryws.com/websockets/v3?app_id=" + app_id
-);
+const { ws, subscribeTickStream } = require("./config.js");
 
 const redis = new Redis({
   host: "cache",
@@ -50,6 +45,7 @@ sub.on("message", (channel, message) => {
     console.log("in ", id, symbol);
 
     // sub to tick stream if connection to symbol does not exist
+    console.log("cc ", connections);
     if (!checkConnectionExistOnSymbol(symbol)) subscribeTickStream(symbol);
 
     // send key name for client to get tick data
@@ -71,7 +67,8 @@ ws.onmessage = (msg) => {
 
     if (!checkConnectionExistOnSymbol(connectionItem.symbol))
       connections.push(connectionItem);
-    redis.set(`tick_${msg.tick.symbol}`, JSON.stringify(msg.tick));
+    let processedTick = changeTickFormat(msg.tick);
+    redis.set(`tick_${msg.tick.symbol}`, JSON.stringify(processedTick));
 
     // check if data was saved in redis
     // redis.get(`tick_${msg.tick.symbol}`).then((result, err) => {
@@ -80,16 +77,7 @@ ws.onmessage = (msg) => {
   }
 };
 
-// get tick stream
-const subscribeTickStream = (symbol) => {
-  ws.send(
-    JSON.stringify({
-      ticks: symbol,
-      subscribe: 1,
-    })
-  );
-};
-
+// check if tick stream exists
 const checkConnectionExistOnSymbol = (symbol) => {
   let exist = false;
   connections.forEach((i) => {
@@ -97,4 +85,38 @@ const checkConnectionExistOnSymbol = (symbol) => {
   });
 
   return exist;
+};
+
+// get tick stream
+// const subscribeTickStream = (symbol) => {
+//   console.log("subs ing ");
+//   ws.send(
+//     JSON.stringify({
+//       ticks: symbol,
+//       subscribe: 1,
+//     })
+//   );
+// };
+
+// change tick format
+const changeTickFormat = (tick) => {
+  return {
+    symbol: tick.symbol,
+    date: new Date(tick.epoch * 1000),
+    price: tick.quote,
+  };
+};
+
+// get historical data
+const getHistoricalData = (symbol, style, interval) => {
+  ws.send(
+    JSON.stringify({
+      ticks_history: symbol,
+      adjust_start_time: 1,
+      count: 100,
+      end: "latest",
+      style: style,
+      granularity: interval.seconds,
+    })
+  );
 };
