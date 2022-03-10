@@ -1,6 +1,6 @@
 import "./App.css";
-import { Box, Button, Divider, Typography } from "@mui/material";
-import Navbar from "./components/Navbar/Navbar2";
+import { Box } from "@mui/material";
+import Navbar from "./components/Navbar/Navbar";
 import AuthRoute from "./views/Authentication/AuthRoute";
 import LoginPage from "./views/Authentication/LoginPage";
 import SignUpPage from "./views/Authentication/SignUpPage";

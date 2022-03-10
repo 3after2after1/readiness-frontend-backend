@@ -104,6 +104,7 @@ const FinalLandingPage = () => {
             >
               <img
                 id=""
+                alt=""
                 // src={process.env.PUBLIC_URL + "/smartmockups3.png"}
                 // style={{ width: "600px", height: "300px" }}
               />

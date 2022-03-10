@@ -36,6 +36,7 @@ const Footer = () => {
           </Typography>
           <img
             id=""
+            alt=""
             src={process.env.PUBLIC_URL + "/borderlesslogo.png"}
             style={{ width: "30px", height: "20px" }}
           />
