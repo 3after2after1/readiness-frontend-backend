@@ -1,0 +1,60 @@
+.stats-group {
+  padding: 10px;
+  margin: 5px;
+  justify-content: center;
+  text-align: center;
+}
+
+.tablet {
+  border-radius: 20px;
+  padding: 5px;
+  margin: 5px;
+  overflow: hidden;
+  text-align: center;
+  justify-content: center;
+}
+
+.tablet-default {
+  background-color: #faf8f6;
+}
+
+.tablet-weak {
+  background-color: #eea4a7;
+}
+
+.tablet-moderate {
+  background-color: #f3caa8;
+}
+
+.tablet-strong {
+  background-color: #d9e5b4;
+}
+
+.strength-indicators-group {
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.strength-indicator-item {
+  /* max-width: 80%; */
+  padding: 5px;
+  border-radius: 20px;
+  border: 1px #ccccc4 solid;
+}
+
+.strength-indicator {
+  padding: 10px;
+  border-radius: 20px;
+}
+
+@media (max-width: 1279px) {
+  .strength-indicator {
+    padding: 2px;
+    border-radius: 20px;
+    margin: auto;
+    width: 70%;
+  }
+}
