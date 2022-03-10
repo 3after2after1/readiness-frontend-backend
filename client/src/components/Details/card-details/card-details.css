@@ -1,0 +1,118 @@
+@media (min-width: 375px){
+    #box-1{
+    width: 373px !important;
+}
+}
+
+@media (min-width: 425px){
+    #box-1{
+    width: 422px !important;
+}
+}
+
+@media (min-width: 768px){
+    #box-1{
+    width: 765px !important;
+}
+}
+
+
+@media (min-width: 1024px){
+    #graph-box{
+        /* flex-wrap: wrap !important;  */
+        flex-direction: row !important; 
+        margin: 0.5em;
+    }
+    #box-1{
+        margin: 0.5em;
+        width: 6990px !important;
+    }
+
+    #comment-box{
+        margin-top: 0;
+        margin-right: 0.5em;
+    }
+}
+
+
+/* 
+#top-container {
+    display: flex;
+    margin: 2em;
+   
+}
+
+#graph-box{
+    width: 220%;
+    height: 63vh;
+    padding: 0.5em;
+}
+
+#comment-box{
+    padding: 0.3em;
+
+}
+
+@media (max-width: 320px){
+    #top-container {
+        display: inline-grid;
+        margin: 0;
+       
+    }
+
+    #graph-box{
+        width: 100%;
+        height: 89vh;        
+    }
+}
+
+@media (max-width: 375px){
+    #top-container {
+        display: inline-grid;
+        margin: 1em;
+    }
+
+    #graph-box{
+        width: 95%;
+        height: 89vh;
+    }
+}
+
+@media (max-width: 425px){
+    #top-container {
+        display: inline-grid;
+        margin: 0;
+    }
+
+    #graph-box{
+        width: 50%;
+        height: 89vh;
+    }
+}
+
+@media (max-width: 768px){
+    #top-container {
+        display: inline-grid;
+      
+    }
+
+    #graph-box{
+        width: 97%;
+        height: 110vh;
+    }
+}
+
+/* 
+@media (max-width: 1024px){
+
+    #graph-box{
+         width: 280%; 
+        height: 83vh;
+    }
+} */
+
+
+
+
+
+ 

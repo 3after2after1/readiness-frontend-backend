@@ -1,0 +1,493 @@
+@media (min-width: 0px) {
+  #firstsection {
+    background: linear-gradient(235deg, #ffffff 0%, #000f25 100%),
+      linear-gradient(180deg, #184d47 0%, #000000 100%),
+      linear-gradient(
+        235deg,
+        #317257 0%,
+        #317257 40%,
+        #081a18 calc(40% + 1px),
+        #081a18 60%,
+        #164645 calc(60% + 1px),
+        #164645 70%,
+        #317257 calc(70% + 1px),
+        #317257 100%
+      ),
+      linear-gradient(
+        125deg,
+        #317257 0%,
+        #317257 40%,
+        #081a18 calc(40% + 1px),
+        #081a18 60%,
+        #164645 calc(60% + 1px),
+        #164645 70%,
+        #317257 calc(70% + 1px),
+        #317257 100%
+      );
+    background-blend-mode: soft-light, screen, darken, normal;
+  }
+  #secondsection {
+  }
+  #thirdsection {
+  }
+  #fourthsection {
+    background: linear-gradient(
+      45deg,
+      #184d47 3%,
+      #184d47 90%,
+      #164645 calc(40% + 1px),
+      #164645 93%,
+      rgb(23, 185, 120) calc(60% + 1px),
+      rgb(23, 185, 120) 96%,
+      #cff4d2 calc(68% + 1px),
+      #cff4d2 100%
+    );
+  }
+  #section23 {
+  }
+  #signUpButton1 {
+    display: none;
+  }
+  #forexButton1 {
+    display: none;
+  }
+  #dashPic1 {
+    display: none;
+  }
+  #dashPic3 {
+    display: none;
+  }
+  #cryptoButton1 {
+    display: none;
+  }
+  #smartmockup {
+    /* background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("/public/smartmockups3.png"); */
+  }
+}
+
+@media (min-width: 320px) {
+  #signUpButton1 {
+    display: none;
+  }
+  #forexButton1 {
+    display: none;
+  }
+  #dashPic1 {
+    display: none;
+  }
+  #dashPic3 {
+    display: none;
+  }
+  #cryptoButton1 {
+    display: none;
+  }
+  #forexFeatureExplanation1 {
+    font-size: 1.2rem !important;
+  }
+  #cryptoFeatureExplanation1 {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (min-width: 480px) {
+  #signUpButton1 {
+    display: none;
+  }
+  #forexButton1 {
+    display: none;
+  }
+  #dashPic1 {
+    display: none;
+  }
+  #dashPic3 {
+    display: none;
+  }
+  #cryptoButton1 {
+    display: none;
+  }
+  #firstsection {
+    height: 600px !important;
+  }
+  #typographyBox1 {
+    width: 440px;
+  }
+  #sentence3 {
+    font-size: 1.1rem !important;
+  }
+  #pictureBox1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #smartmockup {
+    width: 400px !important;
+    height: 300px !important;
+  }
+  #signUpButton2 {
+    width: 400px !important;
+    height: 50px !important;
+    font-size: 1.2rem !important;
+  }
+  #secondsection {
+    height: 1600px !important;
+  }
+  #forexExplanation {
+    width: 400px;
+    font-size: 1.1rem !important;
+  }
+  #forexContentBox {
+    flex-direction: row !important;
+    align-items: initial !important;
+    justify-content: center;
+  }
+  #dashPic2 {
+    width: 400px !important;
+    height: 300px !important;
+  }
+  #forexButton2 {
+    width: 400px !important;
+    height: 50px !important;
+    font-size: 1.2rem !important;
+  }
+  #cryptoContentBox {
+    flex-direction: row !important;
+    align-items: initial !important;
+    justify-content: center;
+  }
+  #cryptoExplanation {
+    width: 400px;
+    font-size: 1.1rem !important;
+  }
+  #dashPic4 {
+    width: 400px !important;
+    height: 300px !important;
+  }
+  #cryptoButton2 {
+    width: 400px !important;
+    height: 50px !important;
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (min-width: 600px) {
+  #signUpButton1 {
+    display: none;
+  }
+  #forexButton1 {
+    display: none;
+  }
+  #dashPic1 {
+    display: none;
+  }
+  #dashPic3 {
+    display: none;
+  }
+  #cryptoButton1 {
+    display: none;
+  }
+  #firstsection {
+    height: 700px !important;
+  }
+  #sentence1 {
+    font-size: 4rem;
+  }
+  #sentence2 {
+    font-size: 3rem;
+  }
+  #sentence3 {
+    font-size: 1.5rem !important;
+  }
+  #smartmockup {
+    width: 400px !important;
+    height: 300px !important;
+  }
+  #signUpButton2 {
+    width: 400px !important;
+    height: 50px !important;
+    font-size: 1.5rem !important;
+  }
+  #forexTitle {
+    font-size: 4rem;
+  }
+  #forexExplanation {
+    width: 400px;
+    font-size: 1rem !important;
+  }
+  /* #forexFeature1 {
+    width: 250px !important;
+  } */
+  /* #forexFeatureExplanation1 {
+    width: 250px !important;
+    font-size: 1.1rem !important;
+  } */
+  #forexButton2 {
+    width: 400px !important;
+    height: 50px !important;
+    font-size: 1.5rem !important;
+  }
+
+  #dashPic2 {
+    width: 400px !important;
+    height: 300px !important;
+  }
+  #cryptoTitle {
+    font-size: 4rem;
+  }
+  #cryptoExplanation {
+    width: 400px;
+    font-size: 1rem !important;
+  }
+  #cryptoButton2 {
+    width: 400px !important;
+    height: 50px !important;
+    font-size: 1.5rem !important;
+  }
+  #dashPic4 {
+    width: 400px !important;
+    height: 300px !important;
+  }
+}
+
+@media (min-width: 750px) {
+  /* #landingPageContent {
+    margin: 25px 100px 25px 100px;
+    box-shadow: 2px 2px 10px 2px #888888;
+  } */
+
+  #firstsection {
+    height: 400px !important;
+  }
+  #signUpContent {
+    text-align: start;
+    flex-direction: row !important;
+  }
+  #typographyBox1 {
+    width: initial;
+    padding-top: 25px;
+    padding-right: 25px;
+  }
+  #sentence1 {
+    font-size: 3.5rem;
+  }
+  #sentence2 {
+    font-size: 2.5rem;
+  }
+  #sentence3 {
+    width: 270px;
+    font-size: 1.3rem !important;
+  }
+
+  #smartmockup {
+    height: 315px !important;
+    width: 400px !important;
+  }
+  #signUpBox {
+    padding-top: 70px !important;
+  }
+
+  #signUpButton1 {
+    display: initial;
+  }
+  #signUpButton2 {
+    display: none;
+  }
+
+  #secondsection {
+    height: 1020px !important;
+  }
+  #divider1 {
+    padding: 25px !important;
+  }
+  #forexAndDashboard {
+    padding-left: 20px;
+    flex-direction: row !important;
+  }
+
+  #forexTitle {
+    padding-left: 25px !important;
+  }
+  #forexExplanation {
+    padding-left: 25px !important;
+    width: 400px;
+    margin: 0;
+  }
+
+  #forexContentBox {
+    padding-left: 25px;
+    flex-direction: row !important;
+    align-items: initial !important;
+    justify-content: space-between !important;
+    width: 430px;
+  }
+  #forexButton1 {
+    width: 420px;
+    height: 55px !important;
+    display: initial;
+  }
+  #forexButton2 {
+    display: none;
+  }
+  #dashPic1 {
+    display: initial;
+    height: 250px !important;
+  }
+  #dashPic2 {
+    display: none;
+  }
+
+  #cryptoAndDashboard {
+    padding-top: 50px !important;
+    padding-right: 15px;
+    flex-direction: row !important;
+  }
+
+  #cryptoTitle {
+    padding-left: 25px !important;
+  }
+  #cryptoExplanation {
+    padding-left: 25px !important;
+    width: 400px;
+    margin: 0;
+  }
+
+  #cryptoContentBox {
+    padding-left: 25px;
+    flex-direction: row !important;
+    align-items: initial !important;
+    justify-content: space-between !important;
+    width: 430px;
+  }
+  #dashPic3 {
+    display: none;
+  }
+  #dashBoxPic4 {
+    padding-bottom: 0 !important;
+    padding-left: 20px;
+  }
+  #dashPic4 {
+    width: 275px !important;
+    display: initial;
+    height: 250px !important;
+  }
+  #cryptoButton1 {
+    width: 420px;
+    height: 55px !important;
+    display: initial;
+  }
+  #cryptoButton2 {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  #sentence1 {
+    font-size: 4rem;
+  }
+  #sentence2 {
+    font-size: 3rem;
+  }
+  #sentence3 {
+    width: 350px;
+    font-size: 1.3rem !important;
+  }
+  #signUpBox {
+    padding-top: 60px !important;
+  }
+  #signUpContent {
+    padding-right: 300px;
+    padding-left: 300px;
+  }
+  #signUpButton1 {
+    display: initial;
+    width: 400px !important;
+    height: 55px !important;
+  }
+  #typographyBox1 {
+    width: 450px;
+    padding-left: 25px;
+    padding-top: 24px;
+    padding-right: 100px;
+  }
+  /* #firstsection {
+    align-items: start !important;
+  }
+  #section23 {
+    padding: 100px 300px 100px 300px;
+  }
+  #thirdsection {
+  } */
+  #forexAndDashboard {
+    padding-left: 20px;
+    flex-direction: row !important;
+    justify-content: center !important;
+  }
+  #forexExplanation {
+    padding-left: 25px !important;
+    width: 400px;
+    margin: 0;
+    font-size: 1rem !important;
+  }
+  #forexFeatureExplanation1 {
+    font-size: 1.2rem !important;
+  }
+  #dashPic1 {
+    display: initial;
+    height: 315px !important;
+    width: 400px !important;
+  }
+  #secondsection {
+    height: 1050px !important;
+  }
+
+  #cryptoAndDashboard {
+    padding-top: 70px !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+  }
+  #cryptoExplanation {
+    padding-left: 25px !important;
+    width: 400px;
+    margin: 0;
+    font-size: 1rem !important;
+  }
+  #cryptoFeatureExplanation1 {
+    font-size: 1.2rem !important;
+  }
+  #dashBoxPic4 {
+    padding-left: 20px;
+  }
+  #dashPic4 {
+    display: initial;
+    height: 315px !important;
+    width: 400px !important;
+  }
+  #forexBox {
+    margin-left: 100px;
+  }
+  #cryptoBox {
+    margin-right: 100px;
+  }
+}
+@media (min-width: 1281px) {
+  #forexAndDashboard {
+    padding-left: 20px;
+    flex-direction: row !important;
+    justify-content: center !important;
+  }
+  #dashPic1 {
+    display: initial;
+    height: 315px !important;
+    width: 400px !important;
+  }
+  #cryptoAndDashboard {
+    flex-direction: row !important;
+    justify-content: center !important;
+  }
+  #dashPic4 {
+    display: initial;
+    height: 315px !important;
+    width: 400px !important;
+  }
+}
