@@ -14,9 +14,18 @@ import CryptoPage from "./views/CryptoPage";
 import Details from "./views/Details/Details";
 import Footer from "./components/Footer/Footer";
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import AboutUs from "./views/AboutUs/AboutUs";
 
 const App = () => {
+  // let location = useLocation();
+  // console.log(location.pathname);
   return (
     <BrowserRouter>
       <Box
@@ -39,6 +48,7 @@ const App = () => {
             <Route path="/forgotpswd" element={<ForgotPassword />}></Route>
             <Route path="/checkemail" element={<CheckEmailPage />}></Route>
             <Route path="/resetpswd" element={<SetNewPassword />}></Route>
+            <Route path="/about" element={<AboutUs />}></Route>
             <Route
               path="/successfulpasswordchange"
               element={<PasswordChangeSuccessPage />}
