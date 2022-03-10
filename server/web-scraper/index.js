@@ -1,24 +1,40 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
+const Redis = require("ioredis");
 
-const NRP = require("node-redis-pubsub");
-const nrp = new NRP({
-  host: "redis-server",
+// create redis connections
+const sub = new Redis({
+  host: "cache",
   PORT: 6379,
-  scope: "microservice",
+});
+const pub = new Redis({
+  host: "cache",
+  PORT: 6379,
 });
 
-// listen on channel, call web scraping function
-nrp.on("GET_FOREX_INFO", (data) => {
-  console.log("get symbol ", data);
+sub.subscribe("GET_FOREX_INFO", (err, count) => {
+  if (err) {
+    console.error("Failed to subscribe: %s", err.message);
+  } else {
+    console.log(`Subscribed successfully! Num of sub channels: ${count}`);
+  }
+});
+sub.on("message", (channel, message) => {
+  message = JSON.parse(message);
+  if (channel === "GET_FOREX_INFO") {
+    console.log("get symbol ", message);
 
-  let from = data.symbol.substring(0, 3);
-  let to = data.symbol.substring(3, 6);
+    let from = message.symbol.substring(0, 3);
+    let to = message.symbol.substring(3, 6);
 
-  scrapeData(from, to).then((data) => {
-    // return extracted data
-    return nrp.emit("RESPONSE_FOREX_INFO", { data: data });
-  });
+    scrapeData(from, to).then((data) => {
+      // return extracted data
+      return pub.publish(
+        "RESPONSE_FOREX_INFO",
+        JSON.stringify({ id: message.id, data: data })
+      );
+    });
+  }
 });
 
 const scrapeData = async (from, to) => {

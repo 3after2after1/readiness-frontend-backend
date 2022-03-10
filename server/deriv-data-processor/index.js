@@ -7,15 +7,15 @@ const ws = new WebSocket(
 );
 
 const redis = new Redis({
-  host: "redis-server",
+  host: "cache",
   PORT: 6379,
 });
 const sub = new Redis({
-  host: "redis-server",
+  host: "cache",
   PORT: 6379,
 });
 const pub = new Redis({
-  host: "redis-server",
+  host: "cache",
   PORT: 6379,
 });
 
