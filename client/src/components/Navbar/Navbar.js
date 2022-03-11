@@ -23,7 +23,7 @@ import { styled, useTheme } from "@mui/material";
 import { signOut } from "@firebase/auth";
 import { auth } from "../../services/firebase";
 import { UserState } from "../../contexts/UserContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 // const useStyles = makeStyles({
 //   text: {
 //     color: "#B33030",
@@ -58,6 +58,8 @@ const Navbar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { user } = UserState();
+  let location = useLocation();
+  console.log(location.pathname);
 
   const [state, setState] = React.useState({
     top: false,

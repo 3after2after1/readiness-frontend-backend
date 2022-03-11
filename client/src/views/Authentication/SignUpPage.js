@@ -25,6 +25,7 @@ import { passwordVerify } from "../../utils/PasswordChecker";
 import { rocketChatSSO, checkUserNameExist } from "../../services/rocketchat";
 import { UserState } from "../../contexts/UserContext";
 import { auth } from "../../services/firebase";
+import axios from "axios";
 
 const SignUpPage = () => {
   const { automatedRocketChatSSO } = UserState();
@@ -92,6 +93,21 @@ const SignUpPage = () => {
       //   pass: result.user.uid,
       //   displayname: username,
       // });
+
+      const userData = {
+        user: result.user.uid,
+        username: username,
+        watchlist: {
+          forex: [],
+          crypto: [],
+        },
+      };
+      axios
+        .post("http://localhost:5000/watchlist/adduser", userData)
+        .then((response) => {
+          console.log(response.status);
+          console.log(response.data);
+        });
 
       console.log("Sign Up Success");
     } catch (error) {
