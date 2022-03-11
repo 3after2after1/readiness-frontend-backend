@@ -46,10 +46,28 @@ services:
   cache:
     image: redis:latest
     restart: always
-    ports:
-      - "6378:6379"
+    # ports:
+    #   - "6378:6379"
     volumes:
       - cache:/data
+    networks:
+      - library-mern-api
+
+  web-scraper:
+    build: ./services/web-scraper
+    depends_on:
+      - cache
+    networks:
+      - library-mern-api
+
+  deriv-data-processor:
+    build:
+      context: ./services/deriv-data-processor
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - cache
+    networks:
+      - library-mern-api
 
   # client:
   #   restart: always

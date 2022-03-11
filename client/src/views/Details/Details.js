@@ -6,17 +6,35 @@ import DetailsStats from "../../components/Details/card-details/card-details-sta
 // import DetailsStatsContent from "../../components/details-stats-content";
 // import Footer from "../../components/Footer";
 import Container from "@mui/material/Box";
+import { useParams } from "react-router";
+import { markets } from "../../utils/utils";
 
 import { getFrxInfo } from "../../utils/web-scrape-forex";
+// using client-web-scraper
+// import { getForexInfo } from "../../utils/backup/scrape-forex-info";
 
-function Details() {
+function Details(props) {
   const [instrumentInfo, setInstrumentInfo] = useState({});
+  let { market, symbol } = useParams();
+  if (!market) market = props.market;
+  if (!symbol) symbol = props.symbol;
 
   // get forex information
   useEffect(() => {
-    getFrxInfo("eurusd").then((data) => {
-      setInstrumentInfo(data);
-    });
+    if (market === markets.forex) {
+      // example: eurusd
+      // server-web-scraper
+      getFrxInfo(symbol).then((data) => {
+        console.log("scrape data ", data);
+        setInstrumentInfo(data);
+      });
+
+      // // client-web-scraper
+      // getForexInfo(symbol.substr(0, 3), symbol.substring(3)).then((data) => {
+      //   setInstrumentInfo(data);
+      //   console.log(data);
+      // });
+    }
   }, []);
 
   return (
@@ -31,7 +49,7 @@ function Details() {
               <column>
                 <row>
                   <div id="company-name" className="company-name">
-                    AAPL | APPLE
+                    {symbol.toUpperCase()} | APPLE
                   </div>
                 </row>
                 <row>
@@ -61,14 +79,18 @@ function Details() {
         </div>
 
         <Container>
-          <DetailsPage />
+          <DetailsPage market={market} symbol={symbol} />
         </Container>
 
         <Container>
-          <DetailsStats
-            dataStats={instrumentInfo.stats}
-            dataDescription={instrumentInfo.description}
-          />
+          {market === markets.forex ? (
+            <DetailsStats
+              dataStats={instrumentInfo.stats}
+              dataDescription={instrumentInfo.description}
+            />
+          ) : (
+            "loading..."
+          )}
         </Container>
       </div>
 
