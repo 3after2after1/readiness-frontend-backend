@@ -10,6 +10,7 @@ import {
   IconButton,
   Avatar,
   Container,
+  Typography,
 } from "@mui/material";
 import GoogleButton from "react-google-button";
 import React, { useState, useEffect } from "react";
@@ -138,13 +139,12 @@ const SignUpPage = () => {
         style={{
           display: "flex",
           flexDirection: "columnn",
-          justifyContent: "center",
+          justifyContent: "space-between",
           alignItems: "center",
           minWidth: "300px",
           width: "100%",
           height: "100%",
           padding: "20px",
-          backgroundColor: "white",
           paddingRight: "20px",
           paddingBottom: "20px",
         }}
@@ -163,21 +163,27 @@ const SignUpPage = () => {
             padding: "20px",
           }}
         >
-          <Avatar sx={{ bgcolor: "green", height: "250px", width: "250px" }}>
-            Logo
-          </Avatar>
-          <h1
-            style={{
-              fontSize: "20px",
+          <img
+            id="finallogo"
+            alt=""
+            src={process.env.PUBLIC_URL + "/finallogo.png"}
+            style={{ width: "400px", height: "330px", paddingBottom: "5px" }}
+          />
+          <Typography
+            id=""
+            variant="h6"
+            // component="div"
+            sx={{
+              fontFamily: "Bree Serif !important",
+              color: "white",
               textAlign: "justify",
-              textJustify: "inter-word",
             }}
           >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
             doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
             enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
             ut aliquip ex ea commodo consequat.
-          </h1>
+          </Typography>
         </Box>
         <Box
           className="signupresize"
@@ -201,11 +207,34 @@ const SignUpPage = () => {
               flexDirection: "column",
               alignItems: "center",
               paddingBottom: "10px",
-              marginTop: "-50px",
+              marginTop: "-20px",
+              fontFamily: "League Spartan",
             }}
           >
-            <h1>Welcome</h1>
-            <h1 style={{ marginTop: "-20px" }}>Aboard</h1>
+            <Typography
+              id=""
+              variant="h4"
+              // component="div"
+              sx={{
+                fontFamily: " League Spartan",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Welcome
+            </Typography>
+            <Typography
+              id=""
+              variant="h4"
+              // component="div"
+              sx={{
+                fontFamily: " League Spartan",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              to TREX
+            </Typography>
           </Box>
           <TextField
             required
