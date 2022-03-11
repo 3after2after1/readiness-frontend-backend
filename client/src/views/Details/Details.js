@@ -10,18 +10,30 @@ import { useParams } from "react-router";
 import { markets } from "../../utils/utils";
 
 import { getFrxInfo } from "../../utils/web-scrape-forex";
+// using client-web-scraper
+// import { getForexInfo } from "../../utils/backup/scrape-forex-info";
 
-function Details() {
+function Details(props) {
   const [instrumentInfo, setInstrumentInfo] = useState({});
-  const { market, symbol } = useParams();
+  let { market, symbol } = useParams();
+  if (!market) market = props.market;
+  if (!symbol) symbol = props.symbol;
 
   // get forex information
   useEffect(() => {
     if (market === markets.forex) {
       // example: eurusd
+      // server-web-scraper
       getFrxInfo(symbol).then((data) => {
+        console.log("scrape data ", data);
         setInstrumentInfo(data);
       });
+
+      // // client-web-scraper
+      // getForexInfo(symbol.substr(0, 3), symbol.substring(3)).then((data) => {
+      //   setInstrumentInfo(data);
+      //   console.log(data);
+      // });
     }
   }, []);
 
@@ -71,10 +83,14 @@ function Details() {
         </Container>
 
         <Container>
-          <DetailsStats
-            dataStats={instrumentInfo.stats}
-            dataDescription={instrumentInfo.description}
-          />
+          {market === markets.forex ? (
+            <DetailsStats
+              dataStats={instrumentInfo.stats}
+              dataDescription={instrumentInfo.description}
+            />
+          ) : (
+            "loading..."
+          )}
         </Container>
       </div>
 

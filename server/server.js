@@ -20,7 +20,7 @@ var forex = require("./routes/forex");
 
 app.use("/watchlist", watchlist);
 app.use("/forex", forex);
-app.use("/crypto", crypto);
+// app.use("/crypto", crypto);
 
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri);
