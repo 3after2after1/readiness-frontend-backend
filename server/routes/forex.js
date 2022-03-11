@@ -118,4 +118,50 @@ router.get("/info", (req, res) => {
   });
 });
 
+// get historical data on symbol
+router.get("/historical", (req, res) => {
+  const { symbol, style, interval } = req.query;
+  let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
+  const historicalDataQuery = {
+    symbol,
+    style,
+    interval,
+    id: reqId,
+  };
+
+  if (!symbol || !style || !interval) {
+    return res.status(404).json({
+      message: "parameters missing",
+    });
+  }
+
+  // create redis connections
+  const sub = new Redis({
+    host: "cache",
+    PORT: 6379,
+  });
+  const pub = new Redis({
+    host: "cache",
+    PORT: 6379,
+  });
+
+  pub.publish("GET_HISTORICAL_DATA", JSON.stringify(historicalDataQuery));
+
+  sub.subscribe("HISTORICAL_OHLC", (err, count) => {
+    if (err) {
+      console.error("Failed to subscribe: %s", err.message);
+    } else {
+      console.log(`Subscribed successfully! Num of sub channels: ${count}`);
+    }
+  });
+  sub.on("message", (channel, message) => {
+    message = JSON.parse(message);
+
+    if (channel === "HISTORICAL_OHLC" && message.id === reqId) {
+      res.json({ data: message.data });
+      return sub.quit();
+    }
+  });
+});
+
 module.exports = router;

@@ -1,6 +1,6 @@
 const Redis = require("ioredis");
-const { ws, subscribeTickStream } = require("./config.js");
-const { changeTickFormat } = require("./utils.js");
+const { ws, subscribeTickStream, getHistoricalData } = require("./config.js");
+const { changeTickFormat, processHistoricalOHLC } = require("./utils.js");
 
 const redis = new Redis({
   host: "cache",
@@ -28,7 +28,7 @@ ws.on("open", () => {
 });
 
 // subscribe on channels
-sub.subscribe("FOREX_IS_CONNECTION_ON", (err, count) => {
+sub.subscribe("FOREX_IS_CONNECTION_ON", "GET_HISTORICAL_DATA", (err, count) => {
   if (err) {
     console.error("Failed to subscribe: %s", err.message);
   } else {
@@ -53,6 +53,12 @@ sub.on("message", (channel, message) => {
       JSON.stringify({ id: id, channel: `tick_${symbol}` })
     );
   }
+
+  if (channel === "GET_HISTORICAL_DATA") {
+    const { symbol, style, interval, id } = message;
+    console.log("received msg from get his chann: ", message);
+    getHistoricalData(symbol, style, interval, id);
+  }
 });
 
 // listening to websocket
@@ -73,6 +79,15 @@ ws.onmessage = (msg) => {
     // redis.get(`tick_${msg.tick.symbol}`).then((result, err) => {
     //   console.log("result ", JSON.parse(result));
     // });
+  }
+
+  // get historical candle data
+  if (msg.msg_type === "candles") {
+    // process OHLC data
+    let processedData = processHistoricalOHLC(msg.candles);
+    let message = { data: processedData, id: msg.req_id };
+
+    pub.publish("HISTORICAL_OHLC", JSON.stringify(message));
   }
 };
 

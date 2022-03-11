@@ -1,4 +1,5 @@
 const { WebSocket } = require("ws");
+const { OHLCIntervals } = require("./constants.js");
 
 const app_id = 1089;
 const ws = new WebSocket(
@@ -17,15 +18,16 @@ const subscribeTickStream = (symbol) => {
 };
 
 // get historical data
-const getHistoricalData = (symbol, style, interval) => {
+const getHistoricalData = (symbol, style, interval, id) => {
   ws.send(
     JSON.stringify({
-      ticks_history: symbol,
+      ticks_history: "frx" + symbol.toUpperCase(),
       adjust_start_time: 1,
       count: 100,
       end: "latest",
       style: style,
-      granularity: interval.seconds,
+      granularity: OHLCIntervals[interval].seconds,
+      req_id: id,
     })
   );
 };
