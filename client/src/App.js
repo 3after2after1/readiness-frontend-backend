@@ -27,10 +27,10 @@ const App = () => {
           flexDirection: "column",
         }}
       >
-        <Navbar />
+        <Navbar style={{ flex: "1" }} />
         {/* <Box style={{ height: "82vh" }}></Box> */}
         {/* style={{ height: "100%" }} */}
-        <Box>
+        <Box style={{ flex: "5" }}>
           <Routes>
             <Route path="/authroute" element={<AuthRoute />}></Route>
             <Route path="/" element={<FinalLandingPage />}></Route>
@@ -48,7 +48,7 @@ const App = () => {
             <Route path="/details" element={<Details />} />
           </Routes>
         </Box>
-        <Footer />
+        <Footer style={{ flex: "1" }} />
       </Box>
     </BrowserRouter>
   );
