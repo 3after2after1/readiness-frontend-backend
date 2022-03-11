@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 var watchlist = require("./routes/watchlist");
 
 app.use("/watchlist", watchlist);
+app.use("/crypto", crypto);
 
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri);
