@@ -22,6 +22,7 @@ import { UserState } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../services/firebase";
 import { doc, getDoc } from "@firebase/firestore";
+import ChatWindow from "../../components/ChatWindow";
 
 const LoginPage = () => {
   const { automatedRocketChatSSO } = UserState();
@@ -239,6 +240,13 @@ const LoginPage = () => {
             </a>
             &nbsp;to sign up.
           </p>
+        </Box>
+        <Box
+          id="comment-box"
+          bgcolor={"white"}
+          style={{ minHeight: "400px", minWidth: "300px", display: "flex" }}
+        >
+          <ChatWindow></ChatWindow>
         </Box>
       </Box>
     </Box>

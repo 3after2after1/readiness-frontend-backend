@@ -38,7 +38,6 @@ export default function DetailsPage() {
           bgcolor={"white"}
           sx={{
             marginTop: "1em",
-            height: 560,
             padding: "0.6em",
             color: (theme) =>
               theme.palette.mode === "dark" ? "grey.300" : "grey.800",
@@ -47,6 +46,7 @@ export default function DetailsPage() {
               theme.palette.mode === "dark" ? "grey.800" : "grey.300",
             borderRadius: 2,
           }}
+          style={{ minHeight: "400px", minWidth: "300px", display: "flex" }}
         >
           <DetailsComment />
         </Box>
