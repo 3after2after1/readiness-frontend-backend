@@ -26,7 +26,10 @@ const getHistoricalData = (symbol, style, interval, id) => {
       count: 100,
       end: "latest",
       style: style,
-      granularity: OHLCIntervals[interval].seconds,
+      granularity:
+        style === "candles"
+          ? OHLCIntervals[interval].seconds
+          : OHLCIntervals.one_minute.seconds,
       req_id: id,
     })
   );

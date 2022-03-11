@@ -129,7 +129,7 @@ router.get("/historical", (req, res) => {
     id: reqId,
   };
 
-  if (!symbol || !style || !interval) {
+  if (!symbol || !style) {
     return res.status(404).json({
       message: "parameters missing",
     });

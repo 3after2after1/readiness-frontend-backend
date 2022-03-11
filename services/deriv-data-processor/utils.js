@@ -21,7 +21,26 @@ const processHistoricalOHLC = (data) => {
   });
 };
 
+// process historical ticks
+const processHistoricalTicks = (data) => {
+  let processedData = [];
+  for (let i = 0; i < data.prices.length; i++) {
+    let price = data.prices[i];
+    processedData.push({
+      date: new Date(data.times[i] * 1000),
+      open: price,
+      close: price,
+      high: price,
+      low: price,
+      volume: 0,
+    });
+  }
+
+  return processedData;
+};
+
 module.exports = {
   changeTickFormat,
   processHistoricalOHLC,
+  processHistoricalTicks,
 };

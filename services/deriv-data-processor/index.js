@@ -1,6 +1,10 @@
 const Redis = require("ioredis");
 const { ws, subscribeTickStream, getHistoricalData } = require("./config.js");
-const { changeTickFormat, processHistoricalOHLC } = require("./utils.js");
+const {
+  changeTickFormat,
+  processHistoricalOHLC,
+  processHistoricalTicks,
+} = require("./utils.js");
 
 const redis = new Redis({
   host: "cache",
@@ -85,6 +89,15 @@ ws.onmessage = (msg) => {
   if (msg.msg_type === "candles") {
     // process OHLC data
     let processedData = processHistoricalOHLC(msg.candles);
+    let message = { data: processedData, id: msg.req_id };
+
+    pub.publish("HISTORICAL_OHLC", JSON.stringify(message));
+  }
+
+  // get historical tick data
+  if (msg.msg_type === "history") {
+    // process tick data to ohlc
+    let processedData = processHistoricalTicks(msg.history);
     let message = { data: processedData, id: msg.req_id };
 
     pub.publish("HISTORICAL_OHLC", JSON.stringify(message));
