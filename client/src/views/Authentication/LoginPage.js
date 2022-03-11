@@ -20,7 +20,8 @@ import {
 } from "@firebase/auth";
 import { UserState } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../services/firebase";
+import { auth, db } from "../../services/firebase";
+import { doc, getDoc } from "@firebase/firestore";
 
 const LoginPage = () => {
   const { automatedRocketChatSSO } = UserState();
@@ -35,10 +36,17 @@ const LoginPage = () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
 
-      console.log("Login Success");
-      console.log(result);
+      // const profileStoreRef = doc(db, "userprofile", result.user.uid);
+      // const profileStoreSnap = await getDoc(profileStoreRef);
 
-      navigate("/");
+      // if (profileStoreSnap.exists()) {
+      //   automatedRocketChatSSO({
+      //     username: profileStoreSnap.data().username,
+      //     email: result.user.email,
+      //     pass: result.user.uid,
+      //     displayname: profileStoreSnap.data().username,
+      //   });
+      // }
 
       // automatedRocketChatSSO({
       //   username: username,
@@ -46,6 +54,11 @@ const LoginPage = () => {
       //   pass: result.user.uid,
       //   displayname: username,
       // });
+
+      console.log("Login Success");
+      console.log(result);
+
+      navigate("/");
     } catch (error) {}
   };
 

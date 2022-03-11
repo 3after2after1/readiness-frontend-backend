@@ -6,6 +6,15 @@ import { useLocation } from "react-router-dom";
 const CheckEmailPage = () => {
   const location = useLocation();
 
+  // React.useEffect(() => {
+  //   console.log("CHECK EMAIL USE EFFECT");
+  //   if (location.state.resetEmail !== "undefined") {
+  //     console.log(location.state.resetEmail);
+  //   } else {
+  //     console.log("Nothing");
+  //   }
+  // }, []);
+
   return (
     <>
       <Box
@@ -60,7 +69,10 @@ const CheckEmailPage = () => {
             fontWeight: "bold",
           }}
         >
-          {location.state.resetEmail}
+          Placeholder@empty.com
+          {/* {location.state.resetEmail.exist()
+            ? location.state.resetEmail
+            : "Email Placeholder"} */}
         </span>
         <span style={{ color: "#6a6a6a", fontSize: "0.85rem" }}>
           {" "}

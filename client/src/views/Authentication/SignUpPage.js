@@ -50,19 +50,19 @@ const SignUpPage = () => {
 
   const handleSubmit = async () => {
     try {
-      // const checkuser = await checkUserNameExist(username);
+      const checkuser = await checkUserNameExist(username);
 
-      // if (!checkuser.error) {
-      //   if (checkuser.result) {
-      //     throw {
-      //       message: "Username already exist",
-      //     };
-      //   }
-      // } else if (checkuser.error) {
-      //   throw {
-      //     message: checkuser.error,
-      //   };
-      // }
+      if (!checkuser.error) {
+        if (checkuser.result) {
+          throw {
+            message: "Username already exist",
+          };
+        }
+      } else if (checkuser.error) {
+        throw {
+          message: checkuser.error,
+        };
+      }
 
       if (password != confirmPassword) {
         throw { message: "Password Mismatch" };
