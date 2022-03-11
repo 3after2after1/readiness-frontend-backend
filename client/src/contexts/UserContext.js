@@ -1,13 +1,16 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../services/firebase";
+import { auth, db } from "../services/firebase";
 import { rocketChatSSO } from "../services/rocketchat";
 import axios from "axios";
+import { onSnapshot } from "@firebase/firestore";
+import { doc } from "@firebase/firestore";
 
 const UserAccount = createContext();
 
 const UserContext = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [username, setUsername] = useState(null);
   const [userRocketChatToken, setUserRocketChatToken] = useState(null);
 
   const rocketGetAuth = () => {
@@ -46,9 +49,27 @@ const UserContext = ({ children }) => {
 
   useEffect(() => {
     console.log("User Context Update");
-    console.log(user);
     if (user !== null && user.uid) {
       console.log(user.uid);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    console.log("User Context Username Update");
+    if (user !== null && user.uid) {
+      const profileStoreRef = doc(db, "userprofile", user.uid);
+
+      var unsubscribe = onSnapshot(profileStoreRef, (userprofile) => {
+        if (userprofile.exists()) {
+          setUsername(userprofile.data().username);
+        } else {
+          console.log("Missing username");
+        }
+      });
+
+      return () => {
+        unsubscribe();
+      };
     }
   }, [user]);
 

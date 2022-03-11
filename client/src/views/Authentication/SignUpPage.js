@@ -24,7 +24,8 @@ import {
 import { passwordVerify } from "../../utils/PasswordChecker";
 import { rocketChatSSO, checkUserNameExist } from "../../services/rocketchat";
 import { UserState } from "../../contexts/UserContext";
-import { auth } from "../../services/firebase";
+import { auth, db } from "../../services/firebase";
+import { doc, setDoc } from "@firebase/firestore";
 
 const SignUpPage = () => {
   const { automatedRocketChatSSO } = UserState();
@@ -85,6 +86,19 @@ const SignUpPage = () => {
       }
 
       console.log(result.user);
+
+      const profileStoreRef = doc(db, "userprofile", result.user.uid);
+
+      try {
+        await setDoc(profileStoreRef, {
+          username: username,
+        });
+      } catch (error) {
+        console.log(error);
+        throw {
+          message: error.message,
+        };
+      }
 
       // automatedRocketChatSSO({
       //   username: username,
