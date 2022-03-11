@@ -1,5 +1,6 @@
 const Redis = require("ioredis");
 const { ws, subscribeTickStream } = require("./config.js");
+const { changeTickFormat } = require("./utils.js");
 
 const redis = new Redis({
   host: "cache",
@@ -40,12 +41,10 @@ sub.on("message", (channel, message) => {
   message = JSON.parse(message);
 
   if (channel === "FOREX_IS_CONNECTION_ON") {
-    console.log(message);
     const { id, symbol } = message;
-    console.log("in ", id, symbol);
+    // console.log("in ", id, symbol);
 
     // sub to tick stream if connection to symbol does not exist
-    console.log("cc ", connections);
     if (!checkConnectionExistOnSymbol(symbol)) subscribeTickStream(symbol);
 
     // send key name for client to get tick data
@@ -61,7 +60,7 @@ ws.onmessage = (msg) => {
   msg = JSON.parse(msg.data);
 
   if (msg.msg_type === "tick") {
-    console.log("tick ", msg);
+    // console.log("tick ", msg);
     connectionItem.stream_id = msg.subscription.id;
     connectionItem.symbol = msg.tick.symbol;
 
@@ -85,38 +84,4 @@ const checkConnectionExistOnSymbol = (symbol) => {
   });
 
   return exist;
-};
-
-// get tick stream
-// const subscribeTickStream = (symbol) => {
-//   console.log("subs ing ");
-//   ws.send(
-//     JSON.stringify({
-//       ticks: symbol,
-//       subscribe: 1,
-//     })
-//   );
-// };
-
-// change tick format
-const changeTickFormat = (tick) => {
-  return {
-    symbol: tick.symbol,
-    date: new Date(tick.epoch * 1000),
-    price: tick.quote,
-  };
-};
-
-// get historical data
-const getHistoricalData = (symbol, style, interval) => {
-  ws.send(
-    JSON.stringify({
-      ticks_history: symbol,
-      adjust_start_time: 1,
-      count: 100,
-      end: "latest",
-      style: style,
-      granularity: interval.seconds,
-    })
-  );
 };

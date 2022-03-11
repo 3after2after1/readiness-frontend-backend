@@ -8,17 +8,30 @@ const ws = new WebSocket(
 // get tick stream
 const subscribeTickStream = (symbol) => {
   console.log("subs ing ");
-  ws.onopen(() => {
-    ws.send(
-      JSON.stringify({
-        ticks: symbol,
-        subscribe: 1,
-      })
-    );
-  });
+  ws.send(
+    JSON.stringify({
+      ticks: symbol,
+      subscribe: 1,
+    })
+  );
+};
+
+// get historical data
+const getHistoricalData = (symbol, style, interval) => {
+  ws.send(
+    JSON.stringify({
+      ticks_history: symbol,
+      adjust_start_time: 1,
+      count: 100,
+      end: "latest",
+      style: style,
+      granularity: interval.seconds,
+    })
+  );
 };
 
 module.exports = {
   ws,
   subscribeTickStream,
+  getHistoricalData,
 };
