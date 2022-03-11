@@ -1,10 +1,11 @@
 import * as React from "react";
-import { AppBar } from "@mui/material";
+import { AppBar, makeStyles } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -18,12 +19,10 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import StarOutlineOutlinedIcon from "@mui/icons-material/StarOutlineOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import EuroOutlinedIcon from "@mui/icons-material/EuroOutlined";
+
 import "./Navbar.css";
-import { styled, useTheme } from "@mui/material";
-import { signOut } from "@firebase/auth";
-import { auth } from "../../services/firebase";
-import { UserState } from "../../contexts/UserContext";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { createTheme, styled, ThemeProvider, useTheme } from "@mui/material";
+
 // const useStyles = makeStyles({
 //   text: {
 //     color: "#B33030",
@@ -32,13 +31,13 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 //   },
 // });
 const text = {
-  color: "black",
+  color: "white",
   fontSize: "1rem",
   fontFamily: "Bree Serif",
   fontWeight: "bold",
 };
 const textLogin = {
-  color: "#B33030",
+  color: "#FFCE45",
   fontSize: "1rem",
   fontFamily: "Bree Serif",
   fontWeight: "bold",
@@ -53,13 +52,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-const Navbar = () => {
+const Navbar2 = () => {
   // const classes = useStyles();
   const theme = useTheme();
-  const navigate = useNavigate();
-  const { user } = UserState();
-  let location = useLocation();
-  console.log(location.pathname);
 
   const [state, setState] = React.useState({
     top: false,
@@ -67,18 +62,6 @@ const Navbar = () => {
     bottom: false,
     right: false,
   });
-
-  const handleLogin = () => {
-    navigate("/loginpage");
-  };
-
-  const handleLogout = () => {
-    signOut(auth);
-  };
-
-  const handleWatchList = () => {
-    navigate("/watchlist");
-  };
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -96,7 +79,7 @@ const Navbar = () => {
       sx={{
         width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
         height: "100%",
-        backgroundColor: "#F9F7F7",
+        backgroundColor: "#184D47",
       }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
@@ -106,16 +89,15 @@ const Navbar = () => {
         <Box style={{ paddingRight: "55px" }}>
           <img
             id="borderlesslogo"
-            alt=""
             src={process.env.PUBLIC_URL + "/borderlesslogo.png"}
             // style={{ width: "40%", height: "100%" }}
           />
         </Box>
         <IconButton onClick={toggleDrawer("left", false)}>
           {theme.direction === "ltr" ? (
-            <ChevronLeftIcon />
+            <ChevronLeftIcon style={{ color: "white" }} />
           ) : (
-            <ChevronRightIcon />
+            <ChevronRightIcon style={{ color: "white" }} />
           )}
         </IconButton>
       </DrawerHeader>
@@ -124,7 +106,7 @@ const Navbar = () => {
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <EuroOutlinedIcon />
+              <EuroOutlinedIcon style={{ color: "white" }} />
             </ListItemIcon>
             <ListItemText
               primaryTypographyProps={{ style: text }}
@@ -137,7 +119,7 @@ const Navbar = () => {
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <MonetizationOnOutlinedIcon />
+              <MonetizationOnOutlinedIcon style={{ color: "white" }} />
             </ListItemIcon>
             <ListItemText
               primaryTypographyProps={{ style: text }}
@@ -145,13 +127,10 @@ const Navbar = () => {
             />
           </ListItemButton>
         </ListItem>
-
         <ListItem>
-          <ListItemButton
-            onClick={user === null ? handleLogin : handleWatchList}
-          >
+          <ListItemButton>
             <ListItemIcon>
-              <StarOutlineOutlinedIcon />
+              <StarOutlineOutlinedIcon style={{ color: "white" }} />
             </ListItemIcon>
             <ListItemText
               primaryTypographyProps={{ style: text }}
@@ -159,11 +138,10 @@ const Navbar = () => {
             />
           </ListItemButton>
         </ListItem>
-
         <ListItem>
-          <ListItemButton onClick={handleLogin}>
+          <ListItemButton>
             <ListItemIcon>
-              <AccountCircleOutlinedIcon />
+              <AccountCircleOutlinedIcon style={{ color: "#FFCE45" }} />
             </ListItemIcon>
             <ListItemText
               primaryTypographyProps={{ style: textLogin }}
@@ -176,12 +154,12 @@ const Navbar = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1, display: "contents" }}>
+    <Box sx={{ flexGrow: 1 }}>
       <AppBar
         style={{
           boxShadow:
             "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
-          backgroundColor: "#F9F7F7",
+          backgroundColor: "#184D47",
           position: "inherit",
         }}
       >
@@ -198,7 +176,7 @@ const Navbar = () => {
                   onClick={toggleDrawer(anchor, true)}
                   sx={{ mr: 2 }}
                 >
-                  <MenuIcon style={{ color: "black" }} />
+                  <MenuIcon style={{ color: "white" }} />
                 </IconButton>
                 <Drawer
                   anchor={anchor}
@@ -212,7 +190,7 @@ const Navbar = () => {
           </div>
           {/* <SidebarNav /> */}
           <Box id="titleBox">
-            <Button onClick={() => navigate("/")}>
+            <Button>
               <Typography
                 id="title"
                 variant="h4"
@@ -220,7 +198,7 @@ const Navbar = () => {
                 sx={{
                   paddingLeft: "10px",
                   fontFamily: "Bree Serif",
-                  color: "#184D47",
+                  color: "white",
                   fontWeight: "bold",
                 }}
               >
@@ -228,7 +206,6 @@ const Navbar = () => {
               </Typography>
               <img
                 id="borderlesslogo"
-                alt=""
                 src={process.env.PUBLIC_URL + "/borderlesslogo.png"}
                 // style={{ width: "40%", height: "100%" }}
               />
@@ -246,7 +223,7 @@ const Navbar = () => {
               id="loginButton"
               color="inherit"
               style={{
-                color: "black",
+                color: "white",
                 fontSize: "1rem",
                 fontFamily: "Bree Serif",
                 fontWeight: "bold",
@@ -260,7 +237,7 @@ const Navbar = () => {
               id="loginButton"
               color="inherit"
               style={{
-                color: "black",
+                color: "white",
                 fontSize: "1rem",
                 fontFamily: "Bree Serif",
                 fontWeight: "bold",
@@ -269,53 +246,32 @@ const Navbar = () => {
             >
               Crypto
             </Button>
-
             <Button
               id="loginButton"
               color="inherit"
               style={{
-                color: "black",
+                color: "white",
                 fontSize: "1rem",
                 fontFamily: "Bree Serif",
                 fontWeight: "bold",
                 marginRight: "20px",
               }}
-              onClick={user === null ? handleLogin : handleWatchList}
             >
               Watchlist
             </Button>
-
-            {user === null ? (
-              <Button
-                id="loginButton"
-                color="inherit"
-                variant="outlined"
-                style={{
-                  color: "#B33030",
-                  fontSize: "1rem",
-                  fontFamily: "Bree Serif",
-                  fontWeight: "bold",
-                }}
-                onClick={handleLogin}
-              >
-                Login
-              </Button>
-            ) : (
-              <Button
-                id="loginButton"
-                color="inherit"
-                variant="outlined"
-                style={{
-                  color: "#B33030",
-                  fontSize: "0.8rem",
-                  fontFamily: "Bree Serif",
-                  fontWeight: "bold",
-                }}
-                onClick={handleLogout}
-              >
-                Log out
-              </Button>
-            )}
+            <Button
+              id="loginButton"
+              color="inherit"
+              variant="outlined"
+              style={{
+                color: "#FFCE45",
+                fontSize: "1rem",
+                fontFamily: "Bree Serif",
+                fontWeight: "bold",
+              }}
+            >
+              Login
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
@@ -323,4 +279,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar2;
