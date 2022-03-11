@@ -15,7 +15,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-var watchlist = require("./routes/watchlist");
+const watchlist = require("./routes/watchlist");
+const crypto = require("./routes/crypto");
 
 app.use("/watchlist", watchlist);
 app.use("/crypto", crypto);
