@@ -13,19 +13,12 @@ import EmailVerify from "./views/Authentication/EmailVerify";
 import CryptoPage from "./views/CryptoPage";
 import Details from "./views/Details/Details";
 import Footer from "./components/Footer/Footer";
-import React from "react";
-import {
-  Link,
-  useLocation,
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import NotFound from "./views/NotFound";
 import AboutUs from "./views/AboutUs/AboutUs";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
-  // let location = useLocation();
-  // console.log(location.pathname);
   return (
     <BrowserRouter>
       <Box
@@ -60,6 +53,7 @@ const App = () => {
               path="/details"
               element={<Details market="forex" symbol="EURUSD" />}
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
         <Footer />
