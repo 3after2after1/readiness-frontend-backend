@@ -1,4 +1,31 @@
 @media (min-width: 320px) {
+  .signupmainbox {
+    background: linear-gradient(235deg, #ffffff 0%, #000f25 100%),
+      linear-gradient(180deg, #184d47 0%, #000000 100%),
+      linear-gradient(
+        235deg,
+        #317257 0%,
+        #317257 40%,
+        #081a18 calc(40% + 1px),
+        #081a18 60%,
+        #164645 calc(60% + 1px),
+        #164645 70%,
+        #317257 calc(70% + 1px),
+        #317257 100%
+      ),
+      linear-gradient(
+        125deg,
+        #317257 0%,
+        #317257 40%,
+        #081a18 calc(40% + 1px),
+        #081a18 60%,
+        #164645 calc(60% + 1px),
+        #164645 70%,
+        #317257 calc(70% + 1px),
+        #317257 100%
+      );
+    background-blend-mode: soft-light, screen, darken, normal;
+  }
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
 
   .boxrememberforgot {

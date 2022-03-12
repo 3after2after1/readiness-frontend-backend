@@ -9,6 +9,7 @@ import {
   InputAdornment,
   IconButton,
   Avatar,
+  Typography,
 } from "@mui/material";
 import GoogleButton from "react-google-button";
 import React, { useState } from "react";
@@ -87,14 +88,30 @@ const LoginPage = () => {
       >
         <Box
           style={{
-            justifyContent: "center",
             display: "flex",
             paddingBottom: "10px",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ bgcolor: "green", height: "80px", width: "80px" }}>
-            Logo
-          </Avatar>
+          <img
+            id="finallogo"
+            alt=""
+            src={process.env.PUBLIC_URL + "/finallogo.png"}
+            style={{ width: "80px", height: "70px", paddingBottom: "5px" }}
+          />
+          <Typography
+            id=""
+            variant="h4"
+            // component="div"
+            sx={{
+              fontFamily: " League Spartan",
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            It's TREX.
+          </Typography>
         </Box>
         <TextField
           className="textfield"
@@ -167,6 +184,8 @@ const LoginPage = () => {
             backgroundColor: "#7BE495",
             color: "black",
             fontWeight: "bold",
+            fontFamily: "League Spartan",
+            fontSize: "1.2rem",
           }}
           onClick={handleSubmit}
         >
