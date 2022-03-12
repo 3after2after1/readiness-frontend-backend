@@ -26,6 +26,8 @@ import {
   subscribeCryptoTickStream,
 } from "../../configs/cryptoCompareApi";
 
+import { getForexOHLCHistorical } from "../../api/forex-endpoint";
+
 import { Grid } from "@material-ui/core";
 import { InputLabel } from "@mui/material";
 import { MenuItem } from "@material-ui/core";
@@ -34,6 +36,10 @@ import { FormControl } from "@material-ui/core";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
+
+import { ForexTickConnection } from "../../utils/forexTickConnection";
+
+let tickConnection;
 
 class ChartComponent extends React.Component {
   constructor(props) {
@@ -47,6 +53,14 @@ class ChartComponent extends React.Component {
   // accepts props: symbol
   componentDidMount() {
     if (this.props.market === "forex") {
+      // getting historical forex data and starting a server sent event connection to get ticks - complete
+      getForexOHLCHistorical("usdjpy", "candles", "one_minute").then((data) => {
+        console.log("data received: ", data);
+        tickConnection = new ForexTickConnection("R_50");
+        tickConnection.connection.onmessage = (msg) =>
+          console.log("tick: ", JSON.parse(JSON.parse(msg.data)));
+      });
+
       ws.onmessage = (msg) => {
         let data = JSON.parse(msg.data);
 
@@ -164,6 +178,8 @@ class ChartComponent extends React.Component {
     } else {
       closeCryptoStream([this.state.subs]);
     }
+
+    tickConnection.closeConnection();
     console.log("unmounting");
   };
 

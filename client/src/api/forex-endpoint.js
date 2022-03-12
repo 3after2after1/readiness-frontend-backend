@@ -1,5 +1,5 @@
 // get historical OHLC data
-export const getForexHistoricalOHLC = (symbol, style, interval) => {
+export const getForexOHLCHistorical = (symbol, style, interval) => {
   let url = `http://localhost:5000/forex/historical?symbol=${symbol}&style=${style}&interval=${interval}`;
   let options = {
     method: "GET",
