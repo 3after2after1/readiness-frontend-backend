@@ -15,6 +15,7 @@ import Details from "./views/Details/Details";
 import Footer from "./components/Footer/Footer";
 import NotFound from "./views/NotFound";
 import AboutUs from "./views/AboutUs/AboutUs";
+import RequireAuth from "./views/RequireAuth";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -48,11 +49,13 @@ const App = () => {
             ></Route>
             <Route path="/emailverify" element={<EmailVerify />}></Route>
             <Route path="/crypto" element={<CryptoPage />} />
-            <Route path="/details/:market/:symbol" element={<Details />} />
-            <Route
-              path="/details"
-              element={<Details market="forex" symbol="EURUSD" />}
-            />
+            <Route element={<RequireAuth />}>
+              <Route path="/details/:market/:symbol" element={<Details />} />
+              <Route
+                path="/details"
+                element={<Details market="forex" symbol="EURUSD" />}
+              />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>

@@ -21,8 +21,8 @@ import EuroOutlinedIcon from "@mui/icons-material/EuroOutlined";
 import { signOut } from "@firebase/auth";
 import { auth } from "../../services/firebase";
 import { UserState } from "../../contexts/UserContext";
-import { useNavigate, Link, useLocation } from "react-router-dom";
-import { createTheme, styled, ThemeProvider, useTheme } from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
+import { styled, useTheme } from "@mui/material";
 import "./Navbar.css";
 let flag = true;
 
@@ -67,6 +67,7 @@ const Navbar = () => {
   const [flag, setFlag] = React.useState(true);
 
   let location = useLocation().pathname;
+  console.log(location);
   React.useEffect(() => {
     //rerender different navbar based on routes
     if (basicRoutes.includes(location)) {
