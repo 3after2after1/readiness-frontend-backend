@@ -20,10 +20,11 @@ import {
 } from "../../configs/derivApi";
 import { createCryptoSubs } from "../../utils/utils-cryptocompare";
 import {
-  ws_cc,
+  // ws_cc,
   getCryptoHistoricalData,
   closeCryptoStream,
   subscribeCryptoTickStream,
+  CryptoSocketConnection,
 } from "../../configs/cryptoCompareApi";
 
 import { getForexOHLCHistorical } from "../../api/forex-endpoint";
@@ -132,18 +133,25 @@ class ChartComponent extends React.Component {
     } else {
       // process crypto data
       // get historical data
+      const ws_crypto = new CryptoSocketConnection();
+
+      // ws_cc.close();
       getCryptoHistoricalData(this.props.symbol, this.state.interval).then(
         (data) => {
           let processedData = processHistoricalOHLC(data, this.props.market);
           this.setState({ data: processedData });
 
-          ws_cc.onopen = function () {
-            subscribeCryptoTickStream(createCryptoSubs(this.props.symbol));
+          ws_crypto.connection.onopen = function () {
+            subscribeCryptoTickStream(
+              createCryptoSubs(this.props.symbol.toUpperCase()),
+              ws_crypto.connection
+            );
           }.bind(this);
         }
       );
 
-      ws_cc.onmessage = (msg) => {
+      ws_crypto.connection.onmessage = (msg) => {
+        console.log("msg ,", msg);
         this.setState({ stream_id: createCryptoSubs(this.props.symbol) });
         let data = JSON.parse(msg.data);
 
@@ -185,7 +193,7 @@ class ChartComponent extends React.Component {
     if (this.props.market === "forex") {
       closeStream(this.state.stream_id);
     } else {
-      closeCryptoStream([this.state.subs]);
+      // closeCryptoStream([this.state.subs], ws_crypto.connection);
     }
 
     tickConnection.closeConnection();
@@ -244,8 +252,7 @@ class ChartComponent extends React.Component {
   // enable and disable chart Indicators
   selectUnselectIndicator = (e) => {
     let indicator = e.target.value;
-    console.log("in ", indicator);
-    console.log("state in ", this.state.indicators);
+
     this.setState({
       indicators:
         typeof indicator === "string" ? indicator.split(",") : indicator,
