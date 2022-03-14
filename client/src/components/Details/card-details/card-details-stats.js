@@ -19,6 +19,7 @@ export default function DetailsStats({ dataStats, dataDescription }) {
         }}
       >
         <StatsForex statsData={dataStats} />
+        {/* forex stats using dataStats from ricky line 21 */}
       </Box>
       <Box
         id="stats-contents-box"
@@ -33,6 +34,7 @@ export default function DetailsStats({ dataStats, dataDescription }) {
         }}
       >
         <p>{dataDescription}</p>
+        {/* line 36 : dataDescription is desc for the symbol */}
       </Box>
     </Box>
   );

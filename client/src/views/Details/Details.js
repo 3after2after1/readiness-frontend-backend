@@ -8,18 +8,22 @@ import DetailsStats from "../../components/Details/card-details/card-details-sta
 import Container from "@mui/material/Box";
 import { useParams } from "react-router";
 import { markets } from "../../utils/utils";
-
 import { getFrxInfo } from "../../utils/web-scrape-forex";
+import { useLocation } from "react-router-dom";
+import { height } from "@mui/system";
 // using client-web-scraper
 // import { getForexInfo } from "../../utils/backup/scrape-forex-info";
 
 function Details(props) {
   const [instrumentInfo, setInstrumentInfo] = useState({});
+  //instrumentInfo has two properties, stats and desc
   const [currentPrice, setCurrentPrice] = useState("-");
   let { market, symbol } = useParams();
   if (!market) market = props.market;
   if (!symbol) symbol = props.symbol;
 
+  const { state } = useLocation();
+  console.log(state);
   const handleCurrentPrice = (price) => {
     setCurrentPrice(price);
   };
@@ -48,13 +52,13 @@ function Details(props) {
         <div className="content-title-details">
           <div className="content-title-left">
             <div className="icon-company" id="icon-company">
-              Image
+              <img src={state.image} style={{ height: "4rem" }} />
             </div>
             <div className="company-box">
               <column>
                 <row>
                   <div id="company-name" className="company-name">
-                    {symbol.toUpperCase()} | APPLE
+                    {symbol.toUpperCase()}
                   </div>
                 </row>
                 <row>
