@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import "./card-details.css";
 import { EuroSymbol } from "@mui/icons-material";
 
-export default function DetailsPage({ market, symbol }) {
+export default function DetailsPage({ market, symbol, getCurrentPrice }) {
   return (
     <Box id="top-container-details" gap="20px">
       <div
@@ -31,7 +31,11 @@ export default function DetailsPage({ market, symbol }) {
             borderRadius: 2,
           }}
         >
-          <Chart symbol={symbol} market={market} />
+          <Chart
+            symbol={symbol}
+            market={market}
+            getCurrentPrice={getCurrentPrice}
+          />
         </Box>
 
         <Box

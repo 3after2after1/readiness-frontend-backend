@@ -88,33 +88,39 @@ class ChartComponent extends React.Component {
         // get tick stream
         if (data.msg_type === "tick") {
           // set stream id
+          if (data.error === undefined) {
+            this.setState({ stream_id: data.subscription.id });
+            let data_tick = data.tick;
 
-          this.setState({ stream_id: data.subscription.id });
-          let data_tick = data.tick;
+            let lastCandle = this.state.data[this.state.data.length - 1];
+            // let lastOHLC = this.state.data[this.state.data.length - 1];
 
-          let lastCandle = this.state.data[this.state.data.length - 1];
-          // let lastOHLC = this.state.data[this.state.data.length - 1];
+            // standardise tick data
+            data_tick.date = new Date(data_tick.epoch * 1000);
+            data_tick.price = data_tick.quote;
 
-          // standardise tick data
-          data_tick.date = new Date(data_tick.epoch * 1000);
-          data_tick.price = data_tick.quote;
+            // send current price to parent component (details) to display
+            this.props.getCurrentPrice(data_tick.price);
 
-          // check if new tick belongs to the same time group of last OHLC
-          let sameTimeGroup = isCurrentTickTimeGroupSame(
-            this.state.interval,
-            lastCandle,
-            data_tick
-          );
+            // check if new tick belongs to the same time group of last OHLC
+            let sameTimeGroup = isCurrentTickTimeGroupSame(
+              this.state.interval,
+              lastCandle,
+              data_tick
+            );
 
-          // if time group of previous OHLC and current tick same, update the previous OHLC, else create new OHLC
-          let newOHLC = null;
-          if (sameTimeGroup) {
-            updateLastOHLC(lastCandle, data_tick);
+            // if time group of previous OHLC and current tick same, update the previous OHLC, else create new OHLC
+            let newOHLC = null;
+            if (sameTimeGroup) {
+              updateLastOHLC(lastCandle, data_tick);
+            } else {
+              newOHLC = createOHLC(data_tick);
+            }
+
+            if (newOHLC) this.state.data.push(newOHLC);
           } else {
-            newOHLC = createOHLC(data_tick);
+            console.log("error: ", msg.error);
           }
-
-          if (newOHLC) this.state.data.push(newOHLC);
         }
       };
 
@@ -149,6 +155,9 @@ class ChartComponent extends React.Component {
             // standardise tick data
             data.date = new Date(data.LASTUPDATE * 1000);
             data.price = data.PRICE;
+
+            // send current price to parent component (details) to display
+            this.props.getCurrentPrice(data.price);
 
             // check if new tick belongs to the same time group of last OHLC
             let sameTimeGroup = isCurrentTickTimeGroupSame(
@@ -244,14 +253,6 @@ class ChartComponent extends React.Component {
   };
 
   render() {
-    const enabledIndicatorStyle = {
-      backgroundColor: "#90EE90",
-    };
-
-    const disabledIndicatorStyle = {
-      backgroundColor: "#f8f8f8",
-    };
-
     // change interval options depending on market and chart type
     let intervalOptions = { ...candleIntervals };
     if (

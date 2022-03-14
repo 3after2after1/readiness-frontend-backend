@@ -15,16 +15,21 @@ import { getFrxInfo } from "../../utils/web-scrape-forex";
 
 function Details(props) {
   const [instrumentInfo, setInstrumentInfo] = useState({});
+  const [currentPrice, setCurrentPrice] = useState("-");
   let { market, symbol } = useParams();
   if (!market) market = props.market;
   if (!symbol) symbol = props.symbol;
+
+  const handleCurrentPrice = (price) => {
+    setCurrentPrice(price);
+  };
 
   // get forex information
   useEffect(() => {
     if (market === markets.forex) {
       // example: eurusd
       // server-web-scraper
-      getFrxInfo(symbol).then((data) => {
+      getFrxInfo("usdjpy").then((data) => {
         console.log("scrape data ", data);
         setInstrumentInfo(data);
       });
@@ -55,7 +60,7 @@ function Details(props) {
                 <row>
                   <div className="company-box">
                     <span className="currency-price" id="currency-price">
-                      188.99
+                      {currentPrice}
                     </span>
                     <span className="currency" id="currency">
                       USD{" "}
@@ -79,7 +84,11 @@ function Details(props) {
         </div>
 
         <Container>
-          <DetailsPage market={market} symbol={symbol} />
+          <DetailsPage
+            market={market}
+            symbol={symbol}
+            getCurrentPrice={handleCurrentPrice}
+          />
         </Container>
 
         <Container>
