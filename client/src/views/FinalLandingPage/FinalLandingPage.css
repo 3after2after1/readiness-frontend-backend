@@ -26,10 +26,7 @@
       );
     background-blend-mode: soft-light, screen, darken, normal;
   }
-  #secondsection {
-  }
-  #thirdsection {
-  }
+
   #fourthsection {
     background: linear-gradient(
       45deg,
@@ -43,8 +40,7 @@
       #cff4d2 100%
     );
   }
-  #section23 {
-  }
+
   #signUpButton1 {
     display: none;
   }
