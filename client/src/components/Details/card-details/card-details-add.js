@@ -17,29 +17,18 @@ export default function CardDetailsAdd() {
     <PopupState variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
         <React.Fragment>
-          <Button
-            style={{
-              borderRadius: 10,
-              backgroundColor: "white",
-              padding: "2px",
-              // height: "80px"
-            }}
-            variant="contained"
-            {...bindTrigger(popupState)}
-          >
-            <IconButton
-              onClick={handleClick}
-              style={{ color: "blue[500]" }}
-              aria-label="add to watchlist"
-              children={
-                btn ? (
-                  <StarBorderIcon />
-                ) : (
-                  <StarIcon sx={{ color: yellow[800] }} />
-                )
-              }
-            ></IconButton>
-          </Button>
+          <IconButton
+            onClick={handleClick}
+            style={{ color: "blue[500]" }}
+            aria-label="add to watchlist"
+            children={
+              btn ? (
+                <StarBorderIcon />
+              ) : (
+                <StarIcon sx={{ color: yellow[800] }} />
+              )
+            }
+          ></IconButton>
         </React.Fragment>
       )}
     </PopupState>

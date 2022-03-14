@@ -136,114 +136,124 @@ class CandleStickStockScaleChart extends React.Component {
       xAccessor(data[data.length - numCandlesOnDisplay]),
     ];
 
+    const changeScroll = () => {
+      let position = document.body.style.position;
+      document.body.style.position = position === "fixed" ? "static" : "fixed";
+      document.body.style.width = "100%";
+      document.body.style.overflowY = "scroll";
+    };
+
     return (
-      <ChartCanvas
-        height={height}
-        ratio={ratio}
-        width={width}
-        margin={{ left: 70, right: 70, top: 20, bottom: 30 }}
-        type={type}
-        seriesName="MSFT"
-        data={data}
-        xScale={xScale}
-        xAccessor={xAccessor}
-        displayXAccessor={displayXAccessor}
-        xExtents={xExtents}
-      >
-        <Chart
-          id={1}
-          yExtents={(d) => [d.high, d.low]}
-          height={
-            indicators.includes(chartIndicators.relative_strength_index) && 300
-          }
+      <div onMouseEnter={changeScroll} onMouseLeave={changeScroll}>
+        <ChartCanvas
+          height={height}
+          ratio={ratio}
+          width={width}
+          margin={{ left: 70, right: 70, top: 20, bottom: 30 }}
+          type={type}
+          seriesName="MSFT"
+          data={data}
+          xScale={xScale}
+          xAccessor={xAccessor}
+          displayXAccessor={displayXAccessor}
+          xExtents={xExtents}
         >
-          <XAxis axisAt="bottom" orient="bottom" ticks={6} {...xGrid} />
-          <YAxis axisAt="right" orient="right" ticks={5} {...yGrid} />
-          <OHLCTooltip origin={[-40, 0]} />
-
-          <CandlestickSeries />
-          {indicators.includes(chartIndicators.simple_moving_avg) && (
-            <>
-              <LineSeries
-                yAccessor={sma20.accessor()}
-                stroke={sma20.stroke()}
-              />
-
-              <CurrentCoordinate
-                yAccessor={sma20.accessor()}
-                fill={sma20.stroke()}
-              />
-
-              <MovingAverageTooltip
-                origin={[-38, 15]}
-                options={[
-                  {
-                    yAccessor: sma20.accessor(),
-                    type: "SMA",
-                    stroke: sma20.stroke(),
-                    windowSize: sma20.options().windowSize,
-                    echo: "some echo here",
-                  },
-                ]}
-              />
-            </>
-          )}
-
-          <EdgeIndicator
-            itemType="last"
-            orient="right"
-            edgeAt="right"
-            yAccessor={(d) => d.close}
-            fill={(d) => (d.close > d.open ? "#A2F5BF" : "#F9ACAA")}
-            stroke={(d) => (d.close > d.open ? "#0B4228" : "#6A1B19")}
-            textFill={(d) => (d.close > d.open ? "#0B4228" : "#420806")}
-            strokeOpacity={1}
-            strokeWidth={3}
-            arrowWidth={2}
-          />
-
-          <MouseCoordinateX
-            at="bottom"
-            orient="bottom"
-            displayFormat={timeFormat("%Y-%m-%d %H:%M %p")}
-          />
-          <MouseCoordinateY
-            at="left"
-            orient="left"
-            displayFormat={format(".4s")}
-          />
-        </Chart>
-        {indicators.includes(chartIndicators.relative_strength_index) && (
           <Chart
-            id={2}
-            yExtents={[0, 100]}
-            height={125}
-            origin={(w, h) => [0, h - 140]}
+            id={1}
+            yExtents={(d) => [d.high, d.low]}
+            height={
+              indicators.includes(chartIndicators.relative_strength_index) &&
+              300
+            }
           >
-            <XAxis
-              axisAt="bottom"
-              orient="bottom"
-              showTicks={false}
-              outerTickSize={0}
-            />
-            <YAxis axisAt="right" orient="right" tickValues={[30, 50, 70]} />
-            <MouseCoordinateY
-              at="right"
+            <XAxis axisAt="bottom" orient="bottom" ticks={6} {...xGrid} />
+            <YAxis axisAt="right" orient="right" ticks={5} {...yGrid} />
+            <OHLCTooltip origin={[-40, 0]} />
+
+            <CandlestickSeries />
+            {indicators.includes(chartIndicators.simple_moving_avg) && (
+              <>
+                <LineSeries
+                  yAccessor={sma20.accessor()}
+                  stroke={sma20.stroke()}
+                />
+
+                <CurrentCoordinate
+                  yAccessor={sma20.accessor()}
+                  fill={sma20.stroke()}
+                />
+
+                <MovingAverageTooltip
+                  origin={[-38, 15]}
+                  options={[
+                    {
+                      yAccessor: sma20.accessor(),
+                      type: "SMA",
+                      stroke: sma20.stroke(),
+                      windowSize: sma20.options().windowSize,
+                      echo: "some echo here",
+                    },
+                  ]}
+                />
+              </>
+            )}
+
+            <EdgeIndicator
+              itemType="last"
               orient="right"
-              displayFormat={format(".2f")}
+              edgeAt="right"
+              yAccessor={(d) => d.close}
+              fill={(d) => (d.close > d.open ? "#A2F5BF" : "#F9ACAA")}
+              stroke={(d) => (d.close > d.open ? "#0B4228" : "#6A1B19")}
+              textFill={(d) => (d.close > d.open ? "#0B4228" : "#420806")}
+              strokeOpacity={1}
+              strokeWidth={3}
+              arrowWidth={2}
             />
 
-            <RSISeries yAccessor={(d) => d.rsi} />
-
-            <RSITooltip
-              origin={[-38, 15]}
-              yAccessor={(d) => d.rsi}
-              options={rsiCalculator.options()}
+            <MouseCoordinateX
+              at="bottom"
+              orient="bottom"
+              displayFormat={timeFormat("%Y-%m-%d %H:%M %p")}
+            />
+            <MouseCoordinateY
+              at="left"
+              orient="left"
+              displayFormat={format(".4s")}
             />
           </Chart>
-        )}
-        <CrossHairCursor />
-      </ChartCanvas>
+          {indicators.includes(chartIndicators.relative_strength_index) && (
+            <Chart
+              id={2}
+              yExtents={[0, 100]}
+              height={125}
+              origin={(w, h) => [0, h - 140]}
+            >
+              <XAxis
+                axisAt="bottom"
+                orient="bottom"
+                showTicks={false}
+                outerTickSize={0}
+              />
+              <YAxis axisAt="right" orient="right" tickValues={[30, 50, 70]} />
+              <MouseCoordinateY
+                at="right"
+                orient="right"
+                displayFormat={format(".2f")}
+              />
+
+              <RSISeries yAccessor={(d) => d.rsi} />
+
+              <RSITooltip
+                origin={[-38, 15]}
+                yAccessor={(d) => d.rsi}
+                options={rsiCalculator.options()}
+              />
+            </Chart>
+          )}
+          <CrossHairCursor />
+        </ChartCanvas>
+      </div>
     );
   }
 }

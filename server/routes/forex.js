@@ -2,6 +2,7 @@ let express = require("express");
 let router = express.Router();
 const Redis = require("ioredis");
 const hash = require("hash-it");
+const onFinished = require("on-finished");
 
 // get forex tick
 router.get("/tick", (req, res) => {
@@ -73,6 +74,16 @@ router.get("/tick", (req, res) => {
         });
       }
     }
+  });
+  onFinished(req, function (err, req) {
+    console.log("request is finished");
+    redis.get(`tick_${symbol}_CLIENT_COUNT`).then((result, err) => {
+      if (result) {
+        let count = Number(result);
+        console.log("current count: ", count);
+        redis.set(`tick_${symbol}_CLIENT_COUNT`, count - 1);
+      }
+    });
   });
 });
 
@@ -158,6 +169,7 @@ router.get("/historical", (req, res) => {
     message = JSON.parse(message);
 
     if (channel === "HISTORICAL_OHLC" && message.id === reqId) {
+      console.log("historic response yes");
       res.json({ data: message.data });
       return sub.quit();
     }
