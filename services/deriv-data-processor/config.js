@@ -8,10 +8,11 @@ const ws = new WebSocket(
 
 // get tick stream
 const subscribeTickStream = (symbol) => {
+  //starting point to get websocket stream
   console.log("subs ing ", symbol);
   ws.send(
     JSON.stringify({
-      ticks: symbol,
+      ticks: "frx" + symbol,
       subscribe: 1,
     })
   );

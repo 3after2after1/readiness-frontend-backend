@@ -39,6 +39,7 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 
 import { ForexTickConnection } from "../../utils/forexTickConnection";
+//call the API endpoint
 
 let tickConnection;
 
@@ -54,14 +55,17 @@ class ChartComponent extends React.Component {
   // accepts props: symbol
   componentDidMount() {
     if (this.props.market === "forex") {
+      // 58-68 (microservice) other all still client
       // getting historical forex data and starting a server sent event connection to get ticks - complete
       getForexOHLCHistorical("usdjpy", "candles", "one_minute").then((data) => {
         console.log("data received: ", data);
-        tickConnection = new ForexTickConnection("R_50");
-        tickConnection.connection.onmessage = (msg) =>
+        tickConnection = new ForexTickConnection("USDJPY");
+        tickConnection.connection.onmessage = (msg) => {
           console.log("tick: ", JSON.parse(JSON.parse(msg.data)));
+          //sse onmessage
+        };
       });
-
+      //ignore
       ws.onmessage = (msg) => {
         let data = JSON.parse(msg.data);
 
@@ -192,6 +196,7 @@ class ChartComponent extends React.Component {
   componentWillUnmount = () => {
     if (this.props.market === "forex") {
       closeStream(this.state.stream_id);
+      //closing sse connection here
     } else {
       // closeCryptoStream([this.state.subs], ws_crypto.connection);
     }

@@ -21,10 +21,15 @@ router.get("/tick", (req, res) => {
     PORT: 6379,
   });
   const tickSub = new Redis({
+    //listens to setEvent in redis key
+    //sub executed before tickSub
+    //tickSub uses config command to make it listen to redis key set events
     host: "cache",
     PORT: 6379,
   });
   const redis = new Redis({
+    //just to get and set value in Redis
+    //no listening at all
     host: "cache",
     PORT: 6379,
   });
@@ -57,15 +62,18 @@ router.get("/tick", (req, res) => {
         tickSub.config("SET", "notify-keyspace-events", "KEA");
         //TO-DO: unsub any existing subbed tick_ channel
         tickSub.subscribe("__keyevent@0__:set", tick_channel, (err, count) => {
+          //listen to set events[tick_channel:keyname in redis]
           if (err) console.log("err :", err);
           else console.log("connected to keyevent! ", count);
         });
 
         // get notification on set event on redis key
         tickSub.on("message", (channel, key) => {
+          //channel is: "__keyevent@0__:set"
           // console.log(`from ${channel} message: ${key}`);
 
           if (key === tick_channel) {
+            //tick_channel is key_name
             redis.get(key).then((result, err) => {
               console.log("result ", "result");
               res.write("data: " + JSON.stringify(result) + "\n\n");
