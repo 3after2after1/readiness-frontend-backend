@@ -15,13 +15,10 @@ import Details from "./views/Details/Details";
 import Footer from "./components/Footer/Footer";
 import NotFound from "./views/NotFound";
 import AboutUs from "./views/AboutUs/AboutUs";
-<<<<<<< HEAD
 import SnackBarNotify from "./components/SnackBarNotify";
-=======
 import Watchlist from "./views/WatchList/Watchlist";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
->>>>>>> master
 
 const App = () => {
   return (
