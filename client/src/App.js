@@ -15,6 +15,7 @@ import Details from "./views/Details/Details";
 import Footer from "./components/Footer/Footer";
 import NotFound from "./views/NotFound";
 import AboutUs from "./views/AboutUs/AboutUs";
+import Watchlist from "./views/WatchList/Watchlist";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -49,6 +50,7 @@ const App = () => {
             <Route path="/emailverify" element={<EmailVerify />}></Route>
             <Route path="/crypto" element={<CryptoPage />} />
             <Route path="/details/:market/:symbol" element={<Details />} />
+            <Route path="/watchlist" element={<Watchlist />}></Route>
             <Route
               path="/details"
               element={<Details market="forex" symbol="EURUSD" />}

@@ -51,11 +51,11 @@ const Footer = () => {
           <Typography
             variant="h6"
             // component="div"
-            sx={{
+            style={{
               paddingLeft: "10px",
               fontFamily: "Bree Serif",
               color: status === true ? "black" : "white",
-              fontSize: "1.2rem",
+              fontSize: "1.0rem",
             }}
           >
             TREX
@@ -113,11 +113,12 @@ const Footer = () => {
         <Typography
           variant="h6"
           // component="div"
-          sx={{
+          style={{
             paddingLeft: "10px",
             fontFamily: "Bree Serif",
             color: status === true ? "black" : "white",
-            fontSize: "0.7rem",
+            fontSize: "0.8rem",
+            fontWeight: "bold",
           }}
         >
           © Copyright 2022 TREX
