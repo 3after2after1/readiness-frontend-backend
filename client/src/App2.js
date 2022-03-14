@@ -15,13 +15,9 @@ import Details from "./views/Details/Details";
 import Footer from "./components/Footer/Footer";
 import NotFound from "./views/NotFound";
 import AboutUs from "./views/AboutUs/AboutUs";
-<<<<<<< HEAD
-import SnackBarNotify from "./components/SnackBarNotify";
-=======
-import Watchlist from "./views/WatchList/Watchlist";
+import RequireAuth from "./views/RequireAuth";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
->>>>>>> master
 
 const App = () => {
   return (
@@ -34,10 +30,10 @@ const App = () => {
           flexDirection: "column",
         }}
       >
-        <Navbar style={{ flex: "1" }} />
+        <Navbar />
         {/* <Box style={{ height: "82vh" }}></Box> */}
         {/* style={{ height: "100%" }} */}
-        <Box style={{ flex: "5" }}>
+        <Box>
           <Routes>
             <Route path="/authroute" element={<AuthRoute />}></Route>
             <Route path="/" element={<FinalLandingPage />}></Route>
@@ -53,17 +49,17 @@ const App = () => {
             ></Route>
             <Route path="/emailverify" element={<EmailVerify />}></Route>
             <Route path="/crypto" element={<CryptoPage />} />
-            <Route path="/details/:market/:symbol" element={<Details />} />
-            <Route path="/watchlist" element={<Watchlist />}></Route>
-            <Route
-              path="/details"
-              element={<Details market="forex" symbol="EURUSD" />}
-            />
+            <Route element={<RequireAuth />}>
+              <Route path="/details/:market/:symbol" element={<Details />} />
+              <Route
+                path="/details"
+                element={<Details market="forex" symbol="EURUSD" />}
+              />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
-        <SnackBarNotify />
-        <Footer style={{ flex: "1" }} />
+        <Footer />
       </Box>
     </BrowserRouter>
   );

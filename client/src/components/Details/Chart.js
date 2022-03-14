@@ -50,11 +50,11 @@ class ChartComponent extends React.Component {
       ws.onmessage = (msg) => {
         let data = JSON.parse(msg.data);
 
-        console.log("inside ", data);
+        // console.log("inside ", data);
 
         // process candle data and subscribe to data stream
         if (data.msg_type === "candles") {
-          console.log("history candies in");
+          // console.log("history candies in");
           let data_candles = data.candles;
           let data_processed = processHistoricalOHLC(
             data_candles,

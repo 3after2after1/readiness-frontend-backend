@@ -15,11 +15,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+var forex = require("./routes/forex");
 const watchlist = require("./routes/watchlist");
 const crypto = require("./routes/crypto");
+const news = require("./routes/news");
 
 app.use("/watchlist", watchlist);
+app.use("/forex", forex);
 app.use("/crypto", crypto);
+app.use("/news", news);
 
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri);
