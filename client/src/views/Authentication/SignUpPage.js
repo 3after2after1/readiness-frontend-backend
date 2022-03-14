@@ -4,31 +4,29 @@ import {
   Button,
   Divider,
   TextField,
-  Checkbox,
-  FormControlLabel,
   InputAdornment,
   IconButton,
-  Avatar,
   Container,
+  Typography,
 } from "@mui/material";
 import GoogleButton from "react-google-button";
 import React, { useState, useEffect } from "react";
 import "./css/SignUpPage.css";
 import {
-  signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "@firebase/auth";
 import { passwordVerify } from "../../utils/PasswordChecker";
-import { rocketChatSSO, checkUserNameExist } from "../../services/rocketchat";
-import { UserState } from "../../contexts/UserContext";
-import { auth } from "../../services/firebase";
+import { checkUserNameExist } from "../../services/rocketchat";
+import { GeneralState } from "../../contexts/GeneralContext";
+import { auth, db } from "../../services/firebase";
+import { doc, setDoc } from "@firebase/firestore";
 import axios from "axios";
 
 const SignUpPage = () => {
-  const { automatedRocketChatSSO } = UserState();
+  const { generateSnackbar } = GeneralState();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,29 +48,33 @@ const SignUpPage = () => {
 
   const handleSubmit = async () => {
     try {
-      // const checkuser = await checkUserNameExist(username);
+      const checkuser = await checkUserNameExist(username);
 
-      // if (!checkuser.error) {
-      //   if (checkuser.result) {
-      //     throw {
-      //       message: "Username already exist",
-      //     };
-      //   }
-      // } else if (checkuser.error) {
-      //   throw {
-      //     message: checkuser.error,
-      //   };
-      // }
+      if (!checkuser.error) {
+        if (checkuser.result) {
+          const error = {
+            message: "Username already exist",
+          };
+          throw error;
+        }
+      } else if (checkuser.error) {
+        const error = {
+          message: checkuser.error,
+        };
+        throw error;
+      }
 
-      if (password != confirmPassword) {
-        throw { message: "Password Mismatch" };
+      if (password !== confirmPassword) {
+        const error = { message: "Password Mismatch" };
+        throw error;
       }
 
       if (!passwordVerify(password)) {
-        throw {
+        const error = {
           message:
             "Please ensure your password contains both Letter and Number",
         };
+        throw error;
       }
 
       const result = await createUserWithEmailAndPassword(
@@ -86,6 +88,19 @@ const SignUpPage = () => {
       }
 
       console.log(result.user);
+
+      const profileStoreRef = doc(db, "userprofile", result.user.uid);
+
+      try {
+        await setDoc(profileStoreRef, {
+          username: username,
+        });
+      } catch (error) {
+        const errormsg = {
+          message: error.message,
+        };
+        throw errormsg;
+      }
 
       // automatedRocketChatSSO({
       //   username: username,
@@ -109,18 +124,34 @@ const SignUpPage = () => {
           console.log(response.data);
         });
 
-      console.log("Sign Up Success");
+      generateSnackbar({
+        newShow: true,
+        newMessage: "Sign Up Successful!",
+        newType: "success",
+      });
     } catch (error) {
       if (!!String(error.message).match("^Firebase:.*")) {
         setErrorMsg((previousError) => ({
           ...previousError,
           message: error.message.replace("Firebase: ", ""),
         }));
+
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message.replace("Firebase: ", ""),
+          newType: "error",
+        });
       } else {
         setErrorMsg((previousError) => ({
           ...previousError,
           message: error.message,
         }));
+
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message,
+          newType: "error",
+        });
       }
 
       return;
@@ -131,10 +162,18 @@ const SignUpPage = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((res) => {
-        console.log("Google Provider Login Success");
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign Up Successful!",
+          newType: "success",
+        });
       })
       .catch((error) => {
-        console.log(error);
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign Up Failed",
+          newType: "error",
+        });
       });
   };
 
@@ -154,13 +193,12 @@ const SignUpPage = () => {
         style={{
           display: "flex",
           flexDirection: "columnn",
-          justifyContent: "center",
+          justifyContent: "space-between",
           alignItems: "center",
           minWidth: "300px",
           width: "100%",
           height: "100%",
           padding: "20px",
-          backgroundColor: "white",
           paddingRight: "20px",
           paddingBottom: "20px",
         }}
@@ -179,21 +217,27 @@ const SignUpPage = () => {
             padding: "20px",
           }}
         >
-          <Avatar sx={{ bgcolor: "green", height: "250px", width: "250px" }}>
-            Logo
-          </Avatar>
-          <h1
-            style={{
-              fontSize: "20px",
+          <img
+            id="finallogo"
+            alt=""
+            src={process.env.PUBLIC_URL + "/finallogo.png"}
+            style={{ width: "400px", height: "330px", paddingBottom: "5px" }}
+          />
+          <Typography
+            id=""
+            variant="h6"
+            // component="div"
+            sx={{
+              fontFamily: "Bree Serif !important",
+              color: "white",
               textAlign: "justify",
-              textJustify: "inter-word",
             }}
           >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
             doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
             enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
             ut aliquip ex ea commodo consequat.
-          </h1>
+          </Typography>
         </Box>
         <Box
           className="signupresize"
@@ -217,11 +261,34 @@ const SignUpPage = () => {
               flexDirection: "column",
               alignItems: "center",
               paddingBottom: "10px",
-              marginTop: "-50px",
+              marginTop: "-20px",
+              fontFamily: "League Spartan",
             }}
           >
-            <h1>Welcome</h1>
-            <h1 style={{ marginTop: "-20px" }}>Aboard</h1>
+            <Typography
+              id=""
+              variant="h4"
+              // component="div"
+              sx={{
+                fontFamily: " League Spartan",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Welcome
+            </Typography>
+            <Typography
+              id=""
+              variant="h4"
+              // component="div"
+              sx={{
+                fontFamily: " League Spartan",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              to TREX
+            </Typography>
           </Box>
           <TextField
             required

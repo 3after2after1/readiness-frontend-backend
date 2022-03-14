@@ -8,7 +8,7 @@ import {
   FormControlLabel,
   InputAdornment,
   IconButton,
-  Avatar,
+  Typography,
 } from "@mui/material";
 import GoogleButton from "react-google-button";
 import React, { useState } from "react";
@@ -18,12 +18,12 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "@firebase/auth";
-import { UserState } from "../../contexts/UserContext";
+import { GeneralState } from "../../contexts/GeneralContext";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebase";
 
 const LoginPage = () => {
-  const { automatedRocketChatSSO } = UserState();
+  const { generateSnackbar } = GeneralState();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,10 +35,17 @@ const LoginPage = () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
 
-      console.log("Login Success");
-      console.log(result);
+      // const profileStoreRef = doc(db, "userprofile", result.user.uid);
+      // const profileStoreSnap = await getDoc(profileStoreRef);
 
-      navigate("/");
+      // if (profileStoreSnap.exists()) {
+      //   automatedRocketChatSSO({
+      //     username: profileStoreSnap.data().username,
+      //     email: result.user.email,
+      //     pass: result.user.uid,
+      //     displayname: profileStoreSnap.data().username,
+      //   });
+      // }
 
       // automatedRocketChatSSO({
       //   username: username,
@@ -46,16 +53,49 @@ const LoginPage = () => {
       //   pass: result.user.uid,
       //   displayname: username,
       // });
-    } catch (error) {}
+
+      generateSnackbar({
+        newShow: true,
+        newMessage: "Login Successful!",
+        newType: "success",
+      });
+
+      navigate("/");
+    } catch (error) {
+      if (!!String(error.message).match("^Firebase:.*")) {
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message.replace("Firebase: ", ""),
+          newType: "error",
+        });
+      } else {
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message,
+          newType: "error",
+        });
+      }
+
+      return;
+    }
   };
 
   const googleProvider = new GoogleAuthProvider();
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((res) => {
-        console.log("Google Provider Login Success");
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign In Successful!",
+          newType: "success",
+        });
       })
       .catch((error) => {
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign In Failed",
+          newType: "error",
+        });
         console.log(error);
       });
   };
@@ -87,14 +127,30 @@ const LoginPage = () => {
       >
         <Box
           style={{
-            justifyContent: "center",
             display: "flex",
             paddingBottom: "10px",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ bgcolor: "green", height: "80px", width: "80px" }}>
-            Logo
-          </Avatar>
+          <img
+            id="finallogo"
+            alt=""
+            src={process.env.PUBLIC_URL + "/finallogo.png"}
+            style={{ width: "80px", height: "70px", paddingBottom: "5px" }}
+          />
+          <Typography
+            id=""
+            variant="h4"
+            // component="div"
+            sx={{
+              fontFamily: " League Spartan",
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            It's TREX.
+          </Typography>
         </Box>
         <TextField
           className="textfield"
@@ -167,6 +223,8 @@ const LoginPage = () => {
             backgroundColor: "#7BE495",
             color: "black",
             fontWeight: "bold",
+            fontFamily: "League Spartan",
+            fontSize: "1.2rem",
           }}
           onClick={handleSubmit}
         >
