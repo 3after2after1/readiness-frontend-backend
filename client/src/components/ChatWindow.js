@@ -24,7 +24,7 @@ const ChatWindow = () => {
   return (
     <iframe
       id="rocket"
-      //key={userRocketChatToken}
+      key={userRocketChatToken}
       style={{ width: "100%", height: "100%" }}
       src="http://192.168.100.164:3005/channel/general/?layout=embedded"
       title="myframe"

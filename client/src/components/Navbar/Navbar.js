@@ -161,15 +161,27 @@ const Navbar = () => {
         </ListItem>
 
         <ListItem>
-          <ListItemButton onClick={handleLogin}>
-            <ListItemIcon>
-              <AccountCircleOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText
-              primaryTypographyProps={{ style: textLogin }}
-              primary="LOGIN"
-            />
-          </ListItemButton>
+          {user === null ? (
+            <ListItemButton onClick={handleLogin}>
+              <ListItemIcon>
+                <AccountCircleOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText
+                primaryTypographyProps={{ style: textLogin }}
+                primary="LOGIN"
+              />
+            </ListItemButton>
+          ) : (
+            <ListItemButton onClick={handleLogout}>
+              <ListItemIcon>
+                <AccountCircleOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText
+                primaryTypographyProps={{ style: textLogin }}
+                primary="LOG OUT"
+              />
+            </ListItemButton>
+          )}
         </ListItem>
       </List>
     </Box>
@@ -307,9 +319,10 @@ const Navbar = () => {
                 variant="outlined"
                 style={{
                   color: "#B33030",
-                  fontSize: "0.8rem",
+                  fontSize: "0.9rem",
                   fontFamily: "Bree Serif",
                   fontWeight: "bold",
+                  width: "110px",
                 }}
                 onClick={handleLogout}
               >

@@ -22,6 +22,7 @@ import {
   Route,
 } from "react-router-dom";
 import AboutUs from "./views/AboutUs/AboutUs";
+import SnackBarNotify from "./components/SnackBarNotify";
 
 const App = () => {
   // let location = useLocation();
@@ -58,6 +59,7 @@ const App = () => {
             <Route path="/details" element={<Details />} />
           </Routes>
         </Box>
+        <SnackBarNotify />
         <Footer style={{ flex: "1" }} />
       </Box>
     </BrowserRouter>

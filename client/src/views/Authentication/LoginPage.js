@@ -19,13 +19,13 @@ import {
   signInWithPopup,
 } from "@firebase/auth";
 import { UserState } from "../../contexts/UserContext";
+import { GeneralState } from "../../contexts/GeneralContext";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../services/firebase";
-import { doc, getDoc } from "@firebase/firestore";
-import ChatWindow from "../../components/ChatWindow";
 
 const LoginPage = () => {
   const { automatedRocketChatSSO } = UserState();
+  const { generateSnackbar } = GeneralState();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,20 +56,48 @@ const LoginPage = () => {
       //   displayname: username,
       // });
 
-      console.log("Login Success");
-      console.log(result);
+      generateSnackbar({
+        newShow: true,
+        newMessage: "Login Successful!",
+        newType: "success",
+      });
 
       navigate("/");
-    } catch (error) {}
+    } catch (error) {
+      if (!!String(error.message).match("^Firebase:.*")) {
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message.replace("Firebase: ", ""),
+          newType: "error",
+        });
+      } else {
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message,
+          newType: "error",
+        });
+      }
+
+      return;
+    }
   };
 
   const googleProvider = new GoogleAuthProvider();
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((res) => {
-        console.log("Google Provider Login Success");
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign In Successful!",
+          newType: "success",
+        });
       })
       .catch((error) => {
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign In Failed",
+          newType: "error",
+        });
         console.log(error);
       });
   };
@@ -240,13 +268,6 @@ const LoginPage = () => {
             </a>
             &nbsp;to sign up.
           </p>
-        </Box>
-        <Box
-          id="comment-box"
-          bgcolor={"white"}
-          style={{ minHeight: "400px", minWidth: "300px", display: "flex" }}
-        >
-          <ChatWindow></ChatWindow>
         </Box>
       </Box>
     </Box>

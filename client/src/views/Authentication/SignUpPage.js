@@ -1,4 +1,4 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { ErrorRounded, Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -24,12 +24,14 @@ import {
 import { passwordVerify } from "../../utils/PasswordChecker";
 import { rocketChatSSO, checkUserNameExist } from "../../services/rocketchat";
 import { UserState } from "../../contexts/UserContext";
+import { GeneralState } from "../../contexts/GeneralContext";
 import { auth, db } from "../../services/firebase";
 import { doc, setDoc } from "@firebase/firestore";
 import axios from "axios";
 
 const SignUpPage = () => {
   const { automatedRocketChatSSO } = UserState();
+  const { generateSnackbar } = GeneralState();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -123,18 +125,34 @@ const SignUpPage = () => {
           console.log(response.data);
         });
 
-      console.log("Sign Up Success");
+      generateSnackbar({
+        newShow: true,
+        newMessage: "Sign Up Successful!",
+        newType: "success",
+      });
     } catch (error) {
       if (!!String(error.message).match("^Firebase:.*")) {
         setErrorMsg((previousError) => ({
           ...previousError,
           message: error.message.replace("Firebase: ", ""),
         }));
+
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message.replace("Firebase: ", ""),
+          newType: "error",
+        });
       } else {
         setErrorMsg((previousError) => ({
           ...previousError,
           message: error.message,
         }));
+
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message,
+          newType: "error",
+        });
       }
 
       return;
@@ -145,10 +163,18 @@ const SignUpPage = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((res) => {
-        console.log("Google Provider Login Success");
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign Up Successful!",
+          newType: "success",
+        });
       })
       .catch((error) => {
-        console.log(error);
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign Up Failed",
+          newType: "error",
+        });
       });
   };
 
