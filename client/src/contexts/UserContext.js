@@ -46,22 +46,25 @@ const UserContext = ({ children }) => {
     });
   }, []);
 
-  useEffect(async () => {
-    console.log("GET AUTH CONTEXT TRIGGER");
-    if (user !== null && user.uid && username !== null) {
-      console.log("Getting Auth");
-      const result = await rocketGetAuth();
-      if (result === false) {
-        console.log("ResignIn RocketChat");
-        const accountData = {
-          username: username,
-          email: user.email,
-          pass: user.uid,
-          displayname: username,
-        };
-        automatedRocketChatSSO(accountData);
+  useEffect(() => {
+    async function rocketChatSSOTrigger() {
+      console.log("GET AUTH CONTEXT TRIGGER");
+      if (user !== null && user.uid && username !== null) {
+        console.log("Getting Auth");
+        const result = await rocketGetAuth();
+        if (result === false) {
+          console.log("ResignIn RocketChat");
+          const accountData = {
+            username: username,
+            email: user.email,
+            pass: user.uid,
+            displayname: username,
+          };
+          automatedRocketChatSSO(accountData);
+        }
       }
     }
+    rocketChatSSOTrigger();
   }, [username]);
 
   useEffect(() => {

@@ -1,10 +1,4 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../services/firebase";
-import { rocketChatSSO } from "../services/rocketchat";
-import axios from "axios";
-import { onSnapshot } from "@firebase/firestore";
-import { doc } from "@firebase/firestore";
 
 const GeneralContextAccess = createContext();
 

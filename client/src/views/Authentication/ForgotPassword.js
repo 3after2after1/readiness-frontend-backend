@@ -1,11 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
 import React, { useState } from "react";
-import {
-  ArrowBackSharp,
-  CottageSharp,
-  LockResetOutlined,
-} from "@mui/icons-material";
-import { width } from "@mui/system";
+import { ArrowBackSharp, LockResetOutlined } from "@mui/icons-material";
 import { auth } from "../../services/firebase";
 import { sendPasswordResetEmail } from "@firebase/auth";
 import { useNavigate } from "react-router-dom";

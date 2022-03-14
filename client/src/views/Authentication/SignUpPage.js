@@ -1,14 +1,11 @@
-import { ErrorRounded, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   Button,
   Divider,
   TextField,
-  Checkbox,
-  FormControlLabel,
   InputAdornment,
   IconButton,
-  Avatar,
   Container,
   Typography,
 } from "@mui/material";
@@ -16,22 +13,19 @@ import GoogleButton from "react-google-button";
 import React, { useState, useEffect } from "react";
 import "./css/SignUpPage.css";
 import {
-  signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "@firebase/auth";
 import { passwordVerify } from "../../utils/PasswordChecker";
-import { rocketChatSSO, checkUserNameExist } from "../../services/rocketchat";
-import { UserState } from "../../contexts/UserContext";
+import { checkUserNameExist } from "../../services/rocketchat";
 import { GeneralState } from "../../contexts/GeneralContext";
 import { auth, db } from "../../services/firebase";
 import { doc, setDoc } from "@firebase/firestore";
 import axios from "axios";
 
 const SignUpPage = () => {
-  const { automatedRocketChatSSO } = UserState();
   const { generateSnackbar } = GeneralState();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -58,25 +52,29 @@ const SignUpPage = () => {
 
       if (!checkuser.error) {
         if (checkuser.result) {
-          throw {
+          const error = {
             message: "Username already exist",
           };
+          throw error;
         }
       } else if (checkuser.error) {
-        throw {
+        const error = {
           message: checkuser.error,
         };
+        throw error;
       }
 
-      if (password != confirmPassword) {
-        throw { message: "Password Mismatch" };
+      if (password !== confirmPassword) {
+        const error = { message: "Password Mismatch" };
+        throw error;
       }
 
       if (!passwordVerify(password)) {
-        throw {
+        const error = {
           message:
             "Please ensure your password contains both Letter and Number",
         };
+        throw error;
       }
 
       const result = await createUserWithEmailAndPassword(
@@ -98,10 +96,10 @@ const SignUpPage = () => {
           username: username,
         });
       } catch (error) {
-        console.log(error);
-        throw {
+        const errormsg = {
           message: error.message,
         };
+        throw errormsg;
       }
 
       // automatedRocketChatSSO({

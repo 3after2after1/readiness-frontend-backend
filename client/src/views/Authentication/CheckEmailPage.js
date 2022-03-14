@@ -6,15 +6,6 @@ import { useLocation } from "react-router-dom";
 const CheckEmailPage = () => {
   const location = useLocation();
 
-  // React.useEffect(() => {
-  //   console.log("CHECK EMAIL USE EFFECT");
-  //   if (location.state.resetEmail !== "undefined") {
-  //     console.log(location.state.resetEmail);
-  //   } else {
-  //     console.log("Nothing");
-  //   }
-  // }, []);
-
   return (
     <>
       <Box

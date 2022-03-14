@@ -8,7 +8,6 @@ import {
   FormControlLabel,
   InputAdornment,
   IconButton,
-  Avatar,
   Typography,
 } from "@mui/material";
 import GoogleButton from "react-google-button";
@@ -19,13 +18,11 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "@firebase/auth";
-import { UserState } from "../../contexts/UserContext";
 import { GeneralState } from "../../contexts/GeneralContext";
 import { useNavigate } from "react-router-dom";
-import { auth, db } from "../../services/firebase";
+import { auth } from "../../services/firebase";
 
 const LoginPage = () => {
-  const { automatedRocketChatSSO } = UserState();
   const { generateSnackbar } = GeneralState();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");

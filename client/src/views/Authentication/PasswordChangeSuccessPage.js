@@ -1,10 +1,6 @@
-import {
-  ArrowBackSharp,
-  CheckCircleOutlineSharp,
-  MailOutlineSharp,
-} from "@mui/icons-material";
+import { CheckCircleOutlineSharp } from "@mui/icons-material";
 import React from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 const PasswordChangeSuccessPage = () => {
   return (

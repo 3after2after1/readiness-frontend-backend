@@ -5,12 +5,6 @@ const ChatWindow = () => {
 
   const onMyFrameLoad = async () => {
     const chatbox = document.getElementById("rocket");
-    // const usertoken = await axios
-    //   .post("http://192.168.100.164:3032/rocket_auth_get", null, {
-    //     withCredentials: true,
-    //   })
-    //   .then((response) => response.data.loginToken)
-    //   .catch((error) => {});
     console.log("FRAME REFRESH");
     console.log(userRocketChatToken);
     chatbox.contentWindow.postMessage(

@@ -1,5 +1,4 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { auth } from "../../services/firebase";
 import { applyActionCode } from "@firebase/auth";
@@ -9,8 +8,6 @@ import { Button, Box } from "@mui/material";
 const EmailVerify = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const resetCode = searchParams.get("oobCode");
-
-  const navigate = useNavigate();
 
   const handleVerify = async () => {
     console.log(resetCode);
@@ -22,7 +19,7 @@ const EmailVerify = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleVerify();
   }, []);
 
