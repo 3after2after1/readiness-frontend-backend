@@ -247,7 +247,7 @@ const Navbar = () => {
                 id="title"
                 variant="h4"
                 // component="div"
-                sx={{
+                style={{
                   paddingLeft: "10px",
                   fontFamily: "Bree Serif",
                   color: flag === true ? "#184D47" : "white",
