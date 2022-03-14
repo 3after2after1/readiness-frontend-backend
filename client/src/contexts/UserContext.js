@@ -5,6 +5,7 @@ import { rocketChatSSO } from "../services/rocketchat";
 import axios from "axios";
 import { onSnapshot } from "@firebase/firestore";
 import { doc } from "@firebase/firestore";
+import { ROCKETCHATNODEJSAPI } from "../api/rocketchat-endpoint";
 
 const UserAccount = createContext();
 
@@ -15,7 +16,7 @@ const UserContext = ({ children }) => {
 
   const rocketGetAuth = async () => {
     return axios
-      .post("http://192.168.100.164:3032/rocket_auth_get", null, {
+      .post(`${ROCKETCHATNODEJSAPI}rocket_auth_get`, null, {
         withCredentials: true,
       })
       .then((response) => {

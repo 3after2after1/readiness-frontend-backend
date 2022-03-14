@@ -10,10 +10,6 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const handleSubmit = async () => {
     try {
-      // const result = await sendPasswordResetEmail(auth, email, {
-      //   url: "http://localhost:3001/resetpswd",
-      //   handleCodeInApp: true,
-      // });
       const result = await sendPasswordResetEmail(auth, email);
 
       console.log("Password reset trigger");
