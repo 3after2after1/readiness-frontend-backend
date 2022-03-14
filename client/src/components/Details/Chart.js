@@ -20,11 +20,14 @@ import {
 } from "../../configs/derivApi";
 import { createCryptoSubs } from "../../utils/utils-cryptocompare";
 import {
-  ws_cc,
+  // ws_cc,
   getCryptoHistoricalData,
   closeCryptoStream,
   subscribeCryptoTickStream,
+  CryptoSocketConnection,
 } from "../../configs/cryptoCompareApi";
+
+import { getForexOHLCHistorical } from "../../api/forex-endpoint";
 
 import { Grid } from "@material-ui/core";
 import { InputLabel } from "@mui/material";
@@ -34,6 +37,10 @@ import { FormControl } from "@material-ui/core";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
+
+import { ForexTickConnection } from "../../utils/forexTickConnection";
+
+let tickConnection;
 
 class ChartComponent extends React.Component {
   constructor(props) {
@@ -47,6 +54,14 @@ class ChartComponent extends React.Component {
   // accepts props: symbol
   componentDidMount() {
     if (this.props.market === "forex") {
+      // getting historical forex data and starting a server sent event connection to get ticks - complete
+      getForexOHLCHistorical("usdjpy", "candles", "one_minute").then((data) => {
+        console.log("data received: ", data);
+        tickConnection = new ForexTickConnection("R_50");
+        tickConnection.connection.onmessage = (msg) =>
+          console.log("tick: ", JSON.parse(JSON.parse(msg.data)));
+      });
+
       ws.onmessage = (msg) => {
         let data = JSON.parse(msg.data);
 
@@ -74,33 +89,39 @@ class ChartComponent extends React.Component {
         // get tick stream
         if (data.msg_type === "tick") {
           // set stream id
+          if (data.error === undefined) {
+            this.setState({ stream_id: data.subscription.id });
+            let data_tick = data.tick;
 
-          this.setState({ stream_id: data.subscription.id });
-          let data_tick = data.tick;
+            let lastCandle = this.state.data[this.state.data.length - 1];
+            // let lastOHLC = this.state.data[this.state.data.length - 1];
 
-          let lastCandle = this.state.data[this.state.data.length - 1];
-          // let lastOHLC = this.state.data[this.state.data.length - 1];
+            // standardise tick data
+            data_tick.date = new Date(data_tick.epoch * 1000);
+            data_tick.price = data_tick.quote;
 
-          // standardise tick data
-          data_tick.date = new Date(data_tick.epoch * 1000);
-          data_tick.price = data_tick.quote;
+            // send current price to parent component (details) to display
+            this.props.getCurrentPrice(data_tick.price);
 
-          // check if new tick belongs to the same time group of last OHLC
-          let sameTimeGroup = isCurrentTickTimeGroupSame(
-            this.state.interval,
-            lastCandle,
-            data_tick
-          );
+            // check if new tick belongs to the same time group of last OHLC
+            let sameTimeGroup = isCurrentTickTimeGroupSame(
+              this.state.interval,
+              lastCandle,
+              data_tick
+            );
 
-          // if time group of previous OHLC and current tick same, update the previous OHLC, else create new OHLC
-          let newOHLC = null;
-          if (sameTimeGroup) {
-            updateLastOHLC(lastCandle, data_tick);
+            // if time group of previous OHLC and current tick same, update the previous OHLC, else create new OHLC
+            let newOHLC = null;
+            if (sameTimeGroup) {
+              updateLastOHLC(lastCandle, data_tick);
+            } else {
+              newOHLC = createOHLC(data_tick);
+            }
+
+            if (newOHLC) this.state.data.push(newOHLC);
           } else {
-            newOHLC = createOHLC(data_tick);
+            console.log("error: ", msg.error);
           }
-
-          if (newOHLC) this.state.data.push(newOHLC);
         }
       };
 
@@ -112,18 +133,25 @@ class ChartComponent extends React.Component {
     } else {
       // process crypto data
       // get historical data
+      const ws_crypto = new CryptoSocketConnection();
+
+      // ws_cc.close();
       getCryptoHistoricalData(this.props.symbol, this.state.interval).then(
         (data) => {
           let processedData = processHistoricalOHLC(data, this.props.market);
           this.setState({ data: processedData });
 
-          ws_cc.onopen = function () {
-            subscribeCryptoTickStream(createCryptoSubs(this.props.symbol));
+          ws_crypto.connection.onopen = function () {
+            subscribeCryptoTickStream(
+              createCryptoSubs(this.props.symbol.toUpperCase()),
+              ws_crypto.connection
+            );
           }.bind(this);
         }
       );
 
-      ws_cc.onmessage = (msg) => {
+      ws_crypto.connection.onmessage = (msg) => {
+        console.log("msg ,", msg);
         this.setState({ stream_id: createCryptoSubs(this.props.symbol) });
         let data = JSON.parse(msg.data);
 
@@ -135,6 +163,9 @@ class ChartComponent extends React.Component {
             // standardise tick data
             data.date = new Date(data.LASTUPDATE * 1000);
             data.price = data.PRICE;
+
+            // send current price to parent component (details) to display
+            this.props.getCurrentPrice(data.price);
 
             // check if new tick belongs to the same time group of last OHLC
             let sameTimeGroup = isCurrentTickTimeGroupSame(
@@ -162,8 +193,10 @@ class ChartComponent extends React.Component {
     if (this.props.market === "forex") {
       closeStream(this.state.stream_id);
     } else {
-      closeCryptoStream([this.state.subs]);
+      // closeCryptoStream([this.state.subs], ws_crypto.connection);
     }
+
+    tickConnection.closeConnection();
     console.log("unmounting");
   };
 
@@ -219,8 +252,7 @@ class ChartComponent extends React.Component {
   // enable and disable chart Indicators
   selectUnselectIndicator = (e) => {
     let indicator = e.target.value;
-    console.log("in ", indicator);
-    console.log("state in ", this.state.indicators);
+
     this.setState({
       indicators:
         typeof indicator === "string" ? indicator.split(",") : indicator,
@@ -228,14 +260,6 @@ class ChartComponent extends React.Component {
   };
 
   render() {
-    const enabledIndicatorStyle = {
-      backgroundColor: "#90EE90",
-    };
-
-    const disabledIndicatorStyle = {
-      backgroundColor: "#f8f8f8",
-    };
-
     // change interval options depending on market and chart type
     let intervalOptions = { ...candleIntervals };
     if (

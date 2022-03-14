@@ -8,7 +8,7 @@ const ws = new WebSocket(
 
 // get tick stream
 const subscribeTickStream = (symbol) => {
-  console.log("subs ing ");
+  console.log("subs ing ", symbol);
   ws.send(
     JSON.stringify({
       ticks: symbol,
@@ -35,8 +35,19 @@ const getHistoricalData = (symbol, style, interval, id) => {
   );
 };
 
+// remove specific tick stream
+const removeStream = (stream_id) => {
+  console.log("removing stream");
+  ws.send(
+    JSON.stringify({
+      forget: stream_id,
+    })
+  );
+};
+
 module.exports = {
   ws,
   subscribeTickStream,
   getHistoricalData,
+  removeStream,
 };
