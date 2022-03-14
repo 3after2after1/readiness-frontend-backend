@@ -29,7 +29,7 @@ function Details(props) {
     if (market === markets.forex) {
       // example: eurusd
       // server-web-scraper
-      getFrxInfo("usdjpy").then((data) => {
+      getFrxInfo(symbol).then((data) => {
         console.log("scrape data ", data);
         setInstrumentInfo(data);
       });
