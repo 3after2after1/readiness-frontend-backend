@@ -187,24 +187,36 @@ const Navbar = () => {
         </ListItem>
 
         <ListItem>
-          <ListItemButton onClick={handleLogin}>
-            <ListItemIcon>
-              <AccountCircleOutlinedIcon
-                style={{ color: flag === true ? "black" : "#FFCE45" }}
+          {user === null ? (
+            <ListItemButton onClick={handleLogin}>
+              <ListItemIcon>
+                <AccountCircleOutlinedIcon
+                  style={{ color: flag === true ? "black" : "#FFCE45" }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primaryTypographyProps={{ style: textLogin }}
+                primary="LOGIN"
               />
-            </ListItemIcon>
-            <ListItemText
-              primaryTypographyProps={{ style: textLogin }}
-              primary="LOGIN"
-            />
-          </ListItemButton>
+            </ListItemButton>
+          ) : (
+            <ListItemButton onClick={handleLogout}>
+              <ListItemIcon>
+                <AccountCircleOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText
+                primaryTypographyProps={{ style: textLogin }}
+                primary="LOG OUT"
+              />
+            </ListItemButton>
+          )}
         </ListItem>
       </List>
     </Box>
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, display: "contents" }}>
       <AppBar
         style={{
           boxShadow:
@@ -341,6 +353,7 @@ const Navbar = () => {
                   fontSize: "0.8rem",
                   fontFamily: "Bree Serif",
                   fontWeight: "bold",
+                  width: "110px",
                 }}
                 onClick={handleLogout}
               >

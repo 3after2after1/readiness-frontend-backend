@@ -3,12 +3,15 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import UserContext from "./contexts/UserContext";
+import GeneralContext from "./contexts/GeneralContext";
 import "react-alice-carousel/lib/alice-carousel.css";
 
 ReactDOM.render(
   <React.StrictMode>
     <UserContext>
-      <App />
+      <GeneralContext>
+        <App />
+      </GeneralContext>
     </UserContext>
   </React.StrictMode>,
   document.getElementById("root")
