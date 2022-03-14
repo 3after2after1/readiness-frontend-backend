@@ -11,7 +11,7 @@ const subscribeTickStream = (symbol) => {
   console.log("subs ing ", symbol);
   ws.send(
     JSON.stringify({
-      ticks: symbol,
+      ticks: "frx" + symbol,
       subscribe: 1,
     })
   );

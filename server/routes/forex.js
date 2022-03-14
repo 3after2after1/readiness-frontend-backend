@@ -75,6 +75,8 @@ router.get("/tick", (req, res) => {
       }
     }
   });
+
+  // subtract num of clients connected to specified connection
   onFinished(req, function (err, req) {
     console.log("request is finished");
     redis.get(`tick_${symbol}_CLIENT_COUNT`).then((result, err) => {
