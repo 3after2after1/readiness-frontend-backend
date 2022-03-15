@@ -1,4 +1,6 @@
 const { WebSocket } = require("ws");
+const axios = require("axios");
+const { OHLCIntervals } = require("./constants.js");
 
 // crypto-compare site api key
 // const CC_API_KEY =
@@ -31,8 +33,29 @@ const subscribeTickStream = (subs) => {
   );
 };
 
+const getHistoricalData = (
+  symbol,
+  interval,
+  limit = 200,
+  lastDate = null,
+  toSymbol = "USD"
+) => {
+  let toTs = lastDate ? `&toTs=${lastDate}` : "";
+  let url =
+    `https://min-api.cryptocompare.com/data/v2/histo${OHLCIntervals[interval].unit}?fsym=${symbol}&tsym=${toSymbol}&limit=${limit}&aggregate=${OHLCIntervals[interval].value}&e=CCCAGG` +
+    toTs +
+    `&api_key=` +
+    CC_API_KEY;
+
+  const promiseHistorical = axios
+    .get(url)
+    .then((response) => response.data.Data.Data);
+  return promiseHistorical;
+};
+
 module.exports = {
   ws,
   subscribeTickStream,
   removeStream,
+  getHistoricalData,
 };
