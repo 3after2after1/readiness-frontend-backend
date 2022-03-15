@@ -6,7 +6,6 @@ const onFinished = require("on-finished");
 
 // get forex tick
 router.get("/tick", (req, res) => {
-  console.log("getting ticks");
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
   const { symbol } = req.query;
   res.setHeader("Content-Type", "text/event-stream");
@@ -69,8 +68,9 @@ router.get("/tick", (req, res) => {
 
         // get notification on set event on redis key
         tickSub.on("message", (channel, key) => {
-          //channel is: "__keyevent@0__:set"
-          // console.log(`from ${channel} message: ${key}`);
+          // console.log(
+          //   `from ${channel} message: ${key}, current given tick channel ${tick_channel}`
+          // );
 
           if (key === tick_channel) {
             //tick_channel is key_name
@@ -142,6 +142,7 @@ router.get("/info", (req, res) => {
 // get historical data on symbol
 router.get("/historical", (req, res) => {
   const { symbol, style, interval } = req.query;
+  console.log("historical data req");
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
   const historicalDataQuery = {
     symbol,
@@ -179,7 +180,8 @@ router.get("/historical", (req, res) => {
     message = JSON.parse(message);
 
     if (channel === "HISTORICAL_OHLC" && message.id === reqId) {
-      console.log("historic response yes");
+      // console.log("historic response yes ", message.data);
+
       res.json({ data: message.data });
       return sub.quit();
     }

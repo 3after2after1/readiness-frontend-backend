@@ -87,8 +87,8 @@ sub.on("message", (channel, message) => {
   }
 
   if (channel === "GET_HISTORICAL_DATA") {
+    console.log("receive msg in get hist data channel");
     const { symbol, style, interval, id } = message;
-    console.log("received msg from get his chann: ", message);
     getHistoricalData(symbol, style, interval, id);
   }
 });
@@ -101,10 +101,11 @@ ws.onmessage = (msg) => {
     //msg_type coming from deriv
     // console.log("tick ", msg);
     if (msg.error === undefined) {
-      //no error
+      console.log("tick");
+      let symbol = msg.tick.symbol.replace("frx", "");
       connectionItem.stream_id = msg.subscription.id;
-      connectionItem.symbol = msg.tick.symbol;
-      let tickKey = `tick_${msg.tick.symbol}`;
+      connectionItem.symbol = symbol;
+      let tickKey = `tick_${symbol}`;
 
       if (!checkConnectionExistOnSymbol(connectionItem.symbol)) {
         //client count
@@ -132,6 +133,7 @@ ws.onmessage = (msg) => {
   if (msg.msg_type === "candles") {
     // process OHLC data
     let processedData = processHistoricalOHLC(msg.candles);
+    console.log("processed ", processedData);
     let message = { data: processedData, id: msg.req_id };
 
     pub.publish("HISTORICAL_OHLC", JSON.stringify(message));
@@ -153,9 +155,8 @@ storageSub.on("message", (channel, key) => {
   if (key.match(clientCountRegex)) {
     let symbol = key.replace("tick_", "");
     symbol = symbol.replace("_CLIENT_COUNT", "");
-    console.log("symbol extracted ", symbol);
+
     redis.get(key).then((result, err) => {
-      console.log(`current num of client ${key}`, result);
       if (Number(result) === 0) {
         connections = connections.filter((item, index) => {
           if (item.symbol !== symbol) {

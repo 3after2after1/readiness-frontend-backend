@@ -42,7 +42,8 @@ router.get("/trending", async (req, res) => {
 // get crypto tick
 router.get("/tick", (req, res) => {
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
-  const { symbol } = req.query;
+  let { symbol } = req.query;
+  symbol = symbol.toUpperCase();
   res.setHeader("Content-Type", "text/event-stream");
 
   // initialize redis connections
@@ -87,13 +88,12 @@ router.get("/tick", (req, res) => {
 
       // get only messages for the current ID
       if (message.id === reqId) {
-        console.log("msg on channel: ", message.id, reqId);
         let tick_channel = message.channel;
         tickSub.config("SET", "notify-keyspace-events", "KEA");
         //TO-DO: unsub any existing subbed tick_ channel
         tickSub.subscribe("__keyevent@0__:set", tick_channel, (err, count) => {
           if (err) console.log("err :", err);
-          else console.log("connected to keyevent! ", count);
+          else console.log("connected to key set event sub! ", count);
         });
 
         // get notification on set event on redis key
@@ -102,7 +102,6 @@ router.get("/tick", (req, res) => {
 
           if (key === tick_channel) {
             redis.get(key).then((result, err) => {
-              console.log("result ", "result");
               res.write("data: " + JSON.stringify(result) + "\n\n");
             });
           }
@@ -117,10 +116,56 @@ router.get("/tick", (req, res) => {
     redis.get(`tick_${symbol}_CLIENT_COUNT`).then((result, err) => {
       if (result) {
         let count = Number(result);
-        console.log("current count: ", count);
         redis.set(`tick_${symbol}_CLIENT_COUNT`, count - 1);
       }
     });
+  });
+});
+
+// get historical data on symbol
+router.get("/historical", (req, res) => {
+  const { symbol, interval } = req.query;
+  let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
+  const historicalDataQuery = {
+    symbol,
+    interval,
+    id: reqId,
+  };
+
+  if (!symbol) {
+    return res.status(404).json({
+      message: "parameters missing",
+    });
+  }
+
+  // create redis connections
+  const sub = new Redis({
+    host: "cache",
+    PORT: 6379,
+  });
+  const pub = new Redis({
+    host: "cache",
+    PORT: 6379,
+  });
+
+  pub.publish(
+    "CRYPTO_GET_HISTORICAL_DATA",
+    JSON.stringify(historicalDataQuery)
+  );
+  sub.subscribe("CRYPTO_HISTORICAL_OHLC", (err, count) => {
+    if (err) {
+      console.error("Failed to subscribe: %s", err.message);
+    } else {
+      console.log(`Subscribed successfully! Num of sub channels: ${count}`);
+    }
+  });
+  sub.on("message", (channel, message) => {
+    message = JSON.parse(message);
+
+    if (channel === "CRYPTO_HISTORICAL_OHLC" && message.id === reqId) {
+      res.json({ data: message.data });
+      return sub.quit();
+    }
   });
 });
 
