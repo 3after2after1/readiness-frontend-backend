@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import GoogleButton from "react-google-button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./css/LoginPage.css";
 import {
   signInWithEmailAndPassword,
@@ -21,6 +21,7 @@ import {
 import { GeneralState } from "../../contexts/GeneralContext";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebase";
+import { WatchListState } from "../../contexts/WatchListContext";
 
 const LoginPage = () => {
   const { generateSnackbar } = GeneralState();
@@ -30,6 +31,10 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const { watchList, dispatch } = WatchListState();
+  useEffect(() => {
+    console.log(watchList);
+  }, [watchList]);
 
   const handleSubmit = async () => {
     try {
@@ -53,6 +58,11 @@ const LoginPage = () => {
       //   pass: result.user.uid,
       //   displayname: username,
       // });
+      let info = {
+        userId: result.user.uid,
+      };
+      dispatch({ type: "INITIALISE", payload: info });
+      //load watchlist data from mongodb to client
 
       generateSnackbar({
         newShow: true,

@@ -10,6 +10,7 @@ router.get("/test", (req, res) => {
 });
 
 router.put("/addsymbol", async (req, res) => {
+  //add new symbol into watchlist based on market and userId
   const client = new MongoClient(uri);
   const { userId, market, symbol } = req.body;
 
@@ -38,6 +39,7 @@ router.put("/addsymbol", async (req, res) => {
 });
 
 router.put("/removesymbol", async (req, res) => {
+  //remove existing symbol from watchlist based on market and userId
   const client = new MongoClient(uri);
   const { userId, market, symbol } = req.body;
 
@@ -66,6 +68,7 @@ router.put("/removesymbol", async (req, res) => {
 });
 
 router.get("/getall", async (req, res) => {
+  //get All user Data
   const client = new MongoClient(uri);
   try {
     await client.connect();
@@ -81,6 +84,7 @@ router.get("/getall", async (req, res) => {
 });
 
 router.get("/getwatchlist", async (req, res) => {
+  //get WatchList for that particular userId
   const client = new MongoClient(uri);
   const { userId } = req.body;
   try {

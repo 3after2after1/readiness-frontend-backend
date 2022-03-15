@@ -46,7 +46,11 @@ const Carousel = () => {
     trending &&
     trending.map((item) => {
       return (
-        <Link className={classes.carouselItem} to={`/crypto/${item.symbol}`}>
+        <Link
+          className={classes.carouselItem}
+          to={`/details/crypto/${item.symbol}`}
+          state={item}
+        >
           <img
             src={item?.large}
             alt={item.name}

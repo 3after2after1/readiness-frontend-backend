@@ -57,14 +57,14 @@ class ChartComponent extends React.Component {
     if (this.props.market === "forex") {
       // 58-68 (microservice) other all still client
       // getting historical forex data and starting a server sent event connection to get ticks - complete
-      getForexOHLCHistorical("usdjpy", "candles", "one_minute").then((data) => {
-        console.log("data received: ", data);
-        tickConnection = new ForexTickConnection("USDJPY");
-        tickConnection.connection.onmessage = (msg) => {
-          console.log("tick: ", JSON.parse(JSON.parse(msg.data)));
-          //sse onmessage
-        };
-      });
+      // getForexOHLCHistorical("usdjpy", "candles", "one_minute").then((data) => {
+      //   console.log("data received: ", data);
+      //   tickConnection = new ForexTickConnection("USDJPY");
+      //   tickConnection.connection.onmessage = (msg) => {
+      //     console.log("tick: ", JSON.parse(JSON.parse(msg.data)));
+      //     //sse onmessage
+      //   };
+      // });
       //ignore
       ws.onmessage = (msg) => {
         let data = JSON.parse(msg.data);
@@ -201,7 +201,7 @@ class ChartComponent extends React.Component {
       // closeCryptoStream([this.state.subs], ws_crypto.connection);
     }
 
-    tickConnection.closeConnection();
+    // tickConnection.closeConnection();
     console.log("unmounting");
   };
 
