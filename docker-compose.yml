@@ -55,6 +55,15 @@ services:
     networks:
       - library-mern-api
 
+  cryptocompare-data-processor:
+    build:
+      context: ./services/cryptocompare-data-processor
+      dockerfile: Dockerfile
+    depends_on:
+      - cache
+    networks:
+      - library-mern-api
+
   # client:
   #   restart: always
   #   build:
