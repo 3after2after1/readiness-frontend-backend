@@ -27,7 +27,10 @@ import {
   CryptoSocketConnection,
 } from "../../api/cryptoCompareApi";
 
-import { getForexOHLCHistorical } from "../../api/forex-endpoint";
+import {
+  getForexOHLCHistorical,
+  ForexTickConnection,
+} from "../../api/forexApi";
 
 import { Grid } from "@material-ui/core";
 import { InputLabel } from "@mui/material";
@@ -38,8 +41,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 
-import { ForexTickConnection } from "../../utils/forexTickConnection";
-
+// variable to contain server-set-events connection
 let tickConnection;
 
 class ChartComponent extends React.Component {
@@ -56,10 +58,40 @@ class ChartComponent extends React.Component {
     if (this.props.market === "forex") {
       // getting historical forex data and starting a server sent event connection to get ticks - complete
       getForexOHLCHistorical("usdjpy", "candles", "one_minute").then((data) => {
-        console.log("data received: ", data);
-        tickConnection = new ForexTickConnection("R_50");
-        tickConnection.connection.onmessage = (msg) =>
-          console.log("tick: ", JSON.parse(JSON.parse(msg.data)));
+        // console.log("data received: ", data);
+        data = data.map((item) => {
+          item.date = new Date(item.date);
+          return item;
+        });
+        this.setState({ data: data });
+
+        tickConnection = new ForexTickConnection("usdjpy");
+        tickConnection.connection.onmessage = (msg) => {
+          let newTick = JSON.parse(JSON.parse(msg.data));
+          let lastOHLC = this.state.data[this.state.data.length - 1];
+          newTick.date = new Date(newTick.date);
+
+          // send current price to parent component (details) to display
+          this.props.getCurrentPrice(newTick.price);
+
+          // check if new tick belongs to the same time group of last OHLC
+          let sameTimeGroup = isCurrentTickTimeGroupSame(
+            // this.state.interval,
+            candleIntervals.one_minute,
+            lastOHLC,
+            newTick
+          );
+
+          // if time group of previous OHLC and current tick same, update the previous OHLC, else create new OHLC
+          let newOHLC = null;
+          if (sameTimeGroup) {
+            updateLastOHLC(lastOHLC, newTick);
+          } else {
+            newOHLC = createOHLC(newTick);
+          }
+
+          if (newOHLC) this.state.data.push(newOHLC);
+        };
       });
 
       ws.onmessage = (msg) => {
@@ -75,15 +107,16 @@ class ChartComponent extends React.Component {
             data_candles,
             this.props.market
           );
+          console.log("hist data: ", data_processed);
           this.setState({ data: data_processed });
-          if (this.stream_id !== null) subscribeTickStream(this.props.symbol);
+          // if (this.stream_id !== null) subscribeTickStream(this.props.symbol);
         }
 
         // process historical tick data
         if (data.msg_type === "history") {
           let data_ticks = data.history;
           let processedData = processHistoricalTicks(data_ticks);
-          this.setState({ data: processedData });
+          // this.setState({ data: processedData });
         }
 
         // get tick stream

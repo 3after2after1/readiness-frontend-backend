@@ -95,9 +95,11 @@ ws.onmessage = (msg) => {
   if (msg.msg_type === "tick") {
     // console.log("tick ", msg);
     if (msg.error === undefined) {
+      console.log("tick");
+      let symbol = msg.tick.symbol.replace("frx", "");
       connectionItem.stream_id = msg.subscription.id;
-      connectionItem.symbol = msg.tick.symbol;
-      let tickKey = `tick_${msg.tick.symbol}`;
+      connectionItem.symbol = symbol;
+      let tickKey = `tick_${symbol}`;
 
       if (!checkConnectionExistOnSymbol(connectionItem.symbol)) {
         connections.push(connectionItem);
@@ -124,6 +126,7 @@ ws.onmessage = (msg) => {
   if (msg.msg_type === "candles") {
     // process OHLC data
     let processedData = processHistoricalOHLC(msg.candles);
+    console.log("processed ", processedData);
     let message = { data: processedData, id: msg.req_id };
 
     pub.publish("HISTORICAL_OHLC", JSON.stringify(message));

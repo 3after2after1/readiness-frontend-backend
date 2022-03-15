@@ -110,6 +110,7 @@ ws.onmessage = (msg) => {
   msg = JSON.parse(msg.data);
 
   if (msg.TYPE === "5") {
+    console.log("tick");
     // process tick data to ohlc
     if (msg.LASTUPDATE && msg.PRICE) {
       let tickKey = `tick_${msg.FROMSYMBOL}`;

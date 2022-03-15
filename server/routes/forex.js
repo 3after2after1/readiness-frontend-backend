@@ -62,7 +62,9 @@ router.get("/tick", (req, res) => {
 
         // get notification on set event on redis key
         tickSub.on("message", (channel, key) => {
-          // console.log(`from ${channel} message: ${key}`);
+          // console.log(
+          //   `from ${channel} message: ${key}, current given tick channel ${tick_channel}`
+          // );
 
           if (key === tick_channel) {
             redis.get(key).then((result, err) => {
@@ -170,7 +172,8 @@ router.get("/historical", (req, res) => {
     message = JSON.parse(message);
 
     if (channel === "HISTORICAL_OHLC" && message.id === reqId) {
-      console.log("historic response yes");
+      // console.log("historic response yes ", message.data);
+
       res.json({ data: message.data });
       return sub.quit();
     }
