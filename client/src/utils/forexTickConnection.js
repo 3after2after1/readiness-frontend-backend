@@ -7,5 +7,6 @@ export class ForexTickConnection {
 
   closeConnection() {
     this.connection.close();
+    //ignore
   }
 }

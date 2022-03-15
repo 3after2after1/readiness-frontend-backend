@@ -10,7 +10,8 @@ import { useParams } from "react-router";
 import { markets } from "../../utils/utils";
 import { getFrxInfo } from "../../utils/web-scrape-forex";
 import { useLocation } from "react-router-dom";
-import { height } from "@mui/system";
+import { ws } from "../../configs/derivApi";
+
 // using client-web-scraper
 // import { getForexInfo } from "../../utils/backup/scrape-forex-info";
 
@@ -21,9 +22,14 @@ function Details(props) {
   let { market, symbol } = useParams();
   if (!market) market = props.market;
   if (!symbol) symbol = props.symbol;
-
+  console.log(useLocation());
   const { state } = useLocation();
-  console.log(state);
+  let watchListData = {
+    image: state.image || state.large,
+    name: state.name,
+    symbol,
+    market,
+  };
   const handleCurrentPrice = (price) => {
     setCurrentPrice(price);
   };
@@ -52,7 +58,10 @@ function Details(props) {
         <div className="content-title-details">
           <div className="content-title-left">
             <div className="icon-company" id="icon-company">
-              <img src={state.image} style={{ height: "4rem" }} />
+              <img
+                src={state.image || state.large}
+                style={{ height: "4rem" }}
+              />
             </div>
             <div className="company-box">
               <column>
@@ -83,7 +92,7 @@ function Details(props) {
           </div>
 
           <div className="content-title-right-icon">
-            <CardDetailsAdd />
+            <CardDetailsAdd watchListData={watchListData} />
           </div>
         </div>
 
