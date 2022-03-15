@@ -17,15 +17,15 @@ import {
   closeStream,
   getHistoricalData,
   subscribeTickStream,
-} from "../../configs/derivApi";
+} from "../../api/derivApi";
 import { createCryptoSubs } from "../../utils/utils-cryptocompare";
 import {
-  // ws_cc,
+  ws_cc,
   getCryptoHistoricalData,
   closeCryptoStream,
   subscribeCryptoTickStream,
   CryptoSocketConnection,
-} from "../../configs/cryptoCompareApi";
+} from "../../api/cryptoCompareApi";
 
 import { getForexOHLCHistorical } from "../../api/forex-endpoint";
 
@@ -133,7 +133,7 @@ class ChartComponent extends React.Component {
     } else {
       // process crypto data
       // get historical data
-      const ws_crypto = new CryptoSocketConnection();
+      // const ws_crypto = new CryptoSocketConnection();
 
       // ws_cc.close();
       getCryptoHistoricalData(this.props.symbol, this.state.interval).then(
@@ -141,16 +141,16 @@ class ChartComponent extends React.Component {
           let processedData = processHistoricalOHLC(data, this.props.market);
           this.setState({ data: processedData });
 
-          ws_crypto.connection.onopen = function () {
+          ws_cc.onopen = function () {
             subscribeCryptoTickStream(
               createCryptoSubs(this.props.symbol.toUpperCase()),
-              ws_crypto.connection
+              ws_cc
             );
           }.bind(this);
         }
       );
 
-      ws_crypto.connection.onmessage = (msg) => {
+      ws_cc.onmessage = (msg) => {
         console.log("msg ,", msg);
         this.setState({ stream_id: createCryptoSubs(this.props.symbol) });
         let data = JSON.parse(msg.data);
@@ -193,7 +193,7 @@ class ChartComponent extends React.Component {
     if (this.props.market === "forex") {
       closeStream(this.state.stream_id);
     } else {
-      // closeCryptoStream([this.state.subs], ws_crypto.connection);
+      closeCryptoStream([this.state.subs]);
     }
 
     tickConnection.closeConnection();
