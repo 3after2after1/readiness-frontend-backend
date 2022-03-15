@@ -1,8 +1,8 @@
 import { BACKEND_DOMAIN } from "./backend";
 
 // get historical OHLC data
-export const getForexOHLCHistorical = (symbol, style, interval) => {
-  let url = `${BACKEND_DOMAIN}/forex/historical?symbol=${symbol.toUpperCase()}&style=${style}&interval=${interval}`;
+export const getCryptoOHLCHistorical = (symbol, interval) => {
+  let url = `${BACKEND_DOMAIN}/crypto/historical?symbol=${symbol.toUpperCase()}&interval=${interval}`;
   let options = {
     method: "GET",
   };
@@ -15,10 +15,10 @@ export const getForexOHLCHistorical = (symbol, style, interval) => {
 };
 
 // create server-sent-event connection
-export class ForexTickConnection {
+export class CryptoTickConnection {
   constructor(symbol) {
     this.connection = new EventSource(
-      `${BACKEND_DOMAIN}/forex/tick?symbol=${symbol.toUpperCase()}`
+      `${BACKEND_DOMAIN}/crypto/tick?symbol=${symbol.toUpperCase()}`
     );
   }
 }

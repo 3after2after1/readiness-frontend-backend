@@ -40,6 +40,7 @@ const getHistoricalData = (
   lastDate = null,
   toSymbol = "USD"
 ) => {
+  console.log("interval ", interval);
   let toTs = lastDate ? `&toTs=${lastDate}` : "";
   let url =
     `https://min-api.cryptocompare.com/data/v2/histo${OHLCIntervals[interval].unit}?fsym=${symbol}&tsym=${toSymbol}&limit=${limit}&aggregate=${OHLCIntervals[interval].value}&e=CCCAGG` +
