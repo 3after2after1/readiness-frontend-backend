@@ -87,13 +87,12 @@ router.get("/tick", (req, res) => {
 
       // get only messages for the current ID
       if (message.id === reqId) {
-        console.log("msg on channel: ", message.id, reqId);
         let tick_channel = message.channel;
         tickSub.config("SET", "notify-keyspace-events", "KEA");
         //TO-DO: unsub any existing subbed tick_ channel
         tickSub.subscribe("__keyevent@0__:set", tick_channel, (err, count) => {
           if (err) console.log("err :", err);
-          else console.log("connected to keyevent! ", count);
+          else console.log("connected to key set event sub! ", count);
         });
 
         // get notification on set event on redis key
@@ -102,7 +101,6 @@ router.get("/tick", (req, res) => {
 
           if (key === tick_channel) {
             redis.get(key).then((result, err) => {
-              console.log("result ", "result");
               res.write("data: " + JSON.stringify(result) + "\n\n");
             });
           }

@@ -52,6 +52,7 @@ sub.on("message", (channel, message) => {
     // sub to tick stream if connection to symbol does not exist
     if (!checkConnectionExistOnSymbol(symbol)) {
       // TODO: set client count
+
       let stream_id = createCryptoSubs(symbol);
       subscribeTickStream(stream_id);
       connectionItem.stream_id = stream_id;
@@ -81,6 +82,8 @@ ws.onmessage = (msg) => {
       let processedTick = changeTickFormat(msg);
       redis.set(tickKey, JSON.stringify(processedTick));
     }
+  } else {
+    console.log("other msg from websocket ", msg);
   }
 };
 
