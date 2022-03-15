@@ -87,6 +87,7 @@ sub.on("message", (channel, message) => {
   }
 
   if (channel === "GET_HISTORICAL_DATA") {
+    console.log("receive msg in get hist data channel");
     const { symbol, style, interval, id } = message;
     getHistoricalData(symbol, style, interval, id);
   }
