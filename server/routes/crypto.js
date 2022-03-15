@@ -42,7 +42,8 @@ router.get("/trending", async (req, res) => {
 // get crypto tick
 router.get("/tick", (req, res) => {
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
-  const { symbol } = req.query;
+  let { symbol } = req.query;
+  symbol = symbol.toUpperCase();
   res.setHeader("Content-Type", "text/event-stream");
 
   // initialize redis connections
@@ -115,7 +116,6 @@ router.get("/tick", (req, res) => {
     redis.get(`tick_${symbol}_CLIENT_COUNT`).then((result, err) => {
       if (result) {
         let count = Number(result);
-        console.log("current count: ", count);
         redis.set(`tick_${symbol}_CLIENT_COUNT`, count - 1);
       }
     });

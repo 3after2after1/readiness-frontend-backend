@@ -18,7 +18,7 @@ const removeStream = (subs) => {
   ws.send(
     JSON.stringify({
       action: "SubRemove",
-      subs: subs,
+      subs: [subs],
     })
   );
 };

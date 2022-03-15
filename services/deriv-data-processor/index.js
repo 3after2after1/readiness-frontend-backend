@@ -84,7 +84,6 @@ sub.on("message", (channel, message) => {
 
   if (channel === "GET_HISTORICAL_DATA") {
     const { symbol, style, interval, id } = message;
-    console.log("received msg from get his chann: ", message);
     getHistoricalData(symbol, style, interval, id);
   }
 });
@@ -146,9 +145,8 @@ storageSub.on("message", (channel, key) => {
   if (key.match(clientCountRegex)) {
     let symbol = key.replace("tick_", "");
     symbol = symbol.replace("_CLIENT_COUNT", "");
-    console.log("symbol extracted ", symbol);
+
     redis.get(key).then((result, err) => {
-      console.log(`current num of client ${key}`, result);
       if (Number(result) === 0) {
         connections = connections.filter((item, index) => {
           if (item.symbol !== symbol) {

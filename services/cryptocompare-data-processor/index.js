@@ -60,7 +60,15 @@ sub.on("message", (channel, message) => {
 
     // sub to tick stream if connection to symbol does not exist
     if (!checkConnectionExistOnSymbol(symbol)) {
-      // TODO: set client count
+      redis.set(`${tickKey}_CLIENT_COUNT`, 1);
+      storageSub.subscribe(
+        "__keyevent@0__:set",
+        `${tickKey}_CLIENT_COUNT`,
+        (err, count) => {
+          if (err) console.log("err :", err);
+          else console.log("connected to keyevent! ", count);
+        }
+      );
 
       let stream_id = createCryptoSubs(symbol);
       subscribeTickStream(stream_id);
@@ -68,7 +76,15 @@ sub.on("message", (channel, message) => {
       connectionItem.symbol = symbol.toUpperCase();
       connections.push(connectionItem);
     } else {
-      // TODO: incremenet client count
+      // add number of clients connected on channel
+      redis.get(`${tickKey}_CLIENT_COUNT`).then((result, err) => {
+        console.log("result count", result);
+        let count = 0;
+        if (result) {
+          count = Number(result);
+        }
+        redis.set(`${tickKey}_CLIENT_COUNT`, count + 1);
+      });
     }
 
     pub.publish(
@@ -104,6 +120,29 @@ ws.onmessage = (msg) => {
     console.log("other msg from websocket ", msg);
   }
 };
+
+// listening to redis connection client count storage set events
+const clientCountRegex = /^(.)+_CLIENT_COUNT$/;
+storageSub.on("message", (channel, key) => {
+  if (key.match(clientCountRegex)) {
+    let symbol = key.replace("tick_", "");
+    symbol = symbol.replace("_CLIENT_COUNT", "");
+
+    redis.get(key).then((result, err) => {
+      if (Number(result) === 0) {
+        connections = connections.filter((item, index) => {
+          if (item.symbol !== symbol) {
+            return item;
+          } else {
+            removeStream(item.stream_id);
+            return;
+          }
+        });
+        console.log("final connections: ", connections);
+      }
+    });
+  }
+});
 
 // create crypto subscription string
 const createCryptoSubs = (symbol) => {
