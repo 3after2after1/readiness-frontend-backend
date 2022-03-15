@@ -45,6 +45,7 @@ class ChartComponent extends React.Component {
   // accepts props: symbol
   componentDidMount() {
     if (this.props.market === "forex") {
+      // 58-68 (microservice) other all still client
       // getting historical forex data and starting a server sent event connection to get ticks - complete
       getForexOHLCHistorical(
         this.props.symbol,

@@ -140,7 +140,9 @@ export default function CustomizedTables({ loading, list, rowClass }) {
                           justifyContent: "space-around",
                         }}
                         onClick={(e) =>
-                          navigate(`/coins/${row.id}`, { state: row })
+                          navigate(`/details/crypto/${row.symbol}`, {
+                            state: row,
+                          })
                         }
                       >
                         <StyledTableCell
@@ -254,7 +256,9 @@ export default function CustomizedTables({ loading, list, rowClass }) {
                           justifyContent: "space-around",
                         }}
                         onClick={(e) =>
-                          navigate(`/coins/${row.id}`, { state: row })
+                          navigate(`/details/crypto/${row.symbol}`, {
+                            state: row,
+                          })
                         }
                       >
                         <StyledTableCell

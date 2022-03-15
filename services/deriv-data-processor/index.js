@@ -26,6 +26,7 @@ const pub = new Redis({
 const storageSub = new Redis({
   host: "cache",
   PORT: 6379,
+  //store client count
 });
 storageSub.config("SET", "notify-keyspace-events", "KEA");
 
@@ -43,6 +44,8 @@ ws.on("open", () => {
 
 // subscribe on channels
 sub.subscribe("FOREX_IS_CONNECTION_ON", "GET_HISTORICAL_DATA", (err, count) => {
+  //subscribe to multiple channel
+  //numbe rof subcribed chnanel
   if (err) {
     console.error("Failed to subscribe: %s", err.message);
   } else {
@@ -79,6 +82,7 @@ sub.on("message", (channel, message) => {
     pub.publish(
       "CONNECTION_CHANNEL",
       JSON.stringify({ id: id, channel: tickKey })
+      //send this to endpoint so that they know which key to listen to
     );
   }
 
@@ -93,6 +97,7 @@ ws.onmessage = (msg) => {
   msg = JSON.parse(msg.data);
 
   if (msg.msg_type === "tick") {
+    //msg_type coming from deriv
     // console.log("tick ", msg);
     if (msg.error === undefined) {
       console.log("tick");
@@ -102,6 +107,7 @@ ws.onmessage = (msg) => {
       let tickKey = `tick_${symbol}`;
 
       if (!checkConnectionExistOnSymbol(connectionItem.symbol)) {
+        //client count
         connections.push(connectionItem);
         storageSub.subscribe(
           "__keyevent@0__:set",
@@ -157,6 +163,7 @@ storageSub.on("message", (channel, key) => {
           } else {
             removeStream(item.stream_id);
             return;
+            //close connection
           }
         });
         console.log("final connections: ", connections);
