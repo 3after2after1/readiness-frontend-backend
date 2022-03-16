@@ -10,7 +10,6 @@ import { useParams } from "react-router";
 import { markets } from "../../utils/utils";
 import { getFrxInfo } from "../../utils/web-scrape-forex";
 import { useLocation } from "react-router-dom";
-import { ws } from "../../configs/derivApi";
 
 // using client-web-scraper
 // import { getForexInfo } from "../../utils/backup/scrape-forex-info";
@@ -24,12 +23,16 @@ function Details(props) {
   if (!symbol) symbol = props.symbol;
   console.log(useLocation());
   const { state } = useLocation();
-  // let watchListData = {
-  //   image: state.image || state.large,
-  //   name: state.name,
-  //   symbol,
-  //   market,
-  // };
+  let imageInput = state
+    ? state.image || state.large
+    : "http://cdn.onlinewebfonts.com/svg/img_462420.png";
+  let nameInput = state ? state.name : "missing name";
+  let watchListData = {
+    image: imageInput,
+    name: nameInput,
+    symbol,
+    market,
+  };
   const handleCurrentPrice = (price) => {
     setCurrentPrice(price);
   };
@@ -57,10 +60,12 @@ function Details(props) {
         <div className="content-title-details">
           <div className="content-title-left">
             <div className="icon-company" id="icon-company">
-              <img
-                // src={state.image || state.large}
-                style={{ height: "4rem" }}
-              />
+              {state && (
+                <img
+                  src={state.image || state.large}
+                  style={{ height: "4rem" }}
+                />
+              )}
             </div>
             <div className="company-box">
               <column>
