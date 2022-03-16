@@ -24,12 +24,12 @@ function Details(props) {
   if (!symbol) symbol = props.symbol;
   console.log(useLocation());
   const { state } = useLocation();
-  let watchListData = {
-    image: state.image || state.large,
-    name: state.name,
-    symbol,
-    market,
-  };
+  // let watchListData = {
+  //   image: state.image || state.large,
+  //   name: state.name,
+  //   symbol,
+  //   market,
+  // };
   const handleCurrentPrice = (price) => {
     setCurrentPrice(price);
   };
@@ -44,7 +44,6 @@ function Details(props) {
         setInstrumentInfo(data);
       });
 
-      // // client-web-scraper
       // getForexInfo(symbol.substr(0, 3), symbol.substring(3)).then((data) => {
       //   setInstrumentInfo(data);
       //   console.log(data);
@@ -59,7 +58,7 @@ function Details(props) {
           <div className="content-title-left">
             <div className="icon-company" id="icon-company">
               <img
-                src={state.image || state.large}
+                // src={state.image || state.large}
                 style={{ height: "4rem" }}
               />
             </div>
@@ -92,7 +91,7 @@ function Details(props) {
           </div>
 
           <div className="content-title-right-icon">
-            <CardDetailsAdd watchListData={watchListData} />
+            {/* <CardDetailsAdd watchListData={watchListData} /> */}
           </div>
         </div>
 
