@@ -48,18 +48,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-const basicRoutes = [
-  "/authroute",
-  "/loginpage",
-  "/signuppage",
-  "/forgotpswd",
-  "/checkemail",
-  "/resetpswd",
-  "/about",
-  "/successfulpasswordchange",
-  "/",
-];
-
 const Navbar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -70,10 +58,15 @@ const Navbar = () => {
   console.log(location);
   React.useEffect(() => {
     //rerender different navbar based on routes
-    if (basicRoutes.includes(location)) {
-      setFlag(true);
-    } else {
+    if (
+      location.startsWith("details") ||
+      location.startsWith("forex") ||
+      location.startsWith("crypto") ||
+      location.startsWith("watchlist")
+    ) {
       setFlag(false);
+    } else {
+      setFlag(true);
     }
   }, [location]);
 

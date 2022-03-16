@@ -47,7 +47,6 @@ function Details(props) {
         setInstrumentInfo(data);
       });
 
-      // // client-web-scraper
       // getForexInfo(symbol.substr(0, 3), symbol.substring(3)).then((data) => {
       //   setInstrumentInfo(data);
       //   console.log(data);
@@ -97,7 +96,7 @@ function Details(props) {
           </div>
 
           <div className="content-title-right-icon">
-            <CardDetailsAdd watchListData={watchListData} />
+            {/* <CardDetailsAdd watchListData={watchListData} /> */}
           </div>
         </div>
 
