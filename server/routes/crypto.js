@@ -117,6 +117,11 @@ router.get("/tick", (req, res) => {
       if (result) {
         let count = Number(result);
         redis.set(`tick_${symbol}_CLIENT_COUNT`, count - 1);
+
+        sub.quit();
+        pub.quit();
+        tickSub.quit();
+        redis.quit();
       }
     });
   });

@@ -6,6 +6,11 @@ const ws = new WebSocket(
   "wss://ws.binaryws.com/websockets/v3?app_id=" + app_id
 );
 
+// keep web socket connection alive
+const keepConnectionAlive = () => {
+  ws.send(JSON.stringify({ ping: 1 }));
+};
+
 // get tick stream
 const subscribeTickStream = (symbol) => {
   //starting point to get websocket stream
@@ -20,6 +25,7 @@ const subscribeTickStream = (symbol) => {
 
 // get historical data
 const getHistoricalData = (symbol, style, interval, id) => {
+  console.log("sending get historical data req to deriv");
   ws.send(
     JSON.stringify({
       ticks_history: "frx" + symbol.toUpperCase(),
@@ -51,4 +57,5 @@ module.exports = {
   subscribeTickStream,
   getHistoricalData,
   removeStream,
+  keepConnectionAlive,
 };

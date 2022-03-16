@@ -136,6 +136,18 @@ storageSub.on("message", (channel, key) => {
             return item;
           } else {
             removeStream(item.stream_id);
+
+            // remove redis keys no longer in use
+            redis.keys("*", (err, keys) => {
+              console.log("b4", keys);
+
+              console.log(`deleting ${key}`);
+              redis.del(key);
+              redis.del(`tick_${symbol}`);
+              redis.keys("*", (err, keys) => {
+                console.log(keys);
+              });
+            });
             return;
           }
         });

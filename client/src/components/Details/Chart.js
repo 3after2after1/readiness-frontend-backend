@@ -61,6 +61,7 @@ class ChartComponent extends React.Component {
 
         // establish a forex server-sent-events connection
         tickConnection = new ForexTickConnection(this.props.symbol);
+
         tickConnection.connection.onmessage = (msg) => {
           let newTick = JSON.parse(JSON.parse(msg.data));
           let lastOHLC = this.state.data[this.state.data.length - 1];

@@ -4,6 +4,7 @@ const {
   subscribeTickStream,
   getHistoricalData,
   removeStream,
+  keepConnectionAlive,
 } = require("./config.js");
 const {
   changeTickFormat,
@@ -40,6 +41,12 @@ const connectionItem = {
 ws.on("open", () => {
   console.log("connection is open :)");
   isSocketOpen = true;
+  setInterval(keepConnectionAlive, 30000);
+});
+
+ws.on("close", () => {
+  console.log("connection is CLOSE :(");
+  reconnect();
 });
 
 // subscribe on channels
@@ -87,7 +94,7 @@ sub.on("message", (channel, message) => {
   }
 
   if (channel === "GET_HISTORICAL_DATA") {
-    console.log("receive msg in get hist data channel");
+    console.log("[GET-HIST-DATA] receive msg in get hist data channel");
     const { symbol, style, interval, id } = message;
     getHistoricalData(symbol, style, interval, id);
   }
@@ -147,6 +154,9 @@ ws.onmessage = (msg) => {
 
     pub.publish("HISTORICAL_OHLC", JSON.stringify(message));
   }
+
+  // get other msg types
+  console.log("other msg", msg);
 };
 
 // listening to redis connection client count storage set events
@@ -163,6 +173,18 @@ storageSub.on("message", (channel, key) => {
             return item;
           } else {
             removeStream(item.stream_id);
+
+            redis.keys("*", (err, keys) => {
+              console.log("b4", keys);
+
+              console.log(`deleting ${key}`);
+              redis.del(key);
+              redis.del(`tick_${symbol}`);
+              redis.keys("*", (err, keys) => {
+                console.log(keys);
+              });
+            });
+
             return;
             //close connection
           }
