@@ -4,18 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./Footer.css";
 let status = true;
 
-const basicRoutes = [
-  "/authroute",
-  "/loginpage",
-  "/signuppage",
-  "/forgotpswd",
-  "/checkemail",
-  "/resetpswd",
-  "/about",
-  "/successfulpasswordchange",
-  "/",
-];
-
 const Footer = () => {
   const navigate = useNavigate();
   const [status, setStatus] = React.useState(true);
@@ -23,10 +11,15 @@ const Footer = () => {
   let location = useLocation().pathname;
   React.useEffect(() => {
     //rerender different navbar based on routes
-    if (basicRoutes.includes(location)) {
-      setStatus(true);
-    } else {
+    if (
+      location.startsWith("details") ||
+      location.startsWith("forex") ||
+      location.startsWith("crypto") ||
+      location.startsWith("watchlist")
+    ) {
       setStatus(false);
+    } else {
+      setStatus(true);
     }
   }, [location]);
   return (
