@@ -12,10 +12,10 @@ const Footer = () => {
   React.useEffect(() => {
     //rerender different navbar based on routes
     if (
-      location.startsWith("details") ||
-      location.startsWith("forex") ||
-      location.startsWith("crypto") ||
-      location.startsWith("watchlist")
+      location.startsWith("/details") ||
+      location.startsWith("/forex") ||
+      location.startsWith("/crypto") ||
+      location.startsWith("/watchlist")
     ) {
       setStatus(false);
     } else {
