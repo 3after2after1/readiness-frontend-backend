@@ -9,7 +9,7 @@ router.get("/tick", (req, res) => {
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
   const { symbol } = req.query;
   res.setHeader("Content-Type", "text/event-stream");
-
+  console.log("receive tick req");
   // initialize redis connections
   const sub = new Redis({
     host: "cache",
@@ -87,11 +87,17 @@ router.get("/tick", (req, res) => {
   // subtract num of clients connected to specified connection
   onFinished(req, function (err, req) {
     console.log("request is finished");
+
     redis.get(`tick_${symbol}_CLIENT_COUNT`).then((result, err) => {
       if (result) {
         let count = Number(result);
         console.log("current count: ", count);
         redis.set(`tick_${symbol}_CLIENT_COUNT`, count - 1);
+
+        sub.quit();
+        pub.quit();
+        tickSub.quit();
+        redis.quit();
       }
     });
   });
