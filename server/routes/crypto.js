@@ -12,31 +12,58 @@ const uri = process.env.MONGO_URI;
 console.log(uri);
 
 router.get("/table", async (req, res) => {
+  const storage = new Redis({
+    host: "cache",
+    PORT: 6379,
+  });
   try {
-    const { data } = await axios.get(CoinList());
-    res.send(data);
+    const cacheData = await storage.get("crypto-table");
+    if (cacheData) {
+      console.log("crypto table cache hit");
+      const data = JSON.parse(cacheData);
+      res.send(data);
+    } else {
+      console.log("crypto table cache miss");
+      const { data } = await axios.get(CoinList());
+      storage.set("crypto-table", JSON.stringify(data), "EX", 30);
+      res.send(data);
+    }
   } catch (error) {
     console.log(error);
   }
+  storage.quit();
 });
 
 router.get("/trending", async (req, res) => {
+  const storage = new Redis({
+    host: "cache",
+    PORT: 6379,
+  });
   try {
-    const {
-      data: { coins },
-    } = await axios.get(TrendingCoins());
-    const filteredData = coins.map(({ item }) => {
-      return {
-        large: item.large,
-        symbol: item.symbol,
-        name: item.name,
-      };
-    });
-    console.log(filteredData);
-    res.send(filteredData);
+    const cacheData = await storage.get("crypto-trending");
+    if (cacheData) {
+      console.log("crypto trending cache hit");
+      const data = JSON.parse(cacheData);
+      res.send(data);
+    } else {
+      console.log("crypto trending cache miss");
+      const {
+        data: { coins },
+      } = await axios.get(TrendingCoins());
+      const filteredData = coins.map(({ item }) => {
+        return {
+          large: item.large,
+          symbol: item.symbol,
+          name: item.name,
+        };
+      });
+      storage.set("crypto-trending", JSON.stringify(filteredData), "EX", 90);
+      res.send(filteredData);
+    }
   } catch (error) {
     console.log(error);
   }
+  storage.quit();
 });
 
 // get crypto tick

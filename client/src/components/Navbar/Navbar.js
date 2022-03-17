@@ -62,7 +62,7 @@ const Navbar = () => {
       location.startsWith("/details") ||
       location.startsWith("/forex") ||
       location.startsWith("/crypto") ||
-      location.startsWith("/watchlist")
+      location.startsWith("/favourite")
     ) {
       setFlag(false);
     } else {
@@ -86,7 +86,7 @@ const Navbar = () => {
   };
 
   const handleWatchList = () => {
-    navigate("/watchlist");
+    navigate("/favourite");
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -135,7 +135,7 @@ const Navbar = () => {
 
       <List>
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={() => navigate("/forex")}>
             <ListItemIcon>
               <EuroOutlinedIcon
                 style={{ color: flag === true ? "black" : "white" }}
@@ -150,7 +150,7 @@ const Navbar = () => {
 
         {/* <Divider /> */}
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={() => navigate("/crypto")}>
             <ListItemIcon>
               <MonetizationOnOutlinedIcon
                 style={{ color: flag === true ? "black" : "white" }}
@@ -164,9 +164,7 @@ const Navbar = () => {
         </ListItem>
 
         <ListItem>
-          <ListItemButton
-            onClick={user === null ? handleLogin : handleWatchList}
-          >
+          <ListItemButton onClick={handleWatchList}>
             <ListItemIcon>
               <StarOutlineOutlinedIcon
                 style={{ color: flag === true ? "black" : "white" }}
@@ -287,6 +285,7 @@ const Navbar = () => {
                 fontWeight: "bold",
                 marginRight: "10px",
               }}
+              onClick={() => navigate("/forex")}
             >
               Forex
             </Button>
@@ -316,7 +315,7 @@ const Navbar = () => {
                 fontWeight: "bold",
                 marginRight: "20px",
               }}
-              onClick={user === null ? handleLogin : handleWatchList}
+              onClick={handleWatchList}
             >
               Watchlist
             </Button>

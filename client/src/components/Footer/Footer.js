@@ -15,7 +15,7 @@ const Footer = () => {
       location.startsWith("/details") ||
       location.startsWith("/forex") ||
       location.startsWith("/crypto") ||
-      location.startsWith("/watchlist")
+      location.startsWith("/favourite")
     ) {
       setStatus(false);
     } else {
