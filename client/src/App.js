@@ -16,6 +16,7 @@ import Footer from "./components/Footer/Footer";
 import AboutUs from "./views/AboutUs/AboutUs";
 import SnackBarNotify from "./components/SnackBarNotify";
 import Watchlist from "./views/WatchList/Watchlist";
+import Favourite from "./views/Favourite/Favourite";
 import ErrorPage from "./views/ErrorPage/ErrorPage";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -51,7 +52,7 @@ const App = () => {
             <Route path="/emailverify" element={<EmailVerify />}></Route>
             <Route path="/crypto" element={<CryptoPage />} />
             <Route path="/details/:market/:symbol" element={<Details />} />
-            <Route path="/watchlist" element={<Watchlist />}></Route>
+            <Route path="/favourite" element={<Favourite />}></Route>
             <Route
               path="/details"
               element={<Details market="forex" symbol="EURUSD" />}

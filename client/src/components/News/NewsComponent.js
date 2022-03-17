@@ -7,7 +7,9 @@ const NewsComponent = ({ market }) => {
   const [news, setNews] = useState([]);
 
   const fetchNews = async () => {
-    const news = await axios.get("http://localhost:5000/news/trending");
+    const news = await axios.get("http://localhost:5000/news/trending", {
+      params: { market },
+    });
     console.log(news.data);
     setNews(news.data);
   };

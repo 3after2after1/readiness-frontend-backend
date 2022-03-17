@@ -1,0 +1,74 @@
+@media (min-width: 0px) {
+  #w-empty-card-box {
+    background: linear-gradient(
+      0deg,
+      #ffffff 3%,
+      #ffffff 90%,
+      #164645 calc(40% + 1px),
+      #164645 93%,
+      rgb(23, 185, 120) calc(60% + 1px),
+      rgb(23, 185, 120) 96%,
+      #cff4d2 calc(68% + 1px),
+      #cff4d2 100%
+    );
+  }
+}
+
+@media (max-width: 480px) {
+  #watchlistForexTitle {
+    font-size: 2.5rem !important;
+  }
+  #watchlistCryptoTitle {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media (min-width: 600px) {
+}
+
+@media (min-width: 750px) {
+  #watchlistTitle {
+    font-size: 2rem;
+  }
+  #watchlistForexTitle {
+    padding-left: 30px;
+    font-size: 3rem !important;
+  }
+  #watchlistCryptoTitle {
+    padding-left: 30px;
+    font-size: 3rem !important;
+  }
+  #favourite-box {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+  }
+
+  #w-empty-card-box {
+    margin: 0.5em;
+  }
+}
+
+@media (min-width: 1024px) {
+  #favourite-box {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: initial !important;
+    padding-left: 20px;
+  }
+
+  #w-empty-card-box {
+    margin: 0.5em;
+  }
+}
+@media (min-width: 1281px) {
+  #watchlistForexTitle {
+    padding-left: 120px;
+  }
+  #watchlistCryptoTitle {
+    padding-left: 120px;
+  }
+
+  #favourite-box {
+    padding-left: 120px;
+  }
+}
