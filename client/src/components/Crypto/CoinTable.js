@@ -17,6 +17,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "@mui/material";
 import RankingTable from "./RankingTable";
+import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
 
 const formatPrice = (price) => {
   return `$${price.toFixed(5)}`;
@@ -90,6 +91,11 @@ const CoinTable = () => {
       cursor: "pointer",
       "&:hover": { backgroundColor: "rgb(173, 173, 173)" },
       fontFamily: "Monstserrat",
+      "& .hide": {
+        "@media (max-width: 900px)": {
+          display: "none",
+        },
+      },
     },
     pagination: {
       "& .MuiPaginationItem-root": {
@@ -99,6 +105,13 @@ const CoinTable = () => {
       "& .Mui-selected": {
         color: "black",
         fontWeight: "bold",
+      },
+    },
+    head: {
+      "& .hide": {
+        "@media (max-width: 900px)": {
+          display: "none",
+        },
       },
     },
   }));
@@ -138,8 +151,14 @@ const CoinTable = () => {
                   background: "#184D47",
                 }}
               >
-                <TableRow>
-                  {["COIN", "PRICE", "24H CHANGE", "MARKET CAP"].map((head) => (
+                <TableRow className={classes.head}>
+                  {[
+                    "COIN",
+                    "PRICE",
+                    "24H CHANGE",
+                    "MARKET CAP",
+                    "LAST 7 DAYS",
+                  ].map((head) => (
                     <TableCell
                       style={{
                         color: "white",
@@ -147,8 +166,10 @@ const CoinTable = () => {
                         fontFamily: "League Spartan",
                         fontSize: "1.2rem",
                       }}
+                      // sx={{ display: { xs: "none", md: "block" } }}
                       key={head}
                       align={head === "Coin" ? "Left" : "center"}
+                      className={head.startsWith("LAST") ? "hide" : ""}
                     >
                       {head}
                     </TableCell>
@@ -224,7 +245,7 @@ const CoinTable = () => {
                         <TableCell
                           align="center"
                           style={{
-                            color: profit > 0 ? "rgb(14, 203, 129" : "red",
+                            color: profit > 0 ? "rgb(14, 203, 129)" : "red",
                             fontWeight: "bold",
                             fontSize: "1rem",
                           }}
@@ -240,6 +261,12 @@ const CoinTable = () => {
                             row.market_cap.toString().slice(0, -6)
                           )}
                           M
+                        </TableCell>
+                        <TableCell align="center" className="hide">
+                          <Sparklines data={row.sparkline_in_7d?.price}>
+                            <SparklinesLine color="rgb(14, 203, 129)" />
+                            <SparklinesSpots style={{ fill: "#56b45d" }} />
+                          </Sparklines>
                         </TableCell>
                       </TableRow>
                     );
@@ -260,7 +287,7 @@ const CoinTable = () => {
           count={Math.floor(handleSearch()?.length / 6)}
           onChange={(_, value) => {
             setPage(value);
-            window.scroll(0, 0);
+            window.scroll(0, 600);
           }}
         />
       </Container>
