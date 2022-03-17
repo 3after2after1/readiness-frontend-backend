@@ -4,7 +4,7 @@ import DetailsComment from "./card-details-comment";
 import Box from "@mui/material/Box";
 import "./card-details.css";
 
-export default function DetailsPage() {
+export default function DetailsPage({ market, symbol, getCurrentPrice }) {
   return (
     <Box id="top-container-details" gap="20px">
       <div
@@ -30,7 +30,11 @@ export default function DetailsPage() {
             borderRadius: 2,
           }}
         >
-          <Chart symbol="R_50" market="forex" />
+          <Chart
+            symbol={symbol}
+            market={market}
+            getCurrentPrice={getCurrentPrice}
+          />
         </Box>
 
         <Box
@@ -38,7 +42,6 @@ export default function DetailsPage() {
           bgcolor={"white"}
           sx={{
             marginTop: "1em",
-            height: 560,
             padding: "0.6em",
             color: (theme) =>
               theme.palette.mode === "dark" ? "grey.300" : "grey.800",
@@ -47,6 +50,7 @@ export default function DetailsPage() {
               theme.palette.mode === "dark" ? "grey.800" : "grey.300",
             borderRadius: 2,
           }}
+          style={{ minHeight: "400px", minWidth: "300px", display: "flex" }}
         >
           <DetailsComment />
         </Box>

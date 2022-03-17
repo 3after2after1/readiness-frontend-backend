@@ -8,38 +8,49 @@ import {
   FormControlLabel,
   InputAdornment,
   IconButton,
-  Avatar,
   Typography,
 } from "@mui/material";
 import GoogleButton from "react-google-button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./css/LoginPage.css";
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
 } from "@firebase/auth";
-import { UserState } from "../../contexts/UserContext";
+import { GeneralState } from "../../contexts/GeneralContext";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebase";
+import { WatchListState } from "../../contexts/WatchListContext";
 
 const LoginPage = () => {
-  const { automatedRocketChatSSO } = UserState();
+  const { generateSnackbar } = GeneralState();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const { watchList, dispatch } = WatchListState();
+  useEffect(() => {
+    console.log(watchList);
+  }, [watchList]);
 
   const handleSubmit = async () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
 
-      console.log("Login Success");
-      console.log(result);
+      // const profileStoreRef = doc(db, "userprofile", result.user.uid);
+      // const profileStoreSnap = await getDoc(profileStoreRef);
 
-      navigate("/");
+      // if (profileStoreSnap.exists()) {
+      //   automatedRocketChatSSO({
+      //     username: profileStoreSnap.data().username,
+      //     email: result.user.email,
+      //     pass: result.user.uid,
+      //     displayname: profileStoreSnap.data().username,
+      //   });
+      // }
 
       // automatedRocketChatSSO({
       //   username: username,
@@ -47,16 +58,54 @@ const LoginPage = () => {
       //   pass: result.user.uid,
       //   displayname: username,
       // });
-    } catch (error) {}
+      let info = {
+        userId: result.user.uid,
+      };
+      dispatch({ type: "INITIALISE", payload: info });
+      //load watchlist data from mongodb to client
+
+      generateSnackbar({
+        newShow: true,
+        newMessage: "Login Successful!",
+        newType: "success",
+      });
+
+      navigate("/");
+    } catch (error) {
+      if (!!String(error.message).match("^Firebase:.*")) {
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message.replace("Firebase: ", ""),
+          newType: "error",
+        });
+      } else {
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message,
+          newType: "error",
+        });
+      }
+
+      return;
+    }
   };
 
   const googleProvider = new GoogleAuthProvider();
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((res) => {
-        console.log("Google Provider Login Success");
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign In Successful!",
+          newType: "success",
+        });
       })
       .catch((error) => {
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign In Failed",
+          newType: "error",
+        });
         console.log(error);
       });
   };

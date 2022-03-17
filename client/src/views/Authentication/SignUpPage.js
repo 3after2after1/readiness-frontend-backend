@@ -4,11 +4,8 @@ import {
   Button,
   Divider,
   TextField,
-  Checkbox,
-  FormControlLabel,
   InputAdornment,
   IconButton,
-  Avatar,
   Container,
   Typography,
 } from "@mui/material";
@@ -16,19 +13,20 @@ import GoogleButton from "react-google-button";
 import React, { useState, useEffect } from "react";
 import "./css/SignUpPage.css";
 import {
-  signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "@firebase/auth";
 import { passwordVerify } from "../../utils/PasswordChecker";
-import { rocketChatSSO, checkUserNameExist } from "../../services/rocketchat";
-import { UserState } from "../../contexts/UserContext";
-import { auth } from "../../services/firebase";
+import { checkUserNameExist } from "../../services/rocketchat";
+import { GeneralState } from "../../contexts/GeneralContext";
+import { auth, db } from "../../services/firebase";
+import { doc, setDoc } from "@firebase/firestore";
+import axios from "axios";
 
 const SignUpPage = () => {
-  const { automatedRocketChatSSO } = UserState();
+  const { generateSnackbar } = GeneralState();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,29 +48,33 @@ const SignUpPage = () => {
 
   const handleSubmit = async () => {
     try {
-      // const checkuser = await checkUserNameExist(username);
+      const checkuser = await checkUserNameExist(username);
 
-      // if (!checkuser.error) {
-      //   if (checkuser.result) {
-      //     throw {
-      //       message: "Username already exist",
-      //     };
-      //   }
-      // } else if (checkuser.error) {
-      //   throw {
-      //     message: checkuser.error,
-      //   };
-      // }
+      if (!checkuser.error) {
+        if (checkuser.result) {
+          const error = {
+            message: "Username already exist",
+          };
+          throw error;
+        }
+      } else if (checkuser.error) {
+        const error = {
+          message: checkuser.error,
+        };
+        throw error;
+      }
 
-      if (password != confirmPassword) {
-        throw { message: "Password Mismatch" };
+      if (password !== confirmPassword) {
+        const error = { message: "Password Mismatch" };
+        throw error;
       }
 
       if (!passwordVerify(password)) {
-        throw {
+        const error = {
           message:
             "Please ensure your password contains both Letter and Number",
         };
+        throw error;
       }
 
       const result = await createUserWithEmailAndPassword(
@@ -87,6 +89,19 @@ const SignUpPage = () => {
 
       console.log(result.user);
 
+      const profileStoreRef = doc(db, "userprofile", result.user.uid);
+
+      try {
+        await setDoc(profileStoreRef, {
+          username: username,
+        });
+      } catch (error) {
+        const errormsg = {
+          message: error.message,
+        };
+        throw errormsg;
+      }
+
       // automatedRocketChatSSO({
       //   username: username,
       //   email: result.user.email,
@@ -94,18 +109,49 @@ const SignUpPage = () => {
       //   displayname: username,
       // });
 
-      console.log("Sign Up Success");
+      const userData = {
+        user: result.user.uid,
+        username: username,
+        watchlist: {
+          forex: [],
+          crypto: [],
+        },
+      };
+      axios
+        .post("http://localhost:5000/watchlist/adduser", userData)
+        .then((response) => {
+          console.log(response.status);
+          console.log(response.data);
+        });
+
+      generateSnackbar({
+        newShow: true,
+        newMessage: "Sign Up Successful!",
+        newType: "success",
+      });
     } catch (error) {
       if (!!String(error.message).match("^Firebase:.*")) {
         setErrorMsg((previousError) => ({
           ...previousError,
           message: error.message.replace("Firebase: ", ""),
         }));
+
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message.replace("Firebase: ", ""),
+          newType: "error",
+        });
       } else {
         setErrorMsg((previousError) => ({
           ...previousError,
           message: error.message,
         }));
+
+        generateSnackbar({
+          newShow: true,
+          newMessage: error.message,
+          newType: "error",
+        });
       }
 
       return;
@@ -116,10 +162,18 @@ const SignUpPage = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((res) => {
-        console.log("Google Provider Login Success");
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign Up Successful!",
+          newType: "success",
+        });
       })
       .catch((error) => {
-        console.log(error);
+        generateSnackbar({
+          newShow: true,
+          newMessage: "Google Sign Up Failed",
+          newType: "error",
+        });
       });
   };
 

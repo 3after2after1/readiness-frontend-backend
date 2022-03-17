@@ -29,27 +29,40 @@ services:
     networks:
       - library-mern-api
 
-  # mongodb:
-  #   container_name: mongo-dev
-  #   image: mongo
-  #   restart: always
-  #   ports:
-  #     - 27017:27017
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
-  #     MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
-  #   volumes:
-  #     - mongodb-data:/data/db
-  #   networks:
-  #     - library-mern-api
-
   cache:
     image: redis:latest
     restart: always
-    ports:
-      - "6378:6379"
+    # ports:
+    #   - "6378:6379"
     volumes:
       - cache:/data
+    networks:
+      - library-mern-api
+
+  web-scraper:
+    build: ./services/web-scraper
+    depends_on:
+      - cache
+    networks:
+      - library-mern-api
+
+  deriv-data-processor:
+    build:
+      context: ./services/deriv-data-processor
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - cache
+    networks:
+      - library-mern-api
+
+  cryptocompare-data-processor:
+    build:
+      context: ./services/cryptocompare-data-processor
+      dockerfile: Dockerfile
+    depends_on:
+      - cache
+    networks:
+      - library-mern-api
 
   # client:
   #   restart: always

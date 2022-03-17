@@ -1,15 +1,7 @@
 import axios from "axios";
-
-const ROCKETCHATNODEJSAPI = "http://192.168.100.164:3032/";
+import { ROCKETCHATNODEJSAPI } from "../api/rocketchat-endpoint";
 
 const rocketChatSSO = (accountData) => {
-  //   const data = {
-  //     username: username,
-  //     email: user.email,
-  //     pass: password,
-  //     displayname: username,
-  //   };
-
   return axios
     .post(`${ROCKETCHATNODEJSAPI}rocket_sso`, accountData, {
       withCredentials: true,
@@ -42,8 +34,10 @@ const checkUserNameExist = (username) => {
       } else {
         if (error.response.status === 404) {
           return { result: false };
-        } else {
+        } else if (error.response.status === 400) {
           return { error: "Bad Request" };
+        } else {
+          return { error: "Something went wrong" };
         }
       }
     });

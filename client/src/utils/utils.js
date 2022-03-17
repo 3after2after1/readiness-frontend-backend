@@ -43,40 +43,6 @@ export const markets = {
   crypto: "crypto",
 };
 
-// convert historical ohlc data to standardized objects
-export const processHistoricalOHLC = (data, market) => {
-  let processedData = data.map((item) => {
-    if (market === markets.forex) {
-      item.date = new Date(item.epoch * 1000);
-    } else if (market === markets.crypto) {
-      item.date = new Date(item.time * 1000);
-    }
-    item.volume = 0;
-
-    return item;
-  });
-
-  return processedData;
-};
-
-// convert historical tick data to standardized objects
-export const processHistoricalTicks = (data) => {
-  let processedData = [];
-  for (let i = 0; i < data.prices.length; i++) {
-    let price = data.prices[i];
-    processedData.push({
-      date: new Date(data.times[i] * 1000),
-      open: price,
-      close: price,
-      high: price,
-      low: price,
-      volume: 0,
-    });
-  }
-
-  return processedData;
-};
-
 // check if current tick belongs to the same time group as the last ohlc
 export const isCurrentTickTimeGroupSame = (interval, lastOHLC, tick) => {
   let lastCandleTimeGroup = null;

@@ -1,8 +1,8 @@
 import Cheerio from "cheerio";
 
 export const getForexInfo = (from, to) => {
-  // let url = `https://cors-anywhere.herokuapp.com/https://www.dailyfx.com/${from}-${to}`;
-  let url = `https://www.dailyfx.com/${from}-${to}`;
+  let url = `https://cors-anywhere.herokuapp.com/https://www.dailyfx.com/${from.toLowerCase()}-${to.toLowerCase()}`;
+  // let url = `https://www.dailyfx.com/${from}-${to}`;
 
   let headers = {
     "User-Agent":

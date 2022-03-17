@@ -3,11 +3,18 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import UserContext from "./contexts/UserContext";
+import GeneralContext from "./contexts/GeneralContext";
+import "react-alice-carousel/lib/alice-carousel.css";
+import WatchListContext from "./contexts/WatchListContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <UserContext>
-      <App />
+      <GeneralContext>
+        <WatchListContext>
+          <App />
+        </WatchListContext>
+      </GeneralContext>
     </UserContext>
   </React.StrictMode>,
   document.getElementById("root")

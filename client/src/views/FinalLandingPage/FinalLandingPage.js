@@ -1,8 +1,10 @@
 import React from "react";
 import { Box, Button, Divider, Typography } from "@mui/material";
 import "./FinalLandingPage.css";
+import { useNavigate } from "react-router-dom";
 
 const FinalLandingPage = () => {
+  let navigate = useNavigate();
   return (
     <Box id="landingPageContent" style={{}}>
       <Box
@@ -73,6 +75,7 @@ const FinalLandingPage = () => {
             >
               <Button
                 id="signUpButton1"
+                onClick={() => navigate("/signuppage")}
                 variant="contained"
                 style={{
                   backgroundColor: "#FFCE45",
@@ -117,6 +120,7 @@ const FinalLandingPage = () => {
               <Button
                 id="signUpButton2"
                 variant="contained"
+                onClick={() => navigate("/signuppage")}
                 style={{
                   backgroundColor: "#FFCE45",
                   color: "#184D47",
@@ -309,6 +313,7 @@ const FinalLandingPage = () => {
                       fontFamily: "Bree Serif",
                       fontWeight: "bold",
                     }}
+                    onClick={() => navigate("/forex")}
                   >
                     Go to Forex
                   </Button>
@@ -350,6 +355,7 @@ const FinalLandingPage = () => {
                   fontWeight: "bold",
                   width: "275px",
                 }}
+                onClick={() => navigate("/forex")}
               >
                 Go to Forex
               </Button>
@@ -509,6 +515,7 @@ const FinalLandingPage = () => {
                       fontFamily: "Bree Serif",
                       fontWeight: "bold",
                     }}
+                    onClick={() => navigate("/crypto")}
                   >
                     Go to Crypto
                   </Button>
@@ -551,6 +558,7 @@ const FinalLandingPage = () => {
                   fontWeight: "bold",
                   width: "275px",
                 }}
+                onClick={() => navigate("/crypto")}
               >
                 Go to Crypto
               </Button>

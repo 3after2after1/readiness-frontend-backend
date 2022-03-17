@@ -10,9 +10,14 @@ import SetNewPassword from "./views/Authentication/SetNewPassword";
 import FinalLandingPage from "./views/FinalLandingPage/FinalLandingPage";
 import PasswordChangeSuccessPage from "./views/Authentication/PasswordChangeSuccessPage";
 import EmailVerify from "./views/Authentication/EmailVerify";
-import CryptoPage from "./views/CryptoPage";
+import CryptoPage from "./views/CryptoPage/CryptoPage";
 import Details from "./views/Details/Details";
 import Footer from "./components/Footer/Footer";
+import AboutUs from "./views/AboutUs/AboutUs";
+import SnackBarNotify from "./components/SnackBarNotify";
+import Watchlist from "./views/WatchList/Watchlist";
+import Favourite from "./views/Favourite/Favourite";
+import ErrorPage from "./views/ErrorPage/ErrorPage";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -27,10 +32,10 @@ const App = () => {
           flexDirection: "column",
         }}
       >
-        <Navbar />
+        <Navbar style={{ flex: "1" }} />
         {/* <Box style={{ height: "82vh" }}></Box> */}
         {/* style={{ height: "100%" }} */}
-        <Box>
+        <Box style={{ flex: "5" }}>
           <Routes>
             <Route path="/authroute" element={<AuthRoute />}></Route>
             <Route path="/" element={<FinalLandingPage />}></Route>
@@ -39,16 +44,24 @@ const App = () => {
             <Route path="/forgotpswd" element={<ForgotPassword />}></Route>
             <Route path="/checkemail" element={<CheckEmailPage />}></Route>
             <Route path="/resetpswd" element={<SetNewPassword />}></Route>
+            <Route path="/about" element={<AboutUs />}></Route>
             <Route
               path="/successfulpasswordchange"
               element={<PasswordChangeSuccessPage />}
             ></Route>
             <Route path="/emailverify" element={<EmailVerify />}></Route>
             <Route path="/crypto" element={<CryptoPage />} />
-            <Route path="/details" element={<Details />} />
+            <Route path="/details/:market/:symbol" element={<Details />} />
+            <Route path="/favourite" element={<Favourite />}></Route>
+            <Route
+              path="/details"
+              element={<Details market="forex" symbol="EURUSD" />}
+            />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Box>
-        <Footer />
+        <SnackBarNotify />
+        <Footer style={{ flex: "1" }} />
       </Box>
     </BrowserRouter>
   );

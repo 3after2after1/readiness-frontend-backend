@@ -4,19 +4,53 @@ import DetailsPage from "../../components/Details/card-details/card-details";
 import CardDetailsAdd from "../../components/Details/card-details/card-details-add";
 import DetailsStats from "../../components/Details/card-details/card-details-stats";
 // import DetailsStatsContent from "../../components/details-stats-content";
-// import Footer from "../../components/Footer";
 import Container from "@mui/material/Box";
-
+import { useParams } from "react-router";
+import { markets } from "../../utils/utils";
 import { getFrxInfo } from "../../utils/web-scrape-forex";
+import { useLocation } from "react-router-dom";
 
-function Details() {
+// using client-web-scraper
+// import { getForexInfo } from "../../utils/backup/scrape-forex-info";
+
+function Details(props) {
   const [instrumentInfo, setInstrumentInfo] = useState({});
+  //instrumentInfo has two properties, stats and desc
+  const [currentPrice, setCurrentPrice] = useState("-");
+  let { market, symbol } = useParams();
+  if (!market) market = props.market;
+  if (!symbol) symbol = props.symbol;
+  console.log(useLocation());
+  const { state } = useLocation();
+  let imageInput = state
+    ? state.image || state.large
+    : "http://cdn.onlinewebfonts.com/svg/img_462420.png";
+  let nameInput = state ? state.name : "missing name";
+  let watchListData = {
+    image: imageInput,
+    name: nameInput,
+    symbol,
+    market,
+  };
+  const handleCurrentPrice = (price) => {
+    setCurrentPrice(price);
+  };
 
   // get forex information
   useEffect(() => {
-    getFrxInfo("eurusd").then((data) => {
-      setInstrumentInfo(data);
-    });
+    if (market === markets.forex) {
+      // example: eurusd
+      // server-web-scraper
+      getFrxInfo(symbol).then((data) => {
+        console.log("scrape data ", data);
+        setInstrumentInfo(data);
+      });
+
+      // getForexInfo(symbol.substr(0, 3), symbol.substring(3)).then((data) => {
+      //   setInstrumentInfo(data);
+      //   console.log(data);
+      // });
+    }
   }, []);
 
   return (
@@ -25,19 +59,24 @@ function Details() {
         <div className="content-title-details">
           <div className="content-title-left">
             <div className="icon-company" id="icon-company">
-              Image
+              {state && (
+                <img
+                  src={state.image || state.large}
+                  style={{ height: "4rem" }}
+                />
+              )}
             </div>
             <div className="company-box">
               <column>
                 <row>
                   <div id="company-name" className="company-name">
-                    AAPL | APPLE
+                    {symbol.toUpperCase()}
                   </div>
                 </row>
                 <row>
                   <div className="company-box">
                     <span className="currency-price" id="currency-price">
-                      188.99
+                      {currentPrice}
                     </span>
                     <span className="currency" id="currency">
                       USD{" "}
@@ -56,19 +95,27 @@ function Details() {
           </div>
 
           <div className="content-title-right-icon">
-            <CardDetailsAdd />
+            <CardDetailsAdd watchListData={watchListData} />
           </div>
         </div>
 
         <Container>
-          <DetailsPage />
+          <DetailsPage
+            market={market}
+            symbol={symbol}
+            getCurrentPrice={handleCurrentPrice}
+          />
         </Container>
 
         <Container>
-          <DetailsStats
-            dataStats={instrumentInfo.stats}
-            dataDescription={instrumentInfo.description}
-          />
+          {market === markets.forex ? (
+            <DetailsStats
+              dataStats={instrumentInfo.stats}
+              dataDescription={instrumentInfo.description}
+            />
+          ) : (
+            "loading..."
+          )}
         </Container>
       </div>
 

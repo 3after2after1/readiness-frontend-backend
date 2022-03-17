@@ -5,41 +5,78 @@ import IconButton from "@mui/material/IconButton";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import { yellow } from "@material-ui/core/colors";
+import { WatchListState } from "../../../contexts/WatchListContext";
 
-export default function CardDetailsAdd() {
-  const [btn, setBtn] = React.useState(true);
+export default function CardDetailsAdd({
+  watchListData: { image, market, name, symbol },
+}) {
+  const checkIfItemExist = (symbol, market) => {
+    //check if symbol already exist in favourites
+    console.log("checking array", watchList[market]);
+    if (watchList[market].length > 0) {
+      console.log("logic worked");
+      console.log(watchList[market]);
+      return watchList[market].some((object) => object.symbol === symbol);
+    } else {
+      console.log("logic failed");
+      console.log(symbol, market);
+      return false;
+    }
+  };
+  const { watchList, dispatch } = WatchListState();
+  const [btn, setBtn] = React.useState(checkIfItemExist(symbol, market));
 
   const handleClick = () => {
-    setBtn(!btn);
+    setBtn((btn) => {
+      if (btn) {
+        //remove
+        const newItem = {
+          market,
+          item: {
+            name,
+            image,
+            symbol,
+          },
+        };
+        dispatch({ type: "REMOVE_ITEM", payload: newItem });
+      } else {
+        //add
+        console.log("add item will happen");
+        const newItem = {
+          market,
+          item: {
+            name,
+            image,
+            symbol,
+          },
+        };
+
+        dispatch({ type: "ADD_ITEM", payload: newItem });
+      }
+      return !btn;
+    });
   };
+  React.useEffect(() => {
+    console.log(watchList);
+    return () => {};
+  }, [watchList]);
 
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
         <React.Fragment>
-          <Button
-            style={{
-              borderRadius: 10,
-              backgroundColor: "white",
-              padding: "2px",
-              // height: "80px"
-            }}
-            variant="contained"
-            {...bindTrigger(popupState)}
-          >
-            <IconButton
-              onClick={handleClick}
-              style={{ color: "blue[500]" }}
-              aria-label="add to watchlist"
-              children={
-                btn ? (
-                  <StarBorderIcon />
-                ) : (
-                  <StarIcon sx={{ color: yellow[800] }} />
-                )
-              }
-            ></IconButton>
-          </Button>
+          <IconButton
+            onClick={handleClick}
+            style={{ color: "blue[500]" }}
+            aria-label="add to watchlist"
+            children={
+              btn ? (
+                <StarIcon sx={{ color: yellow[800] }} />
+              ) : (
+                <StarBorderIcon />
+              )
+            }
+          ></IconButton>
         </React.Fragment>
       )}
     </PopupState>
