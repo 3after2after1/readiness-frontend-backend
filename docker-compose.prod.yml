@@ -26,6 +26,13 @@ services:
       REDIS_PASSWORD: ${REDIS_PASSWORD}
     networks:
       - library-mern-api
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+        delay: 15s
 
   cache:
     image: redis:latest
@@ -43,6 +50,13 @@ services:
       - cache
     networks:
       - library-mern-api
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+        delay: 15s
 
   deriv-data-processor:
     image: rickythain/trex-deriv-processor
@@ -50,6 +64,13 @@ services:
       - cache
     networks:
       - library-mern-api
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+        delay: 15s
 
   cryptocompare-data-processor:
     image: rickythain/trex-cryptocompare-processor
@@ -57,6 +78,13 @@ services:
       - cache
     networks:
       - library-mern-api
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+        delay: 15s
 
   # client:
   #   restart: always
