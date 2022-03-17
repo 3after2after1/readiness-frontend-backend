@@ -5,21 +5,13 @@ LABEL description="React Frontend for the readiness-challenge-frontend"
 
 WORKDIR /app
 
-COPY src/ ./src/
-COPY public/ ./public/
-COPY ./pack*.json ./
-COPY create-env-file.sh ./create-env-file.sh
+COPY ./package.json ./
 
 RUN npm install
 
-
-ARG REACT_APP_ENDPOINT
-
-RUN sh create-env-file.sh REACT_APP_ENDPOINT=$REACT_APP_ENDPOINT
+COPY . .
 
 RUN npm run build
-
-RUN npm i -g serve
 
 FROM nginx
 EXPOSE 3000
