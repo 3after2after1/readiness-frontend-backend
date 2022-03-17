@@ -34,8 +34,10 @@ const checkUserNameExist = (username) => {
       } else {
         if (error.response.status === 404) {
           return { result: false };
-        } else {
+        } else if (error.response.status === 400) {
           return { error: "Bad Request" };
+        } else {
+          return { error: "Something went wrong" };
         }
       }
     });
