@@ -1,4 +1,6 @@
-const ROCKETCHATAPIURL = "http://192.168.100.164:3005/";
-const ROCKETCHATNODEJSAPI = "http://192.168.100.164:3032/";
+const ROCKETCHATAPIURL =
+  "http://ec2-52-221-189-46.ap-southeast-1.compute.amazonaws.com:3005/";
+const ROCKETCHATNODEJSAPI =
+  "http://ec2-52-221-189-46.ap-southeast-1.compute.amazonaws.com:3032/";
 
 export { ROCKETCHATAPIURL, ROCKETCHATNODEJSAPI };
