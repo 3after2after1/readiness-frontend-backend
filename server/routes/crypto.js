@@ -24,7 +24,7 @@ router.get("/table", async (req, res) => {
       res.send(data);
     } else {
       console.log("crypto table cache miss");
-      const { data } = await axios.get(CoinList());
+      let { data } = await axios.get(CoinList());
       storage.set("crypto-table", JSON.stringify(data), "EX", 30);
       res.send(data);
     }
