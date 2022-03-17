@@ -155,7 +155,8 @@ const CoinTable = () => {
                   {[
                     "COIN",
                     "PRICE",
-                    "24H CHANGE",
+                    "24H %",
+                    "7D %",
                     "MARKET CAP",
                     "LAST 7 DAYS",
                   ].map((head) => (
@@ -169,7 +170,11 @@ const CoinTable = () => {
                       // sx={{ display: { xs: "none", md: "block" } }}
                       key={head}
                       align={head === "Coin" ? "Left" : "center"}
-                      className={head.startsWith("LAST") ? "hide" : ""}
+                      className={
+                        head.startsWith("LAST") || head.startsWith("7D")
+                          ? "hide"
+                          : ""
+                      }
                     >
                       {head}
                     </TableCell>
@@ -181,6 +186,8 @@ const CoinTable = () => {
                   .slice((page - 1 - 5) * 6, (page - 1) * 6 + 6)
                   .map((row) => {
                     const profit = row.price_change_percentage_24h > 0;
+                    const profit_7days =
+                      row.price_change_percentage_7d_in_currency > 0;
                     return (
                       <TableRow
                         onClick={(e) =>
@@ -255,6 +262,22 @@ const CoinTable = () => {
                         </TableCell>
                         <TableCell
                           align="center"
+                          className="hide"
+                          style={{
+                            color:
+                              profit_7days > 0 ? "rgb(14, 203, 129)" : "red",
+                            fontWeight: "bold",
+                            fontSize: "1rem",
+                          }}
+                        >
+                          {profit_7days && "+"}
+                          {row.price_change_percentage_7d_in_currency.toFixed(
+                            2
+                          )}
+                          %
+                        </TableCell>
+                        <TableCell
+                          align="center"
                           style={{ fontWeight: "bold", fontSize: "1rem" }}
                         >
                           {numberWithCommas(
@@ -264,8 +287,19 @@ const CoinTable = () => {
                         </TableCell>
                         <TableCell align="center" className="hide">
                           <Sparklines data={row.sparkline_in_7d?.price}>
-                            <SparklinesLine color="rgb(14, 203, 129)" />
-                            <SparklinesSpots style={{ fill: "#56b45d" }} />
+                            <SparklinesLine
+                              color={
+                                profit_7days > 0 ? "rgb(14, 203, 129)" : "red"
+                              }
+                            />
+                            <SparklinesSpots
+                              style={{
+                                fill:
+                                  profit_7days > 0
+                                    ? "rgb(14, 203, 129)"
+                                    : "red",
+                              }}
+                            />
                           </Sparklines>
                         </TableCell>
                       </TableRow>

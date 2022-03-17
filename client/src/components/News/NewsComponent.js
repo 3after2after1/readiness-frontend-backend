@@ -23,7 +23,7 @@ const NewsComponent = ({ market }) => {
   return (
     <div
       className="home-heading-container"
-      style={{ marginTop: "4%", paddingLeft: "2%" }}
+      style={{ margin: "4% 0 1% 0", paddingLeft: "2%" }}
     >
       {news.length > 0 && <NewsCard data={news} />}
     </div>
