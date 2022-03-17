@@ -2,15 +2,17 @@ import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import "./ErrorPage.css";
 import { Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ErrorPage = (props) => {
+  let navigate = useNavigate();
   console.log(Route);
   return (
     <>
       <Box
         id="errorbox"
         style={{
-          height: "82vh",
+          height: "83vh",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -96,6 +98,7 @@ const ErrorPage = (props) => {
                   fontFamily: "Bree Serif",
                   fontWeight: "bold",
                 }}
+                onClick={() => navigate("/")}
               >
                 Return to Home
               </Button>

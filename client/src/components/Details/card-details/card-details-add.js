@@ -12,9 +12,14 @@ export default function CardDetailsAdd({
 }) {
   const checkIfItemExist = (symbol, market) => {
     //check if symbol already exist in favourites
-    if (watchList[market] > 0) {
-      watchList[market].some((object) => object.symbol === symbol);
+    console.log("checking array", watchList[market]);
+    if (watchList[market].length > 0) {
+      console.log("logic worked");
+      console.log(watchList[market]);
+      return watchList[market].some((object) => object.symbol === symbol);
     } else {
+      console.log("logic failed");
+      console.log(symbol, market);
       return false;
     }
   };
@@ -27,10 +32,10 @@ export default function CardDetailsAdd({
         //remove
         const newItem = {
           market,
-          symbol,
           item: {
             name,
             image,
+            symbol,
           },
         };
         dispatch({ type: "REMOVE_ITEM", payload: newItem });
@@ -39,10 +44,10 @@ export default function CardDetailsAdd({
         console.log("add item will happen");
         const newItem = {
           market,
-          symbol,
           item: {
             name,
             image,
+            symbol,
           },
         };
 

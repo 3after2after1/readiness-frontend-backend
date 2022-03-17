@@ -4,7 +4,6 @@ import DetailsPage from "../../components/Details/card-details/card-details";
 import CardDetailsAdd from "../../components/Details/card-details/card-details-add";
 import DetailsStats from "../../components/Details/card-details/card-details-stats";
 // import DetailsStatsContent from "../../components/details-stats-content";
-// import Footer from "../../components/Footer";
 import Container from "@mui/material/Box";
 import { useParams } from "react-router";
 import { markets } from "../../utils/utils";
@@ -96,7 +95,7 @@ function Details(props) {
           </div>
 
           <div className="content-title-right-icon">
-            {/* <CardDetailsAdd watchListData={watchListData} /> */}
+            <CardDetailsAdd watchListData={watchListData} />
           </div>
         </div>
 
