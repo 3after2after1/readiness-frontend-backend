@@ -16,6 +16,8 @@ const ChatWindow = () => {
       },
       ROCKETCHATAPIURL
     );
+
+    return;
   };
   return (
     <iframe
