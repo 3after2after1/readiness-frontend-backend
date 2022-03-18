@@ -1,0 +1,17 @@
+export const etoroMapper = {
+  "EUR/USD": 1,
+  "GBP/USD": 2,
+  "USD/CAD": 4,
+  "USD/JPY": 5,
+  "USD/CHF": 6,
+  "AUD/USD": 7,
+  "EUR/GBP": 8,
+  "EUR/CHF": 9,
+  "EUR/JPY": 10,
+  "GBP/JPY": 11,
+  "EUR/AUD": 12,
+  "EUR/CAD": 13,
+  "AUD/JPY": 14,
+  "AUD/CAD": 47,
+  "GBP/AUD": 50,
+};

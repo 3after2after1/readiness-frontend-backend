@@ -83,6 +83,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     signOut(auth);
+    navigate("/");
   };
 
   const handleWatchList = () => {

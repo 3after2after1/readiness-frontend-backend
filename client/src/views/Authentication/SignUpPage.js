@@ -24,6 +24,7 @@ import { GeneralState } from "../../contexts/GeneralContext";
 import { auth, db } from "../../services/firebase";
 import { doc, setDoc } from "@firebase/firestore";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const { generateSnackbar } = GeneralState();
@@ -39,6 +40,7 @@ const SignUpPage = () => {
     setShowConfirmPassword(!showConfirmPassword);
   const handleMouseDownPassword2 = () =>
     setShowConfirmPassword(!showConfirmPassword);
+  const navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState({ message: "" });
 
@@ -129,6 +131,8 @@ const SignUpPage = () => {
         newMessage: "Sign Up Successful!",
         newType: "success",
       });
+
+      navigate("/");
     } catch (error) {
       if (!!String(error.message).match("^Firebase:.*")) {
         setErrorMsg((previousError) => ({

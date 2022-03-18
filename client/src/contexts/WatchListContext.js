@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer } from "react";
 // import { watchListReducer } from "../reducer/reducer";
 import { UserState } from "../contexts/UserContext";
 import axios from "axios";
+import { BACKEND_DOMAIN } from "../api/backend";
 
 const WatchListContextAccess = createContext();
 
@@ -26,7 +27,7 @@ const WatchListContext = ({ children }) => {
       };
       //   try {
       //     axios
-      //       .post("http://localhost:5000/watchlist/addsymbol", newData)
+      //       .post(`${BACKEND_DOMAIN}/watchlist/addsymbol`, newData)
       //       .then((response) => {
       //         console.log(response.status);
       //         console.log(response.data);
@@ -55,7 +56,7 @@ const WatchListContext = ({ children }) => {
       };
       //   try {
       //     axios
-      //       .post("http://localhost:5000/watchlist/removesymbol", oldData)
+      //       .post(`${BACKEND_DOMAIN}/watchlist/removesymbol`, oldData)
       //       .then((response) => {
       //         console.log(response.status);
       //         console.log(response.data);
@@ -79,7 +80,7 @@ const WatchListContext = ({ children }) => {
       };
       //   try {
       //     data = axios
-      //       .get("http://localhost:5000/watchlist//getwatchlist", identity)
+      //       .get(`${BACKEND_DOMAIN}/watchlist/getwatchlist`, identity)
       //       .then((response) => {
       //         return response.data;
       //       });

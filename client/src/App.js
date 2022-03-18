@@ -15,9 +15,9 @@ import Details from "./views/Details/Details";
 import Footer from "./components/Footer/Footer";
 import AboutUs from "./views/AboutUs/AboutUs";
 import SnackBarNotify from "./components/SnackBarNotify";
-import Watchlist from "./views/WatchList/Watchlist";
 import Favourite from "./views/Favourite/Favourite";
 import ErrorPage from "./views/ErrorPage/ErrorPage";
+import ForexHome from "./views/ForexPage/ForexHome";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -35,7 +35,7 @@ const App = () => {
         <Navbar style={{ flex: "1" }} />
         {/* <Box style={{ height: "82vh" }}></Box> */}
         {/* style={{ height: "100%" }} */}
-        <Box style={{ flex: "5" }}>
+        <Box style={{ flex: "2" }}>
           <Routes>
             <Route path="/authroute" element={<AuthRoute />}></Route>
             <Route path="/" element={<FinalLandingPage />}></Route>
@@ -51,12 +51,13 @@ const App = () => {
             ></Route>
             <Route path="/emailverify" element={<EmailVerify />}></Route>
             <Route path="/crypto" element={<CryptoPage />} />
+            <Route path="/forex" element={<ForexHome />} />
             <Route path="/details/:market/:symbol" element={<Details />} />
             <Route path="/favourite" element={<Favourite />}></Route>
-            <Route
+            {/* <Route
               path="/details"
               element={<Details market="forex" symbol="EURUSD" />}
-            />
+            /> */}
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Box>

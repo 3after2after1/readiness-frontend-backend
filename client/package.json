@@ -28,7 +28,9 @@
     "react-slick": "^0.28.1",
     "react-sparklines": "^1.7.0",
     "react-stockcharts": "^0.7.8",
+    "react-typewriter-effect": "^1.1.0",
     "slick-carousel": "^1.8.1",
+    "typewriter-effect": "^2.18.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
