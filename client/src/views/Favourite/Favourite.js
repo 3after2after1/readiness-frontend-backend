@@ -1,16 +1,10 @@
 import React from "react";
-import "./Favourite.css";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import { blue } from "@mui/material/colors";
-import PlaylistRemoveIcon from "@mui/icons-material/PlaylistRemove";
 import { Box, Button, Typography } from "@mui/material";
 import CardFav from "../../components/Favourite/CardFav";
 import { WatchListState } from "../../contexts/WatchListContext";
 import { useNavigate } from "react-router-dom";
+import "./Favourite.css";
 
 function Favourite() {
   const navigate = useNavigate();
@@ -231,9 +225,6 @@ function Favourite() {
           )}
         </Box>
       </Box>
-      {/* <Box style={{ paddingTop: "24px", backgroundColor: "#f9f7f7" }}>
-        <Footer2 />
-      </Box> */}
     </>
   );
 }

@@ -1,0 +1,17 @@
+{
+  "AUD/JPY": "frxAUDJPY",
+  "AUD/USD": "frxAUDUSD",
+  "EUR/AUD": "frxEURAUD",
+  "EUR/CAD": "frxEURCAD",
+  "EUR/CHF": "frxEURCHF",
+  "EUR/GBP": "frxEURGBP",
+  "EUR/JPY": "frxEURJPY",
+  "EUR/USD": "frxEURUSD",
+  "GBP/AUD": "frxGBPAUD",
+  "GBP/JPY": "frxGBPJPY",
+  "AUD/CAD": "frxAUDCAD",
+  "GBP/USD": "frxGBPUSD",
+  "USD/CAD": "frxUSDCAD",
+  "USD/CHF": "frxUSDCHF",
+  "USD/JPY": "frxUSDJPY"
+}

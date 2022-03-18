@@ -1,0 +1,17 @@
+{
+  "AUDJPY=X": "AUD/JPY",
+  "AUDUSD=X": "AUD/USD",
+  "EURAUD=X": "EUR/AUD",
+  "EURCAD=X": "EUR/CAD",
+  "EURCHF=X": "EUR/CHF",
+  "EURGBP=X": "EUR/GBP",
+  "EURJPY=X": "EUR/JPY",
+  "EURUSD=X": "EUR/USD",
+  "GBPAUD=X": "GBP/AUD",
+  "GBPJPY=X": "GBP/JPY",
+  "AUDCAD=X": "AUD/CAD",
+  "GBPUSD=X": "GBP/USD",
+  "USDCAD=X": "USD/CAD",
+  "USDCHF=X": "USD/CHF",
+  "USDJPY=X": "USD/JPY"
+}
