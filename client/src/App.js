@@ -35,7 +35,7 @@ const App = () => {
         <Navbar style={{ flex: "1" }} />
         {/* <Box style={{ height: "82vh" }}></Box> */}
         {/* style={{ height: "100%" }} */}
-        <Box style={{ flex: "5" }}>
+        <Box style={{ flex: "2" }}>
           <Routes>
             <Route path="/authroute" element={<AuthRoute />}></Route>
             <Route path="/" element={<FinalLandingPage />}></Route>

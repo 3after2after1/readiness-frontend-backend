@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Divider, Typography } from "@mui/material";
 import "./FinalLandingPage.css";
 import { useNavigate } from "react-router-dom";
+import Typewriter from "typewriter-effect";
+import TypeWriterEffect from "react-typewriter-effect";
 
 const FinalLandingPage = () => {
   let navigate = useNavigate();
+
   return (
     <Box id="landingPageContent" style={{}}>
       <Box
@@ -15,7 +18,7 @@ const FinalLandingPage = () => {
           // })`,
           backgroundColor: "#184D47",
           width: "100%",
-          height: "500px",
+          height: "600px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -30,18 +33,18 @@ const FinalLandingPage = () => {
           }}
         >
           <Box id="typographyBox1">
-            <Typography
-              id="sentence1"
-              variant="h3"
-              // component="div"
-              sx={{
-                fontFamily: "League Spartan",
-                color: "white",
-                fontWeight: "bold",
-              }}
+            <Box
+              id="typewrite"
+              style={{ paddingTop: "20px", paddingBottom: "10px" }}
             >
-              Informative.
-            </Typography>
+              <Typewriter
+                options={{
+                  strings: ["Simple", "Insightful", "Powerful"],
+                  autoStart: true,
+                  loop: true,
+                }}
+              />
+            </Box>
             <Typography
               id="sentence2"
               variant="h4"
@@ -50,9 +53,25 @@ const FinalLandingPage = () => {
                 fontFamily: " League Spartan",
                 color: "white",
                 fontWeight: "bold",
+                paddingBottom: "5px",
               }}
             >
               That's TREX.
+            </Typography>
+            <Typography
+              id="sentence4"
+              variant="h5"
+              // component="div"
+              sx={{
+                width: "190px",
+                fontFamily: "League Spartan",
+                color: "white",
+                paddingBottom: "5px",
+                fontWeight: "bold",
+                lineHeight: 1.1,
+              }}
+            >
+              Forex or Crypto, it's all here
             </Typography>
             <Typography
               id="sentence3"
@@ -65,7 +84,8 @@ const FinalLandingPage = () => {
                 color: "white",
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              The all in one seamless platform to help support your investment
+              decisions.
             </Typography>
             <Box
               id="signUpBox"
@@ -86,7 +106,7 @@ const FinalLandingPage = () => {
                   width: "275px",
                 }}
               >
-                Sign Up
+                Start Now
               </Button>
             </Box>
           </Box>
@@ -130,7 +150,7 @@ const FinalLandingPage = () => {
                   width: "275px",
                 }}
               >
-                Sign Up
+                Start Now
               </Button>
             </Box>
           </Box>
@@ -140,9 +160,9 @@ const FinalLandingPage = () => {
         <Box
           id="secondsection"
           style={{
-            backgroundColor: "#F9F7F7",
+            backgroundColor: "white",
             width: "100%",
-            height: "1750px",
+            height: "2320px",
             display: "flex",
             flexDirection: "column",
           }}
@@ -176,9 +196,7 @@ const FinalLandingPage = () => {
                 height: "200px",
                 backgroundColor: "white",
               }}
-            >
-              Dashboard Picture
-            </Box>
+            ></Box>
             <Box id="forexBox">
               <Typography
                 id="forexTitle"
@@ -193,23 +211,27 @@ const FinalLandingPage = () => {
                   fontWeight: "bold",
                 }}
               >
-                Forex.
+                Forex Tracking.
               </Typography>
-              <Typography
-                id="forexExplanation"
-                variant="h6"
-                // component="div"
-                sx={{
-                  width: "250px",
-                  fontFamily: "Bree Serif !important",
-                  font: "caption",
-                  color: "black",
-                  paddingRight: "20px",
-                  paddingLeft: "20px",
-                }}
-              >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </Typography>
+              <Box id="forexTrackingDesc">
+                <Typography
+                  id="forexExplanation"
+                  variant="h6"
+                  // component="div"
+                  sx={{
+                    width: "250px",
+                    fontFamily: "Bree Serif !important",
+                    font: "caption",
+                    color: "black",
+                    paddingRight: "20px",
+                    paddingLeft: "20px",
+                    fontSize: "1.1rem",
+                  }}
+                >
+                  With us, you will always be up to date with the forever active
+                  foreign exchange market.
+                </Typography>
+              </Box>
               <Box
                 id="forexContentBox"
                 style={{
@@ -219,79 +241,140 @@ const FinalLandingPage = () => {
                   alignItems: "center",
                 }}
               >
-                <Box
+                <Typography
+                  id=""
+                  variant="h4"
+                  // component="div"
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
+                    paddingRight: "20px",
+                    paddingLeft: "20px",
+                    paddingBottom: "20px",
+                    fontFamily: "Bree Serif",
+                    color: "#999",
+                    fontSize: "2rem",
                   }}
                 >
+                  Main Features
+                </Typography>
+                <Box id="mainfeaturesbox">
                   <Box
-                    id="forexFeature1"
                     style={{
-                      boxShadow:
-                        "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
-                      width: "185px",
-                      height: "100px",
-                      backgroundColor: "white",
-                      borderRadius: "5px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
                     }}
                   >
-                    1) Main Feature
+                    <Box
+                      id="forexFeature1"
+                      style={{
+                        boxShadow:
+                          "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+                        width: "200px",
+                        height: "100px",
+                        backgroundColor: "#CFF4D2",
+                        borderRadius: "5px",
+                        textAlign: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontFamily: "League Spartan",
+                        fontSize: "1.8rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <Box style={{ width: "180px" }}>
+                        Real Time & Historical Price Charts
+                      </Box>
+                    </Box>
+                    <Typography
+                      id="forexFeatureExplanation1"
+                      variant="h6"
+                      // component="div"
+                      sx={{
+                        width: "220px",
+                        fontFamily: "Bree Serif !important",
+                        font: "caption",
+                        color: "black",
+                        textAlign: "justify",
+                        paddingTop: "10px",
+                        paddingBottom: "20px",
+                      }}
+                    >
+                      Your investment of tomorrow made easy, analyse the past
+                      and present price charts of the exchange markets.
+                    </Typography>
                   </Box>
-                  <Typography
-                    id="forexFeatureExplanation1"
-                    variant="h6"
-                    // component="div"
-                    sx={{
-                      width: "200px",
-                      fontFamily: "Bree Serif !important",
-                      font: "caption",
-                      color: "black",
-                      textAlign: "center",
-                      paddingTop: "10px",
-                      paddingBottom: "20px",
+                  <Box
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
                     }}
                   >
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </Typography>
+                    <Box
+                      id="forexFeature1"
+                      style={{
+                        boxShadow:
+                          "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+                        borderRadius: "5px",
+                        width: "200px",
+                        height: "100px",
+                        backgroundColor: "#CFF4D2",
+                        textAlign: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontFamily: "League Spartan",
+                        fontSize: "1.8rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <Box style={{ width: "180px" }}>Community Live Chat</Box>
+                    </Box>
+                    <Typography
+                      id="forexFeatureExplanation1"
+                      variant="h6"
+                      // component="div"
+                      sx={{
+                        width: "220px",
+                        fontFamily: "Bree Serif !important",
+                        font: "caption",
+                        color: "black",
+                        textAlign: "justify",
+                        paddingTop: "10px",
+                      }}
+                    >
+                      Not sure what to invest on? You can now chat with other
+                      experienced traders to gain insightful tips on the next
+                      possible market movement.
+                    </Typography>
+                  </Box>
                 </Box>
+              </Box>
+              <Box id="dashPic5box">
                 <Box
+                  id="dashPic5"
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
+                    width: "375px",
+                    height: "300px",
                   }}
+                ></Box>
+              </Box>
+              <Box id="forexButton3Box">
+                <Button
+                  id="forexButton3"
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#FFCE45",
+                    color: "#184D47",
+                    fontSize: "1.3rem",
+                    fontFamily: "Bree Serif",
+                    fontWeight: "bold",
+                  }}
+                  onClick={() => navigate("/forex")}
                 >
-                  <Box
-                    id="forexFeature1"
-                    style={{
-                      boxShadow:
-                        "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
-                      borderRadius: "5px",
-                      width: "185px",
-                      height: "100px",
-                      backgroundColor: "white",
-                    }}
-                  >
-                    2) Main Feature
-                  </Box>
-                  <Typography
-                    id="forexFeatureExplanation1"
-                    variant="h6"
-                    // component="div"
-                    sx={{
-                      width: "200px",
-                      fontFamily: "Bree Serif !important",
-                      font: "caption",
-                      color: "black",
-                      textAlign: "center",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </Typography>
-                </Box>
+                  Go to Forex
+                </Button>
               </Box>
               <Box
                 style={{
@@ -332,11 +415,8 @@ const FinalLandingPage = () => {
                 style={{
                   width: "275px",
                   height: "200px",
-                  backgroundColor: "white",
                 }}
-              >
-                Dashboard Picture
-              </Box>
+              ></Box>
             </Box>
             <Box
               style={{
@@ -364,7 +444,7 @@ const FinalLandingPage = () => {
           <Box
             id="cryptoAndDashboard"
             style={{
-              paddingTop: "25px",
+              paddingTop: "30px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -395,23 +475,26 @@ const FinalLandingPage = () => {
                   fontWeight: "bold",
                 }}
               >
-                Crypto.
+                Crypto Tracking.
               </Typography>
-              <Typography
-                id="cryptoExplanation"
-                variant="h6"
-                // component="div"
-                sx={{
-                  width: "250px",
-                  fontFamily: "Bree Serif !important",
-                  font: "caption",
-                  color: "black",
-                  paddingRight: "20px",
-                  paddingLeft: "20px",
-                }}
-              >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </Typography>
+              <Box id="cryptoTrackingDesc">
+                <Typography
+                  id="cryptoExplanation"
+                  variant="h6"
+                  // component="div"
+                  sx={{
+                    width: "250px",
+                    fontFamily: "Bree Serif !important",
+                    font: "caption",
+                    color: "black",
+                    paddingRight: "20px",
+                    paddingLeft: "20px",
+                    fontSize: "1.1rem",
+                  }}
+                >
+                  With us, you will not miss the next flight to the moon.
+                </Typography>
+              </Box>
               <Box
                 id="cryptoContentBox"
                 style={{
@@ -422,78 +505,140 @@ const FinalLandingPage = () => {
                   alignItems: "center",
                 }}
               >
-                <Box
+                <Typography
+                  id=""
+                  variant="h4"
+                  // component="div"
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
+                    paddingRight: "20px",
+                    paddingLeft: "20px",
+                    paddingBottom: "20px",
+                    fontFamily: "Bree Serif",
+                    color: "#999",
+                    fontSize: "2rem",
                   }}
                 >
+                  Main Features
+                </Typography>
+                <Box id="mainfeaturesbox">
                   <Box
                     style={{
-                      boxShadow:
-                        "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
-                      borderRadius: "5px",
-                      width: "185px",
-                      height: "100px",
-                      backgroundColor: "white",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
                     }}
                   >
-                    1) Main Feature
+                    <Box
+                      style={{
+                        boxShadow:
+                          "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+                        borderRadius: "5px",
+                        width: "200px",
+                        height: "100px",
+                        backgroundColor: "#CFF4D2",
+                        textAlign: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontFamily: "League Spartan",
+                        fontSize: "1.8rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <Box style={{ width: "150px" }}>Trending Coins</Box>
+                    </Box>
+                    <Typography
+                      id="cryptoFeatureExplanation1"
+                      variant="h6"
+                      // component="div"
+                      sx={{
+                        width: "220px",
+                        fontFamily: "Bree Serif !important",
+                        font: "caption",
+                        color: "black",
+                        textAlign: "justify",
+                        paddingTop: "10px",
+                        paddingBottom: "20px",
+                      }}
+                    >
+                      There are so many new coins emerging on the market daily,
+                      we identify and display the coins that are trending in the
+                      market. All this just for you.
+                    </Typography>
                   </Box>
-                  <Typography
-                    id="cryptoFeatureExplanation1"
-                    variant="h6"
-                    // component="div"
-                    sx={{
-                      width: "200px",
-                      fontFamily: "Bree Serif !important",
-                      font: "caption",
-                      color: "black",
-                      textAlign: "center",
-                      paddingTop: "10px",
-                      paddingBottom: "20px",
+                  <Box
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
                     }}
                   >
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </Typography>
+                    <Box
+                      style={{
+                        boxShadow:
+                          "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+                        borderRadius: "5px",
+                        width: "200px",
+                        height: "100px",
+                        backgroundColor: "#CFF4D2",
+                        textAlign: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontFamily: "League Spartan",
+                        fontSize: "1.8rem",
+                        fontWeight: "bold",
+                        lineHeight: "1.8rem",
+                      }}
+                    >
+                      {" "}
+                      <Box style={{ width: "150px" }}>Top Gainers & Losers</Box>
+                    </Box>
+                    <Typography
+                      id="cryptoFeatureExplanation1"
+                      variant="h6"
+                      // component="div"
+                      sx={{
+                        width: "220px",
+                        fontFamily: "Bree Serif !important",
+                        font: "caption",
+                        color: "black",
+                        textAlign: "justify",
+                        paddingTop: "10px",
+                      }}
+                    >
+                      Want to know the next Bitcoin? Our top 5 ranking table for
+                      the biggest gainers and losers will help you with exactly
+                      that.
+                    </Typography>
+                  </Box>
                 </Box>
+              </Box>
+              <Box id="dashPic6box">
                 <Box
+                  id="dashPic6"
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
+                    width: "375px",
+                    height: "300px",
+                    backgroundColor: "white",
                   }}
+                ></Box>
+              </Box>
+              <Box id="cryptoButton3Box">
+                <Button
+                  id="cryptoButton3"
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#FFCE45",
+                    color: "#184D47",
+                    fontSize: "1.3rem",
+                    fontFamily: "Bree Serif",
+                    fontWeight: "bold",
+                  }}
+                  onClick={() => navigate("/forex")}
                 >
-                  <Box
-                    style={{
-                      boxShadow:
-                        "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
-                      borderRadius: "5px",
-                      width: "185px",
-                      height: "100px",
-                      backgroundColor: "white",
-                    }}
-                  >
-                    {" "}
-                    2) Main Feature
-                  </Box>
-                  <Typography
-                    id="cryptoFeatureExplanation1"
-                    variant="h6"
-                    // component="div"
-                    sx={{
-                      width: "200px",
-                      fontFamily: "Bree Serif !important",
-                      font: "caption",
-                      color: "black",
-                      textAlign: "center",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </Typography>
-                </Box>
+                  Go to Crypto
+                </Button>
               </Box>
               <Box
                 style={{
@@ -535,11 +680,8 @@ const FinalLandingPage = () => {
                 style={{
                   width: "275px",
                   height: "200px",
-                  backgroundColor: "white",
                 }}
-              >
-                Dashboard Picture
-              </Box>
+              ></Box>
             </Box>
             <Box
               style={{
@@ -571,6 +713,8 @@ const FinalLandingPage = () => {
         style={{
           width: "100%",
           height: "400px",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <Divider
@@ -579,25 +723,91 @@ const FinalLandingPage = () => {
             color: "white",
             padding: "20px",
             fontFamily: "Bree Serif",
-            fontSize: "3rem",
+            fontSize: "2rem",
           }}
         >
-          About Us
+          <Box>Why Choose Us?</Box>
         </Divider>
-        <Box style={{ display: "flex", justifyContent: "center" }}>
-          <Typography
-            id="aboutUs"
-            variant="h6"
-            // component="div"
-            sx={{
-              width: "500px",
-              fontFamily: "Bree Serif !important",
-              color: "white",
-              textAlign: "center",
-            }}
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </Typography>
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Box style={{ paddingBottom: "20px" }}>
+            <Box>
+              <Typography
+                id="friendlyUI"
+                variant="h5"
+                // component="div"
+                style={{
+                  paddingRight: "20px",
+                  paddingLeft: "20px",
+                  paddingBottom: "0px",
+                  fontFamily: "League Spartan",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+              >
+                1) Friendly UI
+              </Typography>
+            </Box>
+            <Box>
+              <Typography
+                id="friendlyUIDesc"
+                variant="h6"
+                // component="div"
+                sx={{
+                  width: "280px",
+                  fontFamily: "Bree Serif !important",
+                  font: "caption",
+                  color: "white",
+                  paddingRight: "20px",
+                  paddingLeft: "20px",
+                  fontSize: "1.1rem",
+                }}
+              >
+                An interactable UI that is designed for a simple and
+                straightforward user experience, just for the users.
+              </Typography>
+            </Box>
+          </Box>
+          <Box style={{ paddingBottom: "20px" }}>
+            <Typography
+              id="allInOne"
+              variant="h5"
+              // component="div"
+              style={{
+                paddingRight: "20px",
+                paddingLeft: "20px",
+                paddingBottom: "0px",
+                fontFamily: "League Spartan",
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              2) All In One Platform
+            </Typography>
+            <Typography
+              id="allInOneDesc"
+              variant="h6"
+              // component="div"
+              sx={{
+                width: "280px",
+                fontFamily: "Bree Serif !important",
+                font: "caption",
+                color: "white",
+                paddingRight: "20px",
+                paddingLeft: "20px",
+                fontSize: "1.1rem",
+              }}
+            >
+              Discover variety of features provided such as the latest financial
+              news, live chatroom, multiple chart variation and more!
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </Box>
