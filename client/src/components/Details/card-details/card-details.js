@@ -11,9 +11,10 @@ export default function DetailsPage({ market, symbol, getCurrentPrice }) {
         id="graph-box"
         style={{
           display: "flex",
+          marginTop: "1em",
           flexDirection: "column",
-          alignItems: "center",
           justifyContent: "center",
+          alignItems: "center",
           margin: "0",
         }}
       >
@@ -21,7 +22,6 @@ export default function DetailsPage({ market, symbol, getCurrentPrice }) {
           id="box-1"
           bgcolor={"white"}
           sx={{
-            width: 320,
             color: (theme) =>
               theme.palette.mode === "dark" ? "grey.300" : "grey.800",
             border: "1px solid",
@@ -42,7 +42,8 @@ export default function DetailsPage({ market, symbol, getCurrentPrice }) {
           bgcolor={"white"}
           sx={{
             marginTop: "1em",
-            padding: "0.6em",
+            justifyContent: "center",
+            width: 319,
             color: (theme) =>
               theme.palette.mode === "dark" ? "grey.300" : "grey.800",
             border: "1px solid",
@@ -50,7 +51,7 @@ export default function DetailsPage({ market, symbol, getCurrentPrice }) {
               theme.palette.mode === "dark" ? "grey.800" : "grey.300",
             borderRadius: 2,
           }}
-          style={{ minHeight: "400px", minWidth: "300px", display: "flex" }}
+          style={{ minHeight: "400px", display: "flex" }}
         >
           <DetailsComment />
         </Box>

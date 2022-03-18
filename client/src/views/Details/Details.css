@@ -27,14 +27,12 @@ body {
 
 .content-title-details {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  margin: 1em;
+  justify-content: space-evenly;
 }
 .company-name {
-  font-size: x-large;
+  font-size: 19px;
   font-weight: 800;
-  padding-right: 0.5em;
 }
 .company-box {
   align-items: center;
@@ -51,12 +49,12 @@ body {
 
 .currency-price {
   font-size: large;
-  font-weight: 300;
+  font-weight: 100;
   padding-right: 0.5em;
 }
 
 .currency {
-  font-size: large;
+ 
   font-weight: 800;
   padding-right: 0.5em;
 }
@@ -66,318 +64,30 @@ body {
   padding-right: 0.5em;
 }
 .currency-volatality {
-  font-size: large;
-  font-weight: 500;
-  padding-right: 0.5em;
+  font-weight: 200;
 }
 
 .content-title-left {
   display: flex;
-  justify-content: center;
-  margin-left: 2em;
-  margin-top: 0.8em;
-  font-size: medium;
-  /* font-weight: 400; */
 }
+
 .content-title-right-icon {
   width: 12.5vw;
-  padding: 5px;
-  margin-left: 2em;
-  margin-top: 2em;
+  padding-left: 3em;
 }
 
-@media (max-width: 320px) {
-  .content-title-left {
-    font-size: 1rem;
-    /* font-weight: 100; */
-    margin-left: 3em;
+
+@media (min-width: 768px){
+  .content-title-details{
+    justify-content: flex-start;
   }
-  .company-name {
-    font-size: smaller;
-    font-weight: 600;
-    padding-right: 0.5em;
-  }
-  .currency {
-    font-size: xx-small;
-    font-weight: 800;
-    padding-right: 0.5em;
   }
 
-  .currency-price {
-    font-size: xx-small;
-    font-weight: 300;
-    padding-right: 0.5em;
-  }
-  .currency-volatality {
-    font-size: xx-small;
-    font-weight: 500;
-    padding-right: 0.5em;
-  }
+  @media (min-width: 1024px){
+    .content-title-details{
+      margin: 2em 0 2em 2em;
+      justify-content: flex-start;
+    }
+    }
 
-  .content-title-right-icon {
-    width: 30vw;
-    margin: 9px;
-  }
-  .icon-company {
-    margin-right: 0.2em;
-  }
-}
-
-@media (min-width: 375px) {
-  .content-title-left {
-    font-size: 1rem;
-    /* font-weight: 100; */
-    margin-left: 2em;
-  }
-  .company-name {
-    font-size: smaller;
-    font-weight: 600;
-    padding-right: 0.5em;
-  }
-  .currency {
-    font-size: xx-small;
-    font-weight: 800;
-    padding-right: 0.5em;
-  }
-
-  .currency-price {
-    font-size: xx-small;
-    font-weight: 300;
-    padding-right: 0.5em;
-  }
-  .currency-volatality {
-    font-size: xx-small;
-    font-weight: 500;
-    padding-right: 0.5em;
-  }
-
-  .content-title-right-icon {
-    width: 30vw;
-    margin: 9px;
-  }
-  .icon-company {
-    margin-right: 0.2em;
-  }
-}
-
-@media (min-width: 375px) {
-  .content-title-left {
-    font-size: 1rem;
-    /* font-weight: 100; */
-    margin-left: 3em;
-  }
-  .company-name {
-    font-size: smaller;
-    font-weight: 600;
-    padding-right: 0.5em;
-  }
-  .currency {
-    font-size: xx-small;
-    font-weight: 800;
-    padding-right: 0.5em;
-  }
-
-  .currency-price {
-    font-size: xx-small;
-    font-weight: 300;
-    padding-right: 0.5em;
-  }
-  .currency-volatality {
-    font-size: xx-small;
-    font-weight: 500;
-    padding-right: 0.5em;
-  }
-
-  .content-title-right-icon {
-    width: 27vw;
-    margin: 9px;
-  }
-  .icon-company {
-    margin-right: 0.2em;
-  }
-}
-
-@media (min-width: 425px) {
-  .content-title-left {
-    font-size: 1rem;
-    /* font-weight: 100; */
-    margin-left: 3.5em;
-  }
-  .company-name {
-    font-size: smaller;
-    font-weight: 600;
-    padding-right: 0.5em;
-  }
-  .currency {
-    font-size: xx-small;
-    font-weight: 800;
-    padding-right: 0.5em;
-  }
-
-  .currency-price {
-    font-size: xx-small;
-    font-weight: 300;
-    padding-right: 0.5em;
-  }
-  .currency-volatality {
-    font-size: xx-small;
-    font-weight: 500;
-    padding-right: 0.5em;
-  }
-
-  .content-title-right-icon {
-    width: 26vw;
-    margin: 9px;
-  }
-  .icon-company {
-    margin-right: 0.2em;
-  }
-}
-
-@media (min-width: 768px) {
-  .content-title-left {
-    font-size: 1rem;
-    /* font-weight: 100; */
-    margin-left: 7em;
-  }
-  .company-name {
-    font-size: medium;
-    font-weight: 600;
-    padding-right: 0.5em;
-  }
-  .currency {
-    font-size: small;
-    font-weight: 800;
-    padding-right: 0.5em;
-  }
-
-  .currency-price {
-    font-size: small;
-    font-weight: 300;
-    padding-right: 0.5em;
-  }
-  .currency-volatality {
-    font-size: small;
-    font-weight: 500;
-    padding-right: 0.5em;
-  }
-
-  .content-title-right-icon {
-    width: 20vw;
-    margin: 9px;
-  }
-  .icon-company {
-    margin-right: 0.2em;
-  }
-}
-
-@media (min-width: 1024px) {
-  .content-title-left {
-    font-size: 1rem;
-    /* font-weight: 100; */
-    margin-left: 1.5em;
-  }
-  .company-name {
-    font-size: medium;
-    font-weight: 600;
-    padding-right: 0.5em;
-  }
-  .currency {
-    font-size: small;
-    font-weight: 800;
-    padding-right: 0.5em;
-  }
-
-  .currency-price {
-    font-size: small;
-    font-weight: 300;
-    padding-right: 0.5em;
-  }
-  .currency-volatality {
-    font-size: small;
-    font-weight: 500;
-    padding-right: 0.5em;
-  }
-
-  .content-title-right-icon {
-    width: 31.5vw;
-    margin: 9px;
-  }
-  .icon-company {
-    margin-right: 0.2em;
-  }
-}
-
-@media (min-width: 1440px) {
-  .content-title-left {
-    font-size: 1rem;
-    /* font-weight: 100; */
-    margin-left: 2.5em;
-  }
-  .company-name {
-    font-size: medium;
-    font-weight: 600;
-    padding-right: 0.5em;
-  }
-  .currency {
-    font-size: small;
-    font-weight: 800;
-    padding-right: 0.5em;
-  }
-
-  .currency-price {
-    font-size: small;
-    font-weight: 300;
-    padding-right: 0.5em;
-  }
-  .currency-volatality {
-    font-size: small;
-    font-weight: 500;
-    padding-right: 0.5em;
-  }
-
-  .content-title-right-icon {
-    width: 30.5vw;
-    margin: 9px;
-  }
-  .icon-company {
-    margin-right: 0.2em;
-  }
-}
-
-@media (min-width: 2560px) {
-  .content-title-left {
-    font-size: 1rem;
-    /* font-weight: 100; */
-    margin-left: 5em;
-  }
-  .company-name {
-    font-size: medium;
-    font-weight: 600;
-    padding-right: 0.5em;
-  }
-  .currency {
-    font-size: small;
-    font-weight: 800;
-    padding-right: 0.5em;
-  }
-
-  .currency-price {
-    font-size: small;
-    font-weight: 300;
-    padding-right: 0.5em;
-  }
-  .currency-volatality {
-    font-size: small;
-    font-weight: 500;
-    padding-right: 0.5em;
-  }
-
-  .content-title-right-icon {
-    width: 29vw;
-    margin: 9px;
-  }
-  .icon-company {
-    margin-right: 0.2em;
-  }
-}
+ 

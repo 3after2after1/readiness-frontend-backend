@@ -50,7 +50,7 @@ const App = () => {
               element={<PasswordChangeSuccessPage />}
             ></Route>
             <Route path="/emailverify" element={<EmailVerify />}></Route>
-            <Route path="/crypto" element={<CryptoPage />} />
+            {/* <Route path="/crypto" element={<CryptoPage />} /> */}
             <Route path="/details/:market/:symbol" element={<Details />} />
             <Route path="/favourite" element={<Favourite />}></Route>
             <Route
