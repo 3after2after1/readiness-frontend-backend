@@ -3,7 +3,9 @@ version: "3.9"
 services:
   backend:
     restart: always
-    image: rickythain/trex-api
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
     container_name: readiness-challenge-backend
     volumes:
       - /app/node_modules
@@ -24,15 +26,8 @@ services:
       REDIS_HOST: cache
       REDIS_PORT: 6379
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-    # networks:
-    #   - library-mern-api
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: any
-      update_config:
-        parallelism: 1
-        delay: 15s
+    networks:
+      - library-mern-api
 
   cache:
     image: redis:latest
@@ -41,63 +36,33 @@ services:
     #   - "6378:6379"
     volumes:
       - cache:/data
-    # networks:
-    #   - library-mern-api
+    networks:
+      - library-mern-api
 
   web-scraper:
-    image: rickythain/trex-dailyfx-scrapper
+    build: ./services/web-scraper
     depends_on:
       - cache
-    # networks:
-    #   - library-mern-api
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: any
-      update_config:
-        parallelism: 1
-        delay: 15s
+    networks:
+      - library-mern-api
 
   deriv-data-processor:
-    image: rickythain/trex-deriv-processor
+    build:
+      context: ./services/deriv-data-processor
+      dockerfile: Dockerfile.dev
     depends_on:
       - cache
-    # networks:
-    #   - library-mern-api
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: any
-      update_config:
-        parallelism: 1
-        delay: 15s
+    networks:
+      - library-mern-api
 
   cryptocompare-data-processor:
-    image: rickythain/trex-cryptocompare-processor
+    build:
+      context: ./services/cryptocompare-data-processor
+      dockerfile: Dockerfile
     depends_on:
       - cache
-    # networks:
-    #   - library-mern-api
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: any
-      update_config:
-        parallelism: 1
-        delay: 15s
-
-  # shepherd:
-  #   image: mazzolino/shepherd
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.role == manager
-  #   environment:
-  #     SLEEP_TIME: "1m"
-  #     IGNORELIST_SERVICES: shepherd cache
-  #     ROLLBACK_ON_FAILURE: "true"
+    networks:
+      - library-mern-api
 
   # client:
   #   restart: always
@@ -129,9 +94,9 @@ services:
   #   networks:
   #     - library-mern-api
 
-# networks:
-#   library-mern-api:
-#     driver: bridge
+networks:
+  library-mern-api:
+    driver: bridge
 
 volumes:
   mongodb-data:

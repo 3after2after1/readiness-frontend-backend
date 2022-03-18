@@ -33,10 +33,18 @@ const UserContext = ({ children }) => {
 
   const automatedRocketChatSSO = async (accountData) => {
     const rocketToken = await rocketChatSSO(accountData);
-    setUserRocketChatToken(rocketToken);
+    if (rocketToken) {
+      setUserRocketChatToken(rocketToken);
+    } else {
+      setUserRocketChatToken(null);
+    }
+
+    return;
   };
 
   useEffect(() => {
+    let isSubscribed = true;
+
     onAuthStateChanged(auth, (user) => {
       console.log("auth state change");
       if (user) {
@@ -45,9 +53,12 @@ const UserContext = ({ children }) => {
         setUser(null);
       }
     });
+
+    return () => (isSubscribed = false);
   }, []);
 
   useEffect(() => {
+    let isSubscribed = true;
     async function rocketChatSSOTrigger() {
       console.log("GET AUTH CONTEXT TRIGGER");
       if (user !== null && user.uid && username !== null) {
@@ -66,9 +77,11 @@ const UserContext = ({ children }) => {
       }
     }
     rocketChatSSOTrigger();
+    return () => (isSubscribed = false);
   }, [username]);
 
   useEffect(() => {
+    let isSubscribed = true;
     console.log("User Context Firebase Username Update");
     if (user !== null && user.uid) {
       const profileStoreRef = doc(db, "userprofile", user.uid);
@@ -86,6 +99,7 @@ const UserContext = ({ children }) => {
         unsubscribe();
       };
     }
+    return () => (isSubscribed = false);
   }, [user]);
 
   useEffect(() => {
@@ -113,6 +127,7 @@ const UserContext = ({ children }) => {
     <UserAccount.Provider
       value={{
         user,
+        username,
         userRocketChatToken,
         automatedRocketChatSSO,
       }}
