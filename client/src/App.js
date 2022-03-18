@@ -15,9 +15,9 @@ import Details from "./views/Details/Details";
 import Footer from "./components/Footer/Footer";
 import AboutUs from "./views/AboutUs/AboutUs";
 import SnackBarNotify from "./components/SnackBarNotify";
-import Watchlist from "./views/WatchList/Watchlist";
 import Favourite from "./views/Favourite/Favourite";
 import ErrorPage from "./views/ErrorPage/ErrorPage";
+import ForexHome from "./views/ForexPage/ForexHome";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -50,8 +50,9 @@ const App = () => {
               element={<PasswordChangeSuccessPage />}
             ></Route>
             <Route path="/emailverify" element={<EmailVerify />}></Route>
-            {/* <Route path="/crypto" element={<CryptoPage />} /> */}
-            {/* <Route path="/details/:market/:symbol" element={<Details />} /> */}
+            <Route path="/crypto" element={<CryptoPage />} />
+            <Route path="/forex" element={<ForexHome />} />
+            <Route path="/details/:market/:symbol" element={<Details />} />
             <Route path="/favourite" element={<Favourite />}></Route>
             {/* <Route
               path="/details"
