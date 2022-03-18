@@ -19,28 +19,13 @@ var forex = require("./routes/forex");
 const watchlist = require("./routes/watchlist");
 const crypto = require("./routes/crypto");
 const news = require("./routes/news");
+const forexhome = require("./routes/forexhome");
 
 app.use("/watchlist", watchlist);
 app.use("/forex", forex);
 app.use("/crypto", crypto);
 app.use("/news", news);
-
-app.get("/users", async (req, res) => {
-  const client = new MongoClient(uri);
-  try {
-    await client.connect();
-    const database = client.db("app-data");
-    const users = database.collection("users");
-
-    const returnedUsers = await users.find().toArray();
-    res.send(returnedUsers);
-  } catch (error) {
-    res.send(error);
-  } finally {
-    console.log(client);
-    await client.close();
-  }
-});
+app.use("/forexhome", forexhome);
 
 app.get("/test", (req, res) => {
   res.send({ Status: "Success" });
