@@ -3,12 +3,13 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
+import { BACKEND_DOMAIN } from "../../api/backend";
 
 const Carousel = () => {
   const [trending, setTrending] = useState([]);
 
   const fetchTrendingCoins = async () => {
-    const coins = await axios.get("http://localhost:5000/crypto/trending");
+    const coins = await axios.get(`${BACKEND_DOMAIN}/crypto/trending`);
     console.log(coins);
     setTrending(coins.data);
   };

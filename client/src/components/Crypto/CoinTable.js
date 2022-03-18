@@ -18,14 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { Pagination } from "@mui/material";
 import RankingTable from "./RankingTable";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
-
-const formatPrice = (price) => {
-  return `$${price.toFixed(5)}`;
-};
-
-const formatPercentageChange = (change) => {
-  return `${change > 0 ? "+ " : " "}${change.toFixed(5)} %`;
-};
+import { BACKEND_DOMAIN } from "../../api/backend";
 
 const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -41,7 +34,7 @@ const CoinTable = () => {
 
   const fetchCoins = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/crypto/table");
+      const { data } = await axios.get(`${BACKEND_DOMAIN}/crypto/table`);
       setCoins(data);
       setLoading(false);
     } catch (error) {
