@@ -40,6 +40,7 @@ const LoginPage = () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
 
+      //TO REMOVE LATER( DLETE BELOW COMMENTED CODE, no longer needed, probably)
       // const profileStoreRef = doc(db, "userprofile", result.user.uid);
       // const profileStoreSnap = await getDoc(profileStoreRef);
 
@@ -58,6 +59,8 @@ const LoginPage = () => {
       //   pass: result.user.uid,
       //   displayname: username,
       // });
+      //TO REMOVE LATER( DLETE ABOVE COMMENTED CODE, no longer needed, probably)
+
       let info = {
         userId: result.user.uid,
       };
