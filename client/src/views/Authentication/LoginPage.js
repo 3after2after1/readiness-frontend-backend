@@ -19,7 +19,7 @@ import {
   signInWithPopup,
 } from "@firebase/auth";
 import { GeneralState } from "../../contexts/GeneralContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { auth } from "../../services/firebase";
 import { WatchListState } from "../../contexts/WatchListContext";
 
@@ -32,6 +32,19 @@ const LoginPage = () => {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const { watchList, dispatch } = WatchListState();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state) {
+      let from = location.state.from.pathname.replace("/", "");
+      generateSnackbar({
+        newShow: true,
+        newMessage: `Sign in or sign up to use the ${from} feature.`,
+        newType: "error",
+      });
+    }
+  }, []);
+
   useEffect(() => {
     console.log(watchList);
   }, [watchList]);

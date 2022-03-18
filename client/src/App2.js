@@ -12,9 +12,11 @@ import PasswordChangeSuccessPage from "./views/Authentication/PasswordChangeSucc
 import EmailVerify from "./views/Authentication/EmailVerify";
 import CryptoPage from "./views/CryptoPage/CryptoPage";
 import Details from "./views/Details/Details";
+import SnackBarNotify from "./components/SnackBarNotify";
 import Footer from "./components/Footer/Footer";
-import NotFound from "./views/NotFound";
+// import NotFound from "./views/NotFound";
 import AboutUs from "./views/AboutUs/AboutUs";
+import Favourite from "./views/Favourite/Favourite";
 import RequireAuth from "./views/RequireAuth";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -51,14 +53,13 @@ const App = () => {
             <Route path="/crypto" element={<CryptoPage />} />
             <Route element={<RequireAuth />}>
               <Route path="/details/:market/:symbol" element={<Details />} />
-              <Route
-                path="/details"
-                element={<Details market="forex" symbol="EURUSD" />}
-              />
+              <Route path="/favourite" element={<Favourite />}></Route>
             </Route>
-            <Route path="*" element={<NotFound />} />
+            {/* <Route path="*" element={<NotFound />} /> */}
           </Routes>
         </Box>
+        <SnackBarNotify />
+
         <Footer />
       </Box>
     </BrowserRouter>
