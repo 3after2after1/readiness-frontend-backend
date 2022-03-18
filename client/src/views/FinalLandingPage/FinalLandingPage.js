@@ -232,122 +232,126 @@ const FinalLandingPage = () => {
                   foreign exchange market.
                 </Typography>
               </Box>
-              <Box
-                id="forexContentBox"
-                style={{
-                  paddingTop: "15px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  id=""
-                  variant="h4"
-                  // component="div"
+              <Box style={{ display: "flex", justifyContent: "center" }}>
+                <Box
+                  id="forexContentBox"
                   style={{
-                    paddingRight: "20px",
-                    paddingLeft: "20px",
-                    paddingBottom: "20px",
-                    fontFamily: "Bree Serif",
-                    color: "#999",
-                    fontSize: "2rem",
+                    paddingTop: "15px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                 >
-                  Main Features
-                </Typography>
-                <Box id="mainfeaturesbox">
-                  <Box
+                  <Typography
+                    id=""
+                    variant="h4"
+                    // component="div"
                     style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
+                      paddingRight: "20px",
+                      paddingLeft: "20px",
+                      paddingBottom: "20px",
+                      fontFamily: "Bree Serif",
+                      color: "#999",
+                      fontSize: "2rem",
                     }}
                   >
+                    Main Features
+                  </Typography>
+                  <Box id="mainfeaturesbox">
                     <Box
-                      id="forexFeature1"
                       style={{
-                        boxShadow:
-                          "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
-                        width: "200px",
-                        height: "100px",
-                        backgroundColor: "#CFF4D2",
-                        borderRadius: "5px",
-                        textAlign: "center",
                         display: "flex",
+                        flexDirection: "column",
                         alignItems: "center",
-                        justifyContent: "center",
-                        fontFamily: "League Spartan",
-                        fontSize: "1.8rem",
-                        fontWeight: "bold",
                       }}
                     >
-                      <Box style={{ width: "180px" }}>
-                        Real Time & Historical Price Charts
+                      <Box
+                        id="forexFeature1"
+                        style={{
+                          boxShadow:
+                            "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+                          width: "200px",
+                          height: "100px",
+                          backgroundColor: "#CFF4D2",
+                          borderRadius: "5px",
+                          textAlign: "center",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontFamily: "League Spartan",
+                          fontSize: "1.8rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <Box style={{ width: "180px" }}>
+                          Real Time & Historical Price Charts
+                        </Box>
                       </Box>
+                      <Typography
+                        id="forexFeatureExplanation1"
+                        variant="h6"
+                        // component="div"
+                        sx={{
+                          width: "220px",
+                          fontFamily: "Bree Serif !important",
+                          font: "caption",
+                          color: "black",
+                          textAlign: "justify",
+                          paddingTop: "10px",
+                          paddingBottom: "20px",
+                        }}
+                      >
+                        Your investment of tomorrow made easy, analyse the past
+                        and present price charts of the exchange markets.
+                      </Typography>
                     </Box>
-                    <Typography
-                      id="forexFeatureExplanation1"
-                      variant="h6"
-                      // component="div"
-                      sx={{
-                        width: "220px",
-                        fontFamily: "Bree Serif !important",
-                        font: "caption",
-                        color: "black",
-                        textAlign: "justify",
-                        paddingTop: "10px",
-                        paddingBottom: "20px",
-                      }}
-                    >
-                      Your investment of tomorrow made easy, analyse the past
-                      and present price charts of the exchange markets.
-                    </Typography>
-                  </Box>
-                  <Box
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
                     <Box
-                      id="forexFeature1"
                       style={{
-                        boxShadow:
-                          "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
-                        borderRadius: "5px",
-                        width: "200px",
-                        height: "100px",
-                        backgroundColor: "#CFF4D2",
-                        textAlign: "center",
                         display: "flex",
+                        flexDirection: "column",
                         alignItems: "center",
-                        justifyContent: "center",
-                        fontFamily: "League Spartan",
-                        fontSize: "1.8rem",
-                        fontWeight: "bold",
                       }}
                     >
-                      <Box style={{ width: "180px" }}>Community Live Chat</Box>
+                      <Box
+                        id="forexFeature1"
+                        style={{
+                          boxShadow:
+                            "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+                          borderRadius: "5px",
+                          width: "200px",
+                          height: "100px",
+                          backgroundColor: "#CFF4D2",
+                          textAlign: "center",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontFamily: "League Spartan",
+                          fontSize: "1.8rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <Box style={{ width: "180px" }}>
+                          Community Live Chat
+                        </Box>
+                      </Box>
+                      <Typography
+                        id="forexFeatureExplanation1"
+                        variant="h6"
+                        // component="div"
+                        sx={{
+                          width: "220px",
+                          fontFamily: "Bree Serif !important",
+                          font: "caption",
+                          color: "black",
+                          textAlign: "justify",
+                          paddingTop: "10px",
+                        }}
+                      >
+                        Not sure what to invest on? You can now chat with other
+                        experienced traders to gain insightful tips on the next
+                        possible market movement.
+                      </Typography>
                     </Box>
-                    <Typography
-                      id="forexFeatureExplanation1"
-                      variant="h6"
-                      // component="div"
-                      sx={{
-                        width: "220px",
-                        fontFamily: "Bree Serif !important",
-                        font: "caption",
-                        color: "black",
-                        textAlign: "justify",
-                        paddingTop: "10px",
-                      }}
-                    >
-                      Not sure what to invest on? You can now chat with other
-                      experienced traders to gain insightful tips on the next
-                      possible market movement.
-                    </Typography>
                   </Box>
                 </Box>
               </Box>
@@ -495,122 +499,126 @@ const FinalLandingPage = () => {
                   With us, you will not miss the next flight to the moon.
                 </Typography>
               </Box>
-              <Box
-                id="cryptoContentBox"
-                style={{
-                  paddingTop: "15px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  id=""
-                  variant="h4"
-                  // component="div"
+              <Box style={{ display: "flex", justifyContent: "center" }}>
+                <Box
+                  id="cryptoContentBox"
                   style={{
-                    paddingRight: "20px",
-                    paddingLeft: "20px",
-                    paddingBottom: "20px",
-                    fontFamily: "Bree Serif",
-                    color: "#999",
-                    fontSize: "2rem",
+                    paddingTop: "15px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  Main Features
-                </Typography>
-                <Box id="mainfeaturesbox">
-                  <Box
+                  <Typography
+                    id=""
+                    variant="h4"
+                    // component="div"
                     style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
+                      paddingRight: "20px",
+                      paddingLeft: "20px",
+                      paddingBottom: "20px",
+                      fontFamily: "Bree Serif",
+                      color: "#999",
+                      fontSize: "2rem",
                     }}
                   >
+                    Main Features
+                  </Typography>
+                  <Box id="mainfeaturesbox">
                     <Box
                       style={{
-                        boxShadow:
-                          "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
-                        borderRadius: "5px",
-                        width: "200px",
-                        height: "100px",
-                        backgroundColor: "#CFF4D2",
-                        textAlign: "center",
                         display: "flex",
+                        flexDirection: "column",
                         alignItems: "center",
-                        justifyContent: "center",
-                        fontFamily: "League Spartan",
-                        fontSize: "1.8rem",
-                        fontWeight: "bold",
                       }}
                     >
-                      <Box style={{ width: "150px" }}>Trending Coins</Box>
+                      <Box
+                        style={{
+                          boxShadow:
+                            "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+                          borderRadius: "5px",
+                          width: "200px",
+                          height: "100px",
+                          backgroundColor: "#CFF4D2",
+                          textAlign: "center",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontFamily: "League Spartan",
+                          fontSize: "1.8rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <Box style={{ width: "150px" }}>Trending Coins</Box>
+                      </Box>
+                      <Typography
+                        id="cryptoFeatureExplanation1"
+                        variant="h6"
+                        // component="div"
+                        sx={{
+                          width: "220px",
+                          fontFamily: "Bree Serif !important",
+                          font: "caption",
+                          color: "black",
+                          textAlign: "justify",
+                          paddingTop: "10px",
+                          paddingBottom: "20px",
+                        }}
+                      >
+                        There are so many new coins emerging on the market
+                        daily, we identify and display the coins that are
+                        trending in the market. All this just for you.
+                      </Typography>
                     </Box>
-                    <Typography
-                      id="cryptoFeatureExplanation1"
-                      variant="h6"
-                      // component="div"
-                      sx={{
-                        width: "220px",
-                        fontFamily: "Bree Serif !important",
-                        font: "caption",
-                        color: "black",
-                        textAlign: "justify",
-                        paddingTop: "10px",
-                        paddingBottom: "20px",
-                      }}
-                    >
-                      There are so many new coins emerging on the market daily,
-                      we identify and display the coins that are trending in the
-                      market. All this just for you.
-                    </Typography>
-                  </Box>
-                  <Box
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
                     <Box
                       style={{
-                        boxShadow:
-                          "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
-                        borderRadius: "5px",
-                        width: "200px",
-                        height: "100px",
-                        backgroundColor: "#CFF4D2",
-                        textAlign: "center",
                         display: "flex",
+                        flexDirection: "column",
                         alignItems: "center",
-                        justifyContent: "center",
-                        fontFamily: "League Spartan",
-                        fontSize: "1.8rem",
-                        fontWeight: "bold",
-                        lineHeight: "1.8rem",
                       }}
                     >
-                      {" "}
-                      <Box style={{ width: "150px" }}>Top Gainers & Losers</Box>
+                      <Box
+                        style={{
+                          boxShadow:
+                            "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+                          borderRadius: "5px",
+                          width: "200px",
+                          height: "100px",
+                          backgroundColor: "#CFF4D2",
+                          textAlign: "center",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontFamily: "League Spartan",
+                          fontSize: "1.8rem",
+                          fontWeight: "bold",
+                          lineHeight: "1.8rem",
+                        }}
+                      >
+                        {" "}
+                        <Box style={{ width: "150px" }}>
+                          Top Gainers & Losers
+                        </Box>
+                      </Box>
+                      <Typography
+                        id="cryptoFeatureExplanation1"
+                        variant="h6"
+                        // component="div"
+                        sx={{
+                          width: "220px",
+                          fontFamily: "Bree Serif !important",
+                          font: "caption",
+                          color: "black",
+                          textAlign: "justify",
+                          paddingTop: "10px",
+                        }}
+                      >
+                        Want to know the next Bitcoin? Our top 5 ranking table
+                        for the biggest gainers and losers will help you with
+                        exactly that.
+                      </Typography>
                     </Box>
-                    <Typography
-                      id="cryptoFeatureExplanation1"
-                      variant="h6"
-                      // component="div"
-                      sx={{
-                        width: "220px",
-                        fontFamily: "Bree Serif !important",
-                        font: "caption",
-                        color: "black",
-                        textAlign: "justify",
-                        paddingTop: "10px",
-                      }}
-                    >
-                      Want to know the next Bitcoin? Our top 5 ranking table for
-                      the biggest gainers and losers will help you with exactly
-                      that.
-                    </Typography>
                   </Box>
                 </Box>
               </Box>
