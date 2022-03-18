@@ -36,10 +36,17 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (location.state) {
-      let from = location.state.from.pathname.replace("/", "");
+      let from = location.state.from.pathname;
+      let feature = "";
+      if (from.includes("details")) {
+        feature =
+          "details for " + from.replace(/\/details\/((forex)|(crypto))\//, "");
+      } else if (from.includes("favourite")) {
+        feature = "watch list";
+      }
       generateSnackbar({
         newShow: true,
-        newMessage: `Sign in or sign up to use the ${from} feature.`,
+        newMessage: `Sign in or sign up to access the ${feature} feature.`,
         newType: "error",
       });
     }
