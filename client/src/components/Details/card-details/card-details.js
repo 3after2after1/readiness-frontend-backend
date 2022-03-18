@@ -50,7 +50,13 @@ export default function DetailsPage({ market, symbol, getCurrentPrice }) {
               theme.palette.mode === "dark" ? "grey.800" : "grey.300",
             borderRadius: 2,
           }}
-          style={{ minHeight: "400px", minWidth: "300px", display: "flex" }}
+          style={{
+            height: "100%",
+            minHeight: "400px",
+            minWidth: "300px",
+            display: "flex",
+            backgroundColor: "grey",
+          }}
         >
           <DetailsComment />
         </Box>
