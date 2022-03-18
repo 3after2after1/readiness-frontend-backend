@@ -4,6 +4,7 @@ import Chart from "react-apexcharts";
 import { ChartProperties } from "./ChartProperties";
 import { etoroMapper } from "./etoroMapper";
 import axios from "axios";
+import { BACKEND_DOMAIN } from "../../api/backend";
 
 function StaticChart({ id, range }) {
   const [series, setSeries] = useState([
@@ -17,22 +18,24 @@ function StaticChart({ id, range }) {
   useEffect(() => {
     const getLatestPrice = () => {
       try {
-        axios.get("http://localhost:5002/livepricefeed").then(({ data }) => {
-          let filteredData = data[etoroMapper[id]][range]["prices"].map(
-            (row) => {
-              return [row.ToTime, row.Price];
-            }
-          );
-          let close = data[etoroMapper[id]][range]["close"];
-          setClose(close);
+        axios
+          .get(`${BACKEND_DOMAIN}/forexhome/historicaldata`)
+          .then(({ data }) => {
+            let filteredData = data[etoroMapper[id]][range]["prices"].map(
+              (row) => {
+                return [row.ToTime, row.Price];
+              }
+            );
+            let close = data[etoroMapper[id]][range]["close"];
+            setClose(close);
 
-          setSeries([
-            {
-              data: filteredData,
-            },
-          ]);
-          setLoading(false);
-        });
+            setSeries([
+              {
+                data: filteredData,
+              },
+            ]);
+            setLoading(false);
+          });
       } catch (error) {
         console.log(error);
       }

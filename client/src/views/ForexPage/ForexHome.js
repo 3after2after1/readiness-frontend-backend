@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import NewsComponent from "../../components/News/NewsComponent";
 import "./ForexHome.css";
-// import { BACKEND_DOMAIN } from "../../api/backend";
+import { BACKEND_DOMAIN } from "../../api/backend";
 const data = require("./majorPair.json");
 
 function ForexHome() {
@@ -16,7 +16,7 @@ function ForexHome() {
 
   let navigate = useNavigate();
   useEffect(() => {
-    let sse = new EventSource(`http://localhost:5001/tick?symbol=[${param}]`);
+    let sse = new EventSource(`${BACKEND_DOMAIN}/forexhome/tick`);
     sse.onmessage = (event) => {
       let next = JSON.parse(JSON.parse(event.data));
       // console.log("event stream:", next);

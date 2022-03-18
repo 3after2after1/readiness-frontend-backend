@@ -11,7 +11,7 @@
   "GBPJPY=X": "GBP/JPY",
   "AUDCAD=X": "AUD/CAD",
   "GBPUSD=X": "GBP/USD",
-  "USDCAD=X": "USD/CAD",
-  "USDCHF=X": "USD/CHF",
-  "USDJPY=X": "USD/JPY"
+  "CAD=X": "USD/CAD",
+  "CHF=X": "USD/CHF",
+  "JPY=X": "USD/JPY"
 }

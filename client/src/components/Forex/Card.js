@@ -22,7 +22,6 @@ const emoji = {
 
 const CardHolder = ({ id, change, price, direction, range }) => {
   let navigate = useNavigate();
-  console.log("id", data[id]);
   return (
     <Card
       id="forex-card-box-new"
