@@ -129,7 +129,7 @@ router.get("/tick", (req, res) => {
 
           if (key === tick_channel) {
             redis.get(key).then((result, err) => {
-              res.write("data: " + JSON.stringify(result) + "\n\n");
+              res.write("data: " + result + "\n\n");
             });
           }
         });
