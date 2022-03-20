@@ -128,19 +128,21 @@ ws.onmessage = (msg) => {
       }
       let processedTick = changeTickFormat(msg.tick);
       redis.set(tickKey, JSON.stringify(processedTick));
+    } else if (msg.error.code === "MarketIsClosed") {
+      let symbol = msg.echo_req.ticks.replace("frx", "");
+      console.log("publishing error msg ", symbol);
+      pub.publish(
+        "FOREX_ERROR_MESSAGES",
+        JSON.stringify({ symbol: symbol, error: msg.error.code })
+      );
     }
-
-    // check if data was saved in redis
-    // redis.get(`tick_${msg.tick.symbol}`).then((result, err) => {
-    //   console.log("result ", JSON.parse(result));
-    // });
   }
 
   // get historical candle data
   if (msg.msg_type === "candles") {
     // process OHLC data
     let processedData = processHistoricalOHLC(msg.candles);
-    console.log("processed ", processedData);
+    // console.log("processed ", processedData);
     let message = { data: processedData, id: msg.req_id };
 
     pub.publish("HISTORICAL_OHLC", JSON.stringify(message));
@@ -156,7 +158,10 @@ ws.onmessage = (msg) => {
   }
 
   // get other msg types
-  console.log("other msg", msg);
+  if (msg.msg_type === "ping") {
+    console.log("pong");
+  }
+  // console.log("other msg", msg);
 };
 
 // listening to redis connection client count storage set events

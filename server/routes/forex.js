@@ -41,11 +41,13 @@ router.get("/tick", (req, res) => {
 
   // get redis key to subscribe to listen to ticks
   // then, sub to a redis key on set event
-  sub.subscribe("CONNECTION_CHANNEL", (err, count) => {
+  sub.subscribe("CONNECTION_CHANNEL", "FOREX_ERROR_MESSAGES", (err, count) => {
     if (err) {
       console.error("Failed to subscribe: %s", err.message);
     } else {
-      console.log(`Subscribed successfully! Num of sub channels: ${count}`);
+      console.log(
+        `[tick] Subscribed successfully! Num of sub channels: ${count}`
+      );
     }
   });
   sub.on("message", (channel, message) => {
@@ -76,10 +78,20 @@ router.get("/tick", (req, res) => {
             //tick_channel is key_name
             redis.get(key).then((result, err) => {
               console.log("result ", "result");
-              res.write("data: " + JSON.stringify(result) + "\n\n");
+              res.write("data: " + result + "\n\n");
             });
           }
         });
+      }
+    }
+
+    if (channel === "FOREX_ERROR_MESSAGES") {
+      if (symbol.toLowerCase() === message.symbol.toLowerCase()) {
+        res.write(
+          "data: " +
+            JSON.stringify({ symbol: message.symbol, error: message.error }) +
+            "\n\n"
+        );
       }
     }
   });
