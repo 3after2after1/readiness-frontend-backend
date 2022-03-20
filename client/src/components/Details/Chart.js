@@ -23,7 +23,7 @@ import {
 
 import { Grid } from "@material-ui/core";
 import { InputLabel } from "@mui/material";
-import { MenuItem } from "@material-ui/core";
+import { MenuItem, CircularProgress, LinearProgress } from "@material-ui/core";
 import { Select } from "@mui/material";
 import { FormControl } from "@material-ui/core";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -225,7 +225,23 @@ class ChartComponent extends React.Component {
     }
 
     if (!this.state.data) {
-      return <div>Loading...</div>;
+      return (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress
+            style={{ color: "#184d47" }}
+            size="100px"
+            thickness="2"
+          />
+        </div>
+      );
     }
     return (
       <div>

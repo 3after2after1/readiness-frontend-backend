@@ -9,6 +9,7 @@ import { useParams } from "react-router";
 import { markets } from "../../utils/utils";
 import { getFrxInfo } from "../../utils/web-scrape-forex";
 import { useLocation } from "react-router-dom";
+import { LinearProgress } from "@material-ui/core";
 
 // using client-web-scraper
 // import { getForexInfo } from "../../utils/backup/scrape-forex-info";
@@ -108,13 +109,17 @@ function Details(props) {
         </Container>
 
         <Container>
-          {market === markets.forex ? (
-            <DetailsStats
-              dataStats={instrumentInfo.stats}
-              dataDescription={instrumentInfo.description}
-            />
+          {Object.keys(instrumentInfo).length !== 0 ? (
+            market === markets.forex ? (
+              <DetailsStats
+                dataStats={instrumentInfo.stats}
+                dataDescription={instrumentInfo.description}
+              />
+            ) : (
+              "loading..."
+            )
           ) : (
-            "loading..."
+            <LinearProgress style={{ background: "gold" }} />
           )}
         </Container>
       </div>
