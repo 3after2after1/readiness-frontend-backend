@@ -1,0 +1,154 @@
+#main-indictor-container {
+  display: flex;
+  flex-direction: row;
+  height: max-content;
+  width: 487px;
+  background-color: cyan;
+  margin-left: 40px;
+}
+
+.gauge-chart1 {
+  display: flex;
+  flex-direction: column;
+  background-color: #ededed;
+  justify-content: space-between;
+  padding: 0.6rem 0.1rem;
+  margin: 0 0.6rem;
+  height: 20vh;
+}
+
+.gauge-chart2 {
+  display: flex;
+  flex-direction: column;
+  background-color: #ededed;
+  justify-content: space-between;
+  margin: 0rem 0.3rem;
+  height: 15vh;
+}
+
+#summary {
+  background-color: white;
+  /* change to blue later */
+  height: 38vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#sub-summary {
+  background-color: yellowgreen;
+  height: 18vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.summary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.sub-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.sub-summary2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: fit-content;
+  padding: 0;
+  background-color: white;
+}
+
+#centergauge {
+  border-left: 0.15rem solid black;
+  border-right: 0.15rem solid black;
+  padding: 0 0.8rem;
+}
+
+.textgauge {
+  margin: 0 0.7rem;
+  display: block;
+  position: relative;
+}
+
+.textgauge .hover {
+  visibility: hidden;
+  height: 0;
+  position: absolute;
+}
+
+.textgauge:hover .hover {
+  visibility: visible;
+  background-color: black;
+  border-radius: 0.5rem;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.7rem;
+  padding: 0.1rem;
+  transform: translate(-40px, -90px);
+  height: fit-content;
+  position: absolute;
+  z-index: 100;
+  width: 200px;
+}
+#subcontainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 20vw;
+}
+
+.bearish {
+  color: rgb(218, 78, 53);
+  text-align: center;
+}
+
+.neutral {
+  color: rgb(174, 183, 209) !important;
+  text-align: center;
+}
+
+.bullish {
+  color: rgb(126, 211, 33);
+  text-align: center;
+}
+
+.rowgauge {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  height: 30px;
+}
+
+.row2gauge {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.8rem;
+  height: 35px;
+}
+
+.row3gauge {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem 0;
+  height: 10px;
+}
+
+.hrline {
+  margin: 0 0.9rem;
+}

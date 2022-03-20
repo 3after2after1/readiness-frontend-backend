@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import "./card-details-stats.css";
 import StatsForex from "../stats/stats-forex";
 import DOMPurify from "dompurify";
+import GaugeMeter from "../../Crypto/Stats/GaugeMeter";
 
 export default function DetailsStats({ dataStats, dataDescription, market }) {
   return (
@@ -34,6 +35,7 @@ export default function DetailsStats({ dataStats, dataDescription, market }) {
         >
           {/* <StatsForex statsData={dataStats} /> */}
           {/* forex stats using dataStats from ricky line 21 */}
+          <GaugeMeter />
         </Box>
         <Box
           id="stats-contents-box"
