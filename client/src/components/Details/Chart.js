@@ -29,9 +29,25 @@ import { FormControl } from "@material-ui/core";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
+import Container from "@mui/material/Container";
 
 // variable to contain server-set-events connection
 let tickConnection;
+
+const MarketClosed = () => {
+  return (
+    <Container
+      style={{
+        backgroundColor: "#ffffa7",
+        padding: "7px",
+        maxWidth: "none",
+        textAlign: "center",
+      }}
+    >
+      Market is currently closed
+    </Container>
+  );
+};
 
 class ChartComponent extends React.Component {
   constructor(props) {
@@ -40,6 +56,7 @@ class ChartComponent extends React.Component {
       interval: candleIntervals.one_minute,
       chart: charts.candle_stick,
       indicators: [],
+      error: null,
     };
   }
   // accepts props: symbol
@@ -63,30 +80,39 @@ class ChartComponent extends React.Component {
         tickConnection = new ForexTickConnection(this.props.symbol);
 
         tickConnection.connection.onmessage = (msg) => {
-          let newTick = JSON.parse(JSON.parse(msg.data));
-          let lastOHLC = this.state.data[this.state.data.length - 1];
-          newTick.date = new Date(newTick.date);
+          let newTick = JSON.parse(msg.data);
+          // let newTick = JSON.parse(JSON.parse(msg.data));
+          console.log("newtick msg ", newTick);
 
-          // send current price to parent component (details) to display
-          this.props.getCurrentPrice(newTick.price);
-
-          // check if new tick belongs to the same time group of last OHLC
-          let sameTimeGroup = isCurrentTickTimeGroupSame(
-            // this.state.interval,
-            this.state.interval,
-            lastOHLC,
-            newTick
-          );
-
-          // if time group of previous OHLC and current tick same, update the previous OHLC, else create new OHLC
-          let newOHLC = null;
-          if (sameTimeGroup) {
-            updateLastOHLC(lastOHLC, newTick);
+          if (newTick.error) {
+            console.log("receives error ", newTick.error);
+            this.setState({ error: newTick.error });
+            tickConnection.connection.close();
           } else {
-            newOHLC = createOHLC(newTick);
-          }
+            let lastOHLC = this.state.data[this.state.data.length - 1];
+            newTick.date = new Date(newTick.date);
 
-          if (newOHLC) this.state.data.push(newOHLC);
+            // send current price to parent component (details) to display
+            this.props.getCurrentPrice(newTick.price);
+
+            // check if new tick belongs to the same time group of last OHLC
+            let sameTimeGroup = isCurrentTickTimeGroupSame(
+              // this.state.interval,
+              this.state.interval,
+              lastOHLC,
+              newTick
+            );
+
+            // if time group of previous OHLC and current tick same, update the previous OHLC, else create new OHLC
+            let newOHLC = null;
+            if (sameTimeGroup) {
+              updateLastOHLC(lastOHLC, newTick);
+            } else {
+              newOHLC = createOHLC(newTick);
+            }
+
+            if (newOHLC) this.state.data.push(newOHLC);
+          }
         };
       });
     } else {
@@ -245,6 +271,7 @@ class ChartComponent extends React.Component {
     }
     return (
       <div>
+        {this.state.error && <MarketClosed />}
         {this.state.chart === charts.candle_stick && (
           <CandleStickChart
             type="hybrid"
