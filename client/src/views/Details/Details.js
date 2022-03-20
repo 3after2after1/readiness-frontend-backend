@@ -9,6 +9,7 @@ import { useParams } from "react-router";
 import { markets } from "../../utils/utils";
 import { getFrxInfo } from "../../utils/web-scrape-forex";
 import { useLocation } from "react-router-dom";
+import { getCryptoInfo } from "../../utils/web-scrape-crypto";
 
 // using client-web-scraper
 // import { getForexInfo } from "../../utils/backup/scrape-forex-info";
@@ -42,7 +43,6 @@ function Details(props) {
       // example: eurusd
       // server-web-scraper
       getFrxInfo(symbol).then((data) => {
-        console.log("scrape data ", data);
         setInstrumentInfo(data);
       });
 
@@ -50,6 +50,13 @@ function Details(props) {
       //   setInstrumentInfo(data);
       //   console.log(data);
       // });
+    } else {
+      getCryptoInfo(nameInput.toLowerCase(), symbol.toLocaleLowerCase()).then(
+        (data) => {
+          console.log("scrape data ", data);
+          setInstrumentInfo(data);
+        }
+      );
     }
   }, []);
 
@@ -112,16 +119,17 @@ function Details(props) {
             <DetailsStats
               dataStats={instrumentInfo.stats}
               dataDescription={instrumentInfo.description}
+              market="forex"
             />
           ) : (
-            "loading..."
+            <DetailsStats
+              dataStats={{}}
+              dataDescription={instrumentInfo.description}
+              market="crypto"
+            />
           )}
         </Container>
       </div>
-
-      {/* <div classname="footer-content">
-        <Footer />
-      </div> */}
     </div>
   );
 }

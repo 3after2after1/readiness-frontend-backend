@@ -11,7 +11,6 @@ let router = express.Router();
 // get forex tick
 router.get("/tick", (req, res) => {
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
-  // const { symbol } = req.query;
   const { symbol } = req.query;
   console.log(symbol);
 
@@ -106,40 +105,58 @@ router.get("/tick", (req, res) => {
 
 // get forex tick
 router.get("/historicaldata", async (req, res) => {
-  let [daily, weekly, closing] = await axios
-    .all([
-      axios.get(
-        `https://api.etorostatic.com/sapi/candles/quickcharts.json/RollingToday/24?instruments=[${keys}]`
-      ),
-      axios.get(
-        `https://api.etorostatic.com/sapi/candles/quickcharts.json/RollingThisWeek/24?instruments=[${keys}]`
-      ),
-      axios.get(
-        `https://api.etorostatic.com/sapi/candles/closingprices.json?instruments=[${keys}]`
-      ),
-    ])
-    .then(
-      axios.spread((obj1, obj2, obj3) => {
-        return [obj1.data, obj2.data, obj3.data];
-      })
-    );
-  let Obj = {};
-
-  //console.log(daily);
-  daily.forEach(({ InstrumentId, Prices }, index) => {
-    Obj[InstrumentId] = {
-      day: {
-        prices: Prices,
-        close: closing[index]["ClosingPrices"]["Daily"]["Price"],
-      },
-      week: {
-        prices: weekly[index]["Prices"],
-        close: closing[index]["ClosingPrices"]["Weekly"]["Price"],
-      },
-    };
+  const storage = new Redis({
+    host: "cache",
+    PORT: 6379,
   });
 
-  res.send(Obj);
+  try {
+    const cacheData = await storage.get("forex-static-data");
+    if (cacheData) {
+      console.log("forex static data cache hit");
+      const data = JSON.parse(cacheData);
+      res.send(data);
+    } else {
+      let [daily, weekly, closing] = await axios
+        .all([
+          axios.get(
+            `https://api.etorostatic.com/sapi/candles/quickcharts.json/RollingToday/24?instruments=[${keys}]`
+          ),
+          axios.get(
+            `https://api.etorostatic.com/sapi/candles/quickcharts.json/RollingThisWeek/24?instruments=[${keys}]`
+          ),
+          axios.get(
+            `https://api.etorostatic.com/sapi/candles/closingprices.json?instruments=[${keys}]`
+          ),
+        ])
+        .then(
+          axios.spread((obj1, obj2, obj3) => {
+            return [obj1.data, obj2.data, obj3.data];
+          })
+        );
+      let Obj = {};
+
+      //console.log(daily);
+      daily.forEach(({ InstrumentId, Prices }, index) => {
+        Obj[InstrumentId] = {
+          day: {
+            prices: Prices,
+            close: closing[index]["ClosingPrices"]["Daily"]["Price"],
+          },
+          week: {
+            prices: weekly[index]["Prices"],
+            close: closing[index]["ClosingPrices"]["Weekly"]["Price"],
+          },
+        };
+      });
+      storage.set("forex-static-data", JSON.stringify(Obj), "EX", 3600);
+      res.send(Obj);
+    }
+  } catch (error) {
+    console.log("error");
+  } finally {
+    storage.quit();
+  }
 });
 
 module.exports = router;
