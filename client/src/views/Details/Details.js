@@ -18,7 +18,6 @@ import { useNavigate, Outlet, Navigate } from "react-router-dom";
 
 function Details(props) {
   //  watchListInitializer();
-  console.log("spamming");
   const [instrumentInfo, setInstrumentInfo] = useState({});
   //instrumentInfo has two properties, stats and desc
   const [currentPrice, setCurrentPrice] = useState("-");
@@ -101,7 +100,7 @@ function Details(props) {
       );
 
       getCryptoStats(symbol.toUpperCase()).then((data) => {
-        console.log("stats data ", data);
+        // console.log("stats data ", data);
         setInstrumentInfo((prev) => {
           return { ...prev, stats: data.stats };
         });
@@ -187,25 +186,9 @@ function Details(props) {
         </Container>
 
         <Container>
-          {/* {market === markets.forex ? (
-            <DetailsStats
-              dataStats={instrumentInfo.stats}
-              dataDescription={instrumentInfo.description}
-              market="forex"
-            />
-          ) : (
-            <DetailsStats
-              dataStats={instrumentInfo.stats}
-              dataDescription={instrumentInfo.description}
-              market="crypto"
-            /> */}
-          {console.log("instrumentinfo ", instrumentInfo)}
+          {/* {console.log("instrumentinfo ", instrumentInfo)} */}
           {Object.keys(instrumentInfo).length !== 0 ? (
             market === markets.forex ? (
-              // <DetailsStats
-              //   dataStats={instrumentInfo.stats}
-              //   dataDescription={instrumentInfo.description}
-              // />
               <DetailsStats
                 dataStats={instrumentInfo.stats}
                 dataDescription={instrumentInfo.description}

@@ -78,7 +78,7 @@
 
 #main-container-forexHome {
   padding-bottom: 25px;
-  width: 100vw;
-  margin: 0;
+  width: 99.2vw !important;
+
   overflow-x: hidden !important;
 }

@@ -1,63 +1,89 @@
-@media (min-width: 0px) {
-  #aboutussection {
-    background: linear-gradient(
-      0deg,
-      #184d47 3%,
-      #184d47 90%,
-      #164645 calc(40% + 1px),
-      #164645 93%,
-      rgb(23, 185, 120) calc(60% + 1px),
-      rgb(23, 185, 120) 96%,
-      #cff4d2 calc(68% + 1px),
-      #cff4d2 100%
-    );
+@media (min-width: 375px) {
+  #textabtus {
+    width: 328px !important;
   }
-}
+  #textabtus-2 {
+    width: 328px !important;
+  }
+  #textabtus-3 {
+    width: 328px !important;
+  }
 
-@media (min-width: 320px) {
-}
-
-@media (min-width: 480px) {
-  #aboutuscontentbox {
+  #iconabtus {
     width: 380px !important;
+    justify-content: center !important;
   }
 }
 
-@media (min-width: 600px) {
-  #aboutustitle {
-    font-size: 3.5rem;
+@media (min-width: 425px) {
+  #textabtus {
+    width: 355px !important;
+  }
+  #textabtus-2 {
+    width: 355px !important;
+  }
+  #textabtus-3 {
+    width: 355px !important;
   }
 
-  #aboutuscontentbox {
-    width: 480px !important;
-  }
-  #aboutuscontent {
-    font-size: 1.2rem;
+  #iconabtus {
+    width: 380px !important;
+    justify-content: center !important;
   }
 }
 
-@media (min-width: 750px) {
+@media (min-width: 540px) {
+  #textabtus {
+    width: 405px !important;
+  }
+  #textabtus-2 {
+    width: 405px !important;
+  }
+  #textabtus-3 {
+    width: 405px !important;
+  }
+
+  #iconabtus {
+    width: 380px !important;
+    justify-content: center !important;
+  }
+}
+
+@media (min-width: 768px) {
+  #aboutusmainsection {
+    justify-content: center !important;
+  }
   #aboutustitlebox {
-    padding-top: 120px !important;
+    padding: 0 !important;
   }
-  #aboutuscontentbox {
-    width: 600px !important;
+  #aboutustitlebox-2 {
+    padding: 1em 0 0 0 !important;
   }
-}
+  #aboutustitlebox-3 {
+    padding: 1em 0 0 0 !important;
+  }
+  #aboutustitlebox-4 {
+    padding: 1em 0 0 0 !important;
+    text-align: center !important;
+  }
+  #textabtus {
+    width: 650px !important;
+    font-size: 20px !important;
+    text-align: center !important;
+  }
+  #textabtus-2 {
+    width: 650px !important;
+    font-size: 20px !important;
+    text-align: center !important;
+  }
+  #textabtus-3 {
+    width: 650px !important;
+    text-align: center !important;
+    font-size: 20px !important;
+  }
 
-@media (min-width: 1024px) {
-  #aboutustitle {
-    font-size: 4rem !important;
+  #iconabtus {
+    width: 550px !important;
+    justify-content: center !important;
   }
-  #aboutustitlebox {
-    padding-top: 120px !important;
-  }
-  #aboutuscontentbox {
-    width: 700px !important;
-  }
-  #aboutuscontent {
-    font-size: 1.3rem !important;
-  }
-}
-@media (min-width: 1281px) {
 }

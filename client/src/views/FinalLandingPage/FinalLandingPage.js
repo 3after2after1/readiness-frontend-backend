@@ -612,7 +612,7 @@ const FinalLandingPage = () => {
                     fontFamily: "Bree Serif",
                     fontWeight: "bold",
                   }}
-                  onClick={() => navigate("/forex")}
+                  onClick={() => navigate("/crypto")}
                 >
                   Go to Crypto
                 </Button>

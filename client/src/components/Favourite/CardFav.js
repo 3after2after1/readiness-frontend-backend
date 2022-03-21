@@ -1,11 +1,20 @@
-import { Avatar, Card, CardHeader, CardMedia, IconButton } from "@mui/material";
+import {
+  Avatar,
+  Card,
+  CardHeader,
+  CardMedia,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import "./CardFav.css";
 import React from "react";
 import { blue } from "@mui/material/colors";
 import PlaylistRemoveIcon from "@mui/icons-material/PlaylistRemove";
 import CardDetailsAdd from "../Details/card-details/card-details-add";
+import { useNavigate } from "react-router-dom";
 
 const CardFav = ({ item, market }) => {
+  let navigate = useNavigate();
   let watchListData = {
     image: item?.image,
     name: item.name,
@@ -26,6 +35,7 @@ const CardFav = ({ item, market }) => {
         margin: "10px 0 0 0 ",
         height: 200,
       }}
+      onClick={() => navigate(`/details/${market}/${item.symbol}`)}
     >
       <img
         src={item?.image}
@@ -34,7 +44,17 @@ const CardFav = ({ item, market }) => {
         width="50"
         style={{ display: "flex", alignSelf: "center", marginBottom: 10 }}
       />
-      <CardHeader style={{ textAlign: "center" }} title={item?.symbol} />
+      <CardHeader
+        className="cardfavtitle"
+        sx={{
+          fontFamily: "Bree Serif !important",
+          color: "#999",
+          fontWeight: "2rem !important",
+        }}
+        style={{ textAlign: "center", fontFamily: "Bree Serif" }}
+        title={item?.symbol}
+      />
+
       <CardDetailsAdd watchListData={watchListData} />
     </Card>
   );

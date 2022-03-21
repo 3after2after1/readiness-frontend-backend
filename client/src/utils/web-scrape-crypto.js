@@ -38,7 +38,6 @@ export const getCryptoStats = async (symbol) => {
       method: "GET",
       url: site_url,
     });
-    console.log("crypto stats", data);
 
     return { stats: data };
   } catch (error) {

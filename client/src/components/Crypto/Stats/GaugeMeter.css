@@ -152,6 +152,24 @@
   margin: 0 0.9rem;
 }
 
+@media (max-width: 1600px) {
+  #summary {
+    /* display: inline-block !important; */
+    height: 41.5vh;
+    width: 400px;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 1082px) {
+  #summary {
+    /* display: inline-block !important; */
+    height: 41.5vh;
+    width: 400px;
+    padding: 0 1rem;
+  }
+}
+
 @media (max-width: 780px) {
   #main-indictor-container {
     width: inherit !important;
@@ -200,8 +218,8 @@
   }
   #summary {
     /* display: inline-block !important; */
-    height: 20vh;
-    padding-right: 2rem;
+    height: 43vh;
+    padding-right: 3.5rem;
   }
   /* .gauge-chart1 {
     color: blue;
@@ -219,8 +237,26 @@
   #summary {
     /* display: inline-block !important; */
     height: 45vh;
-    padding-right: 2rem;
+    padding-right: 3.5rem;
   }
+}
+
+@media (max-width: 350px) {
+  #main-indictor-container {
+    width: inherit !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+  }
+  #summary {
+    /* display: inline-block !important; */
+    height: 42vh;
+    padding-right: 3rem;
+  }
+  /* .gauge-chart1 {
+    color: blue;
+    height: 200px;
+  } */
 }
 
 @media (max-width: 320px) {
@@ -233,6 +269,6 @@
   #summary {
     /* display: inline-block !important; */
     height: 45vh;
-    margin: 0 1rem;
+    margin: 0 2rem;
   }
 }

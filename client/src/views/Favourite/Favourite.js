@@ -25,7 +25,8 @@ function Favourite() {
           backgroundColor: "#f9f7f7",
           paddingLeft: "20px",
           paddingRight: "20px",
-          paddingBottom: "25px",
+          paddingBottom: "46px",
+          paddingTop: "46px",
         }}
       >
         <Box style={{ textAlign: "center", paddingTop: "20px" }}>

@@ -6,7 +6,7 @@ import { etoroMapper } from "./etoroMapper";
 import axios from "axios";
 import { BACKEND_DOMAIN } from "../../api/backend";
 
-function StaticChart({ id, range }) {
+function StaticChart({ id, range, direction }) {
   const [series, setSeries] = useState([
     {
       data: [],
@@ -17,6 +17,7 @@ function StaticChart({ id, range }) {
 
   useEffect(() => {
     const getLatestPrice = () => {
+      console.log("getting forex static chart");
       try {
         axios
           .get(`${BACKEND_DOMAIN}/forexhome/historicaldata`)
@@ -26,9 +27,10 @@ function StaticChart({ id, range }) {
                 return [row.ToTime, row.Price];
               }
             );
+            // let constant = direction === "up" ? -0.001 : 0.001;s
             let close = data[etoroMapper[id]][range]["close"];
+            // setClose((close + constant).toFixed(5));
             setClose(close);
-
             setSeries([
               {
                 data: filteredData,
