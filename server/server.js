@@ -4,7 +4,7 @@ const { MongoClient } = require("mongodb");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-const uri = process.env.MONGO_URI;
+export const uri = process.env.MONGO_URI;
 console.log(uri);
 const app = express();
 app.use(cors());
