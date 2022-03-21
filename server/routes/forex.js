@@ -3,6 +3,7 @@ let router = express.Router();
 const Redis = require("ioredis");
 const hash = require("hash-it");
 const onFinished = require("on-finished");
+const { ms } = require("date-fns/locale");
 
 // get forex tick
 router.get("/tick", (req, res) => {
@@ -41,11 +42,13 @@ router.get("/tick", (req, res) => {
 
   // get redis key to subscribe to listen to ticks
   // then, sub to a redis key on set event
-  sub.subscribe("CONNECTION_CHANNEL", (err, count) => {
+  sub.subscribe("CONNECTION_CHANNEL", "FOREX_ERROR_MESSAGES", (err, count) => {
     if (err) {
       console.error("Failed to subscribe: %s", err.message);
     } else {
-      console.log(`Subscribed successfully! Num of sub channels: ${count}`);
+      console.log(
+        `[tick] Subscribed successfully! Num of sub channels: ${count}`
+      );
     }
   });
   sub.on("message", (channel, message) => {
@@ -75,10 +78,21 @@ router.get("/tick", (req, res) => {
           if (key === tick_channel) {
             //tick_channel is key_name
             redis.get(key).then((result, err) => {
-              res.write("data: " + JSON.stringify(result) + "\n\n");
+              console.log("result ", "result");
+              res.write("data: " + result + "\n\n");
             });
           }
         });
+      }
+    }
+
+    if (channel === "FOREX_ERROR_MESSAGES") {
+      if (symbol.toLowerCase() === message.symbol.toLowerCase()) {
+        res.write(
+          "data: " +
+            JSON.stringify({ symbol: message.symbol, error: message.error }) +
+            "\n\n"
+        );
       }
     }
   });
@@ -174,7 +188,7 @@ router.get("/historical", (req, res) => {
 
   pub.publish("GET_HISTORICAL_DATA", JSON.stringify(historicalDataQuery));
 
-  sub.subscribe("HISTORICAL_OHLC", (err, count) => {
+  sub.subscribe("HISTORICAL_OHLC", "FOREX_ERROR_MESSAGES", (err, count) => {
     if (err) {
       console.error("Failed to subscribe: %s", err.message);
     } else {
@@ -189,6 +203,10 @@ router.get("/historical", (req, res) => {
 
       res.json({ data: message.data });
       return sub.quit();
+    }
+
+    if (channel === "FOREX_ERROR_MESSAGES" && message.id === reqId) {
+      res.json({ symbol: symbol, error: message.error });
     }
   });
 });

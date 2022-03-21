@@ -3,19 +3,36 @@ import CardFilter from "../../components/Forex/CardFilter";
 import ForexSearchBar from "../../components/Forex/ForexSearchBar";
 import Card from "../../components/Forex/Card";
 import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import NewsComponent from "../../components/News/NewsComponent";
 import "./ForexHome.css";
+import { GeneralState } from "../../contexts/GeneralContext";
 import { BACKEND_DOMAIN } from "../../api/backend";
 const data = require("./majorPair.json");
 
 function ForexHome() {
   const [stonks, setStonks] = useState([]);
   const [range, setRange] = useState("day");
+  const location = useLocation();
+  const { generateSnackbar } = GeneralState();
+
   let param = Object.keys(data);
 
   let navigate = useNavigate();
   useEffect(() => {
+    if (location.state) {
+      let from = location.state.from.pathname;
+      let error = location.state.error;
+
+      if (error) {
+        generateSnackbar({
+          newShow: true,
+          newMessage: `Symbol is invalid`,
+          newType: "error",
+        });
+      }
+    }
+
     let sse = new EventSource(`${BACKEND_DOMAIN}/forexhome/tick`);
     sse.onmessage = (event) => {
       let next = JSON.parse(JSON.parse(event.data));

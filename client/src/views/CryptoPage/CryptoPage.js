@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Carousel from "../../components/Crypto/Carousel";
 import CoinTable from "../../components/Crypto/CoinTable";
 import NewsComponent from "../../components/News/NewsComponent";
 import { Container, makeStyles, Typography } from "@material-ui/core";
+import { GeneralState } from "../../contexts/GeneralContext";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   bannerContent: {
@@ -27,7 +29,24 @@ const useStyles = makeStyles(() => ({
 }));
 
 const CryptoPage = () => {
+  const { generateSnackbar } = GeneralState();
+  const location = useLocation();
   const classes = useStyles();
+
+  useEffect(() => {
+    if (location.state) {
+      let from = location.state.from.pathname;
+      let error = location.state.error;
+
+      if (error) {
+        generateSnackbar({
+          newShow: true,
+          newMessage: `No data exist of symbol`,
+          newType: "error",
+        });
+      }
+    }
+  }, []);
   return (
     <div style={{ overflowX: "hidden", backgroundColor: "#f9f7f7" }}>
       <Container

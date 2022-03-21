@@ -10,6 +10,8 @@ import { getFrxInfo } from "../../utils/web-scrape-forex";
 import { useLocation } from "react-router-dom";
 import { getCryptoInfo, getCryptoStats } from "../../utils/web-scrape-crypto";
 import "./Details.css";
+import { LinearProgress } from "@material-ui/core";
+import { useNavigate, Outlet, Navigate } from "react-router-dom";
 
 // using client-web-scraper
 // import { getForexInfo } from "../../utils/backup/scrape-forex-info";
@@ -20,9 +22,15 @@ function Details(props) {
   const [instrumentInfo, setInstrumentInfo] = useState({});
   //instrumentInfo has two properties, stats and desc
   const [currentPrice, setCurrentPrice] = useState("-");
+  const [priceChange, setPriceChange] = useState("-");
+  const [percentagePriceChange, setPercentagePriceChange] = useState("-");
+  const [symbolError, setSymbolError] = useState("");
+
   let { market, symbol } = useParams();
   if (!market) market = props.market;
   if (!symbol) symbol = props.symbol;
+  console.log(useLocation());
+  const location = useLocation();
   const { state } = useLocation();
   let imageInput = null;
 
@@ -48,7 +56,23 @@ function Details(props) {
     market,
   };
   const handleCurrentPrice = (price) => {
+    let previousPrice;
+    if (currentPrice) previousPrice = currentPrice;
     setCurrentPrice(price);
+    if (previousPrice) {
+      setPriceChange(currentPrice - currentPrice);
+      setPercentagePriceChange((priceChange / previousPrice).toFixed(2) + "%");
+    }
+    setCurrentPrice(price);
+
+    console.log(
+      `c: ${currentPrice}, ch: ${priceChange}, %: ${percentagePriceChange}`
+    );
+  };
+
+  const handleInvalidSymbol = (error, market) => {
+    console.log("handling error ", error);
+    setSymbolError(error);
   };
 
   // get forex information
@@ -82,7 +106,21 @@ function Details(props) {
       });
     }
   }, []);
-
+  if (symbolError.toLowerCase() === "invalidsymbol") {
+    return (
+      <Navigate
+        to="/forex"
+        state={{ from: location, error: "invalid symbol" }}
+      />
+    );
+  } else if (symbolError.toLowerCase() === "marketnodata") {
+    return (
+      <Navigate
+        to="/crypto"
+        state={{ from: location, error: "no data exist" }}
+      />
+    );
+  }
   return (
     <div className="main-container-details">
       <div className="content">
@@ -134,6 +172,7 @@ function Details(props) {
             market={market}
             symbol={symbol}
             getCurrentPrice={handleCurrentPrice}
+            handleSymbol={handleInvalidSymbol}
           />
         </Container>
 
@@ -150,6 +189,17 @@ function Details(props) {
               dataDescription={instrumentInfo.description}
               market="crypto"
             />
+            // {Object.keys(instrumentInfo).length !== 0 ? (
+            //   market === markets.forex ? (
+            //     <DetailsStats
+            //       dataStats={instrumentInfo.stats}
+            //       dataDescription={instrumentInfo.description}
+            //     />
+            //   ) : (
+            //     "loading..."
+            //   )
+            // ) : (
+            //   <LinearProgress style={{ background: "gold" }} />
           )}
         </Container>
       </div>
