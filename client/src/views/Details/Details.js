@@ -187,7 +187,7 @@ function Details(props) {
         </Container>
 
         <Container>
-          {market === markets.forex ? (
+          {/* {market === markets.forex ? (
             <DetailsStats
               dataStats={instrumentInfo.stats}
               dataDescription={instrumentInfo.description}
@@ -198,18 +198,28 @@ function Details(props) {
               dataStats={instrumentInfo.stats}
               dataDescription={instrumentInfo.description}
               market="crypto"
-            />
-            // {Object.keys(instrumentInfo).length !== 0 ? (
-            //   market === markets.forex ? (
-            //     <DetailsStats
-            //       dataStats={instrumentInfo.stats}
-            //       dataDescription={instrumentInfo.description}
-            //     />
-            //   ) : (
-            //     "loading..."
-            //   )
-            // ) : (
-            //   <LinearProgress style={{ background: "gold" }} />
+            /> */}
+          {console.log("instrumentinfo ", instrumentInfo)}
+          {Object.keys(instrumentInfo).length !== 0 ? (
+            market === markets.forex ? (
+              // <DetailsStats
+              //   dataStats={instrumentInfo.stats}
+              //   dataDescription={instrumentInfo.description}
+              // />
+              <DetailsStats
+                dataStats={instrumentInfo.stats}
+                dataDescription={instrumentInfo.description}
+                market="forex"
+              />
+            ) : (
+              <DetailsStats
+                dataStats={instrumentInfo.stats}
+                dataDescription={instrumentInfo.description}
+                market="crypto"
+              />
+            )
+          ) : (
+            <LinearProgress style={{ background: "gold" }} />
           )}
         </Container>
       </div>
