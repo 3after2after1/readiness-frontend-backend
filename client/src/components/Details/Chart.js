@@ -98,6 +98,7 @@ class ChartComponent extends React.Component {
               newTick.date = new Date(newTick.date);
 
               // send current price to parent component (details) to display
+              console.log("last ohlc ", this.state.data[data.length - 1]);
               this.props.getCurrentPrice(
                 this.generatePriceSummary(
                   newTick.price,
@@ -218,6 +219,7 @@ class ChartComponent extends React.Component {
 
       getForexOHLCHistorical(this.props.symbol, styleQuery, intervalQuery).then(
         (data) => {
+          data = data.data;
           data = data.map((item) => {
             item.date = new Date(item.date);
             return item;
@@ -227,6 +229,8 @@ class ChartComponent extends React.Component {
       );
     } else {
       getCryptoOHLCHistorical(this.props.symbol, interval.name).then((data) => {
+        data = data.data;
+
         data = data.map((item) => {
           item.date = new Date(item.date);
           return item;
@@ -250,6 +254,8 @@ class ChartComponent extends React.Component {
           "candles",
           candleIntervals.one_minute.name
         ).then((data) => {
+          data = data.data;
+
           data = data.map((item) => {
             item.date = new Date(item.date);
             return item;
