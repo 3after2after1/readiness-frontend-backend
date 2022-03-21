@@ -47,9 +47,9 @@ const ErrorPage = () => {
                 variant="h1"
                 // component="div"
                 sx={{
-                  fontFamily: " League Spartan",
+                  fontFamily: "League Spartan !important",
                   color: "black",
-                  fontWeight: "bold",
+                  fontWeight: "bold !important",
                   fontSize: "8rem",
                   letterSpacing: "1rem",
                   opacity: "60%",
@@ -64,9 +64,9 @@ const ErrorPage = () => {
                 variant="h3"
                 // component="div"
                 sx={{
-                  fontFamily: " League Spartan",
+                  fontFamily: "League Spartan !important",
                   color: "black",
-                  fontWeight: "bold",
+                  fontWeight: "bold !important",
                   fontSize: "4rem",
                 }}
               >
@@ -77,9 +77,9 @@ const ErrorPage = () => {
                 variant="h3"
                 // component="div"
                 sx={{
-                  fontFamily: " League Spartan",
+                  fontFamily: "League Spartan !important",
                   color: "black",
-                  fontWeight: "bold",
+                  fontWeight: "bold !important",
                   fontSize: "4rem",
                 }}
               >
@@ -94,8 +94,8 @@ const ErrorPage = () => {
                   backgroundColor: "#FFCE45",
                   color: "#184D47",
                   fontSize: "1.3rem",
-                  fontFamily: "Bree Serif",
-                  fontWeight: "bold",
+                  fontFamily: "Bree Serif !important",
+                  fontWeight: "bold !important",
                 }}
               >
                 Return to Home

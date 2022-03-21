@@ -58,9 +58,9 @@
     display: none;
   }
   #smartmockup {
-    /* background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-size: contain;
-    background-image: url("/public/smartmockups3.png"); */
+    background-image: url("/public/smartmockup.png");
   }
   #dashPic5 {
     display: none;
@@ -297,6 +297,9 @@
   #firstsection {
     height: 600px !important;
   }
+  #pictureBox1 {
+    justify-content: center;
+  }
   #signUpContent {
     text-align: start;
     flex-direction: row !important;
@@ -321,6 +324,7 @@
   #smartmockup {
     height: 315px !important;
     width: 400px !important;
+    margin-top: 100px;
   }
   #signUpBox {
     padding-top: 70px !important;
@@ -492,6 +496,12 @@
   #typewrite {
     font-size: 5rem;
   }
+  #smartmockup {
+    height: 315px !important;
+    width: 500px !important;
+    margin-top: 50px !important;
+    background-size: cover !important;
+  }
   #sentence2 {
     font-size: 3rem;
   }
@@ -515,7 +525,7 @@
     width: 450px;
     padding-left: 25px;
     padding-top: 24px;
-    padding-right: 100px;
+    padding-right: 50px;
   }
 
   #forexAndDashboard {
@@ -593,6 +603,11 @@
 @media (min-width: 1281px) {
   #secondsection {
     height: 1400px !important;
+  }
+  #smartmockup {
+    height: 415px !important;
+    width: 700px !important;
+    background-size: cover;
   }
   #forexAndDashboard {
     flex-direction: row !important;
