@@ -20,7 +20,7 @@ services:
       - cache
     environment:
       NODE_ENV: ${NODE_ENV}
-      # MONGO_URI: ${MONGO_URI}
+      MONGO_URI: ${MONGO_URI}
       REDIS_HOST: cache
       REDIS_PORT: 6379
       REDIS_PASSWORD: ${REDIS_PASSWORD}

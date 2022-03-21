@@ -2,8 +2,10 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import "./card-details-stats.css";
 import StatsForex from "../stats/stats-forex";
+import DOMPurify from "dompurify";
+import GaugeMeter from "../../Crypto/Stats/GaugeMeter";
 
-export default function DetailsStats({ dataStats, dataDescription }) {
+export default function DetailsStats({ dataStats, dataDescription, market }) {
   return (
     <Box id="top-container-stats" gap="20px">
       <div
@@ -31,14 +33,23 @@ export default function DetailsStats({ dataStats, dataDescription }) {
             borderRadius: 2,
           }}
         >
-          <StatsForex statsData={dataStats} />
+          {/* <StatsForex statsData={dataStats} /> */}
           {/* forex stats using dataStats from ricky line 21 */}
+          {market === "crypto" ? (
+            dataStats ? (
+              <GaugeMeter data={dataStats} />
+            ) : (
+              <p>No data available at the moment</p>
+            )
+          ) : (
+            <StatsForex statsData={dataStats} />
+          )}
         </Box>
         <Box
           id="stats-contents-box"
           bgcolor={"white"}
           sx={{
-            marginTop: "1em",
+            marginTop: "0.5em",
             padding: "0.5em",
             color: (theme) =>
               theme.palette.mode === "dark" ? "grey.300" : "grey.800",
@@ -48,7 +59,25 @@ export default function DetailsStats({ dataStats, dataDescription }) {
             borderRadius: 2,
           }}
         >
-          <p>{dataDescription}</p>
+          {market === "crypto" ? (
+            <p
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(
+                  dataDescription
+                    ? dataDescription
+                    : "No data available at the moment"
+                ),
+              }}
+              style={{
+                fontFamily: "Bree Serif",
+                fontSize: "0.9rem",
+                margin: "0",
+              }}
+            ></p>
+          ) : (
+            <p>{dataDescription}</p>
+          )}
+
           {/* line 36 : dataDescription is desc for the symbol */}
         </Box>
       </div>

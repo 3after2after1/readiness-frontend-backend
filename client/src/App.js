@@ -54,10 +54,6 @@ const App = () => {
             <Route path="/forex" element={<ForexHome />} />
             <Route path="/details/:market/:symbol" element={<Details />} />
             <Route path="/favourite" element={<Favourite />}></Route>
-            {/* <Route
-              path="/details"
-              element={<Details market="forex" symbol="EURUSD" />}
-            /> */}
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Box>

@@ -25,8 +25,10 @@ import { auth, db } from "../../services/firebase";
 import { doc, setDoc } from "@firebase/firestore";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { WatchListState } from "../../contexts/WatchListContext";
 
 const SignUpPage = () => {
+  const { dispatch } = WatchListState();
   const { generateSnackbar } = GeneralState();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -119,12 +121,13 @@ const SignUpPage = () => {
           crypto: [],
         },
       };
-      axios
-        .post("http://localhost:5000/watchlist/adduser", userData)
-        .then((response) => {
-          console.log(response.status);
-          console.log(response.data);
-        });
+      // axios
+      //   .post("http://localhost:5000/watchlist/adduser", userData)
+      //   .then((response) => {
+      //     console.log(response.status);
+      //     console.log(response.data);
+      //   });
+      dispatch({ type: "CREATE_RECORD", payload: userData });
 
       generateSnackbar({
         newShow: true,
