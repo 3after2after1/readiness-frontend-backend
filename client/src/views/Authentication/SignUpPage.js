@@ -234,13 +234,11 @@ const SignUpPage = () => {
             sx={{
               fontFamily: "Bree Serif !important",
               color: "white",
-              textAlign: "justify",
+              textAlign: "center",
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-            doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-            enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-            ut aliquip ex ea commodo consequat.
+            The all in one seamless platform to help support your investment
+            decisions.
           </Typography>
         </Box>
         <Box
@@ -274,9 +272,9 @@ const SignUpPage = () => {
               variant="h4"
               // component="div"
               sx={{
-                fontFamily: " League Spartan",
+                fontFamily: " League Spartan !important",
                 color: "black",
-                fontWeight: "bold",
+                fontWeight: "bold !important",
               }}
             >
               Welcome
@@ -286,9 +284,9 @@ const SignUpPage = () => {
               variant="h4"
               // component="div"
               sx={{
-                fontFamily: " League Spartan",
+                fontFamily: " League Spartan !important",
                 color: "black",
-                fontWeight: "bold",
+                fontWeight: "bold !important",
               }}
             >
               to TREX

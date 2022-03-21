@@ -70,6 +70,7 @@ body {
   display: flex;
 }
 .content-title-right-icon {
+  display: flex;
   width: 12.5vw;
   padding-left: 3em;
 }
