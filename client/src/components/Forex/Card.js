@@ -102,7 +102,7 @@ const CardHolder = ({ id, change, price, direction, range }) => {
           {` ${emoji[direction]}`}
         </Typography>
       </Box>
-      <StaticChart id={data[id]} range={range} />
+      <StaticChart id={data[id]} range={range} direction={direction} />
     </Card>
   );
 };

@@ -2,9 +2,10 @@ import React from "react";
 import { useNavigate, useLocation, Outlet, Navigate } from "react-router-dom";
 import { UserState } from "../contexts/UserContext";
 import { WatchListState } from "../contexts/WatchListContext";
+import { LinearProgress } from "@material-ui/core";
 
 const RequireAuth = () => {
-  const { watchListInitializer } = WatchListState();
+  // const { watchListInitializer } = WatchListState();
   let location = useLocation();
   let navigate = useNavigate;
   const { watchlist, userStatus } = UserState();
@@ -20,7 +21,7 @@ const RequireAuth = () => {
 
       return <Outlet />;
     } else {
-      return <p>Loading..</p>;
+      return <LinearProgress style={{ background: "gold", height: "20vh" }} />;
     }
   };
   return <>{detectStatus(userStatus)}</>;

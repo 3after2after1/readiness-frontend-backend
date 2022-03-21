@@ -20,7 +20,8 @@ const WatchListContext = ({ children }) => {
     //   .then((response) => {
     //     return response.data;
     //   });
-    dispatch({ type: "INITIALISE", payload: data });
+    dispatch({ type: "INITIALISE" });
+    // dispatch({ type: "INITIALISE", payload: data });
   };
   const watchListReducer = (state, action) => {
     if (action.type === "ADD_ITEM") {
@@ -90,7 +91,8 @@ const WatchListContext = ({ children }) => {
       //   userId: user?.uid,
       // };
 
-      return action.payload;
+      // return action.payload;
+      return state;
     }
 
     if (action.type === "CREATE_RECORD") {

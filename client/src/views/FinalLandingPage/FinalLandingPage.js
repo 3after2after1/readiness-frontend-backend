@@ -13,9 +13,6 @@ const FinalLandingPage = () => {
       <Box
         id="firstsection"
         style={{
-          // backgroundImage: `url(${
-          //   process.env.PUBLIC_URL + "/wickedbackground1.png"
-          // })`,
           backgroundColor: "#184D47",
           width: "100%",
           height: "600px",
@@ -39,7 +36,7 @@ const FinalLandingPage = () => {
             >
               <Typewriter
                 options={{
-                  strings: ["Simple", "Insightful", "Powerful"],
+                  strings: ["Simple", "Informative"],
                   autoStart: true,
                   loop: true,
                 }}
@@ -48,11 +45,10 @@ const FinalLandingPage = () => {
             <Typography
               id="sentence2"
               variant="h4"
-              // component="div"
               sx={{
-                fontFamily: " League Spartan",
+                fontFamily: "League Spartan !important",
                 color: "white",
-                fontWeight: "bold",
+                fontWeight: "bold !important",
                 paddingBottom: "5px",
               }}
             >
@@ -61,14 +57,13 @@ const FinalLandingPage = () => {
             <Typography
               id="sentence4"
               variant="h5"
-              // component="div"
               sx={{
                 width: "190px",
-                fontFamily: "League Spartan",
+                fontFamily: "League Spartan !important",
                 color: "white",
                 paddingBottom: "5px",
-                fontWeight: "bold",
-                lineHeight: 1.1,
+                fontWeight: "bold !important",
+                lineHeight: "1.1 !important",
               }}
             >
               Forex or Crypto, it's all here
@@ -76,12 +71,13 @@ const FinalLandingPage = () => {
             <Typography
               id="sentence3"
               variant="h6"
-              // component="div"
               sx={{
                 width: "250px",
                 fontFamily: "Bree Serif !important",
                 font: "caption",
                 color: "white",
+                fontSize: "1rem !important",
+                lineHeight: "unset !important",
               }}
             >
               The all in one seamless platform to help support your investment
@@ -196,12 +192,11 @@ const FinalLandingPage = () => {
                 height: "200px",
                 backgroundColor: "white",
               }}
-            ></Box>
+            />
             <Box id="forexBox">
               <Typography
                 id="forexTitle"
                 variant="h3"
-                // component="div"
                 style={{
                   paddingRight: "20px",
                   paddingLeft: "20px",
@@ -225,7 +220,8 @@ const FinalLandingPage = () => {
                     color: "black",
                     paddingRight: "20px",
                     paddingLeft: "20px",
-                    fontSize: "1.1rem",
+                    fontSize: "1.1rem !important",
+                    lineHeight: "unset !important",
                   }}
                 >
                   With us, you will always be up to date with the forever active
@@ -245,7 +241,6 @@ const FinalLandingPage = () => {
                   <Typography
                     id=""
                     variant="h4"
-                    // component="div"
                     style={{
                       paddingRight: "20px",
                       paddingLeft: "20px",
@@ -295,10 +290,12 @@ const FinalLandingPage = () => {
                           width: "220px",
                           fontFamily: "Bree Serif !important",
                           font: "caption",
-                          color: "black",
+                          color: "#696969",
                           textAlign: "justify",
                           paddingTop: "10px",
                           paddingBottom: "20px",
+                          fontSize: "1.1rem !important",
+                          lineHeight: "unset !important",
                         }}
                       >
                         Your investment of tomorrow made easy, analyse the past
@@ -342,9 +339,11 @@ const FinalLandingPage = () => {
                           width: "220px",
                           fontFamily: "Bree Serif !important",
                           font: "caption",
-                          color: "black",
+                          color: "#696969",
                           textAlign: "justify",
                           paddingTop: "10px",
+                          fontSize: "1.1rem !important",
+                          lineHeight: "unset !important",
                         }}
                       >
                         Not sure what to invest on? You can now chat with other
@@ -362,7 +361,7 @@ const FinalLandingPage = () => {
                     width: "375px",
                     height: "300px",
                   }}
-                ></Box>
+                />
               </Box>
               <Box id="forexButton3Box">
                 <Button
@@ -384,28 +383,7 @@ const FinalLandingPage = () => {
                 style={{
                   paddingTop: "20px",
                 }}
-              >
-                <Box
-                  style={{
-                    paddingLeft: "25px",
-                  }}
-                >
-                  <Button
-                    id="forexButton1"
-                    variant="contained"
-                    style={{
-                      backgroundColor: "#FFCE45",
-                      color: "#184D47",
-                      fontSize: "1.3rem",
-                      fontFamily: "Bree Serif",
-                      fontWeight: "bold",
-                    }}
-                    onClick={() => navigate("/forex")}
-                  >
-                    Go to Forex
-                  </Button>
-                </Box>
-              </Box>
+              />
             </Box>
             <Box
               style={{
@@ -420,7 +398,7 @@ const FinalLandingPage = () => {
                   width: "275px",
                   height: "200px",
                 }}
-              ></Box>
+              />
             </Box>
             <Box
               style={{
@@ -455,21 +433,10 @@ const FinalLandingPage = () => {
               justifyContent: "center",
             }}
           >
-            <Box
-              id="dashPic3"
-              style={{
-                width: "275px",
-                height: "200px",
-                backgroundColor: "white",
-              }}
-            >
-              Dashboard Picture
-            </Box>
             <Box id="cryptoBox">
               <Typography
                 id="cryptoTitle"
                 variant="h3"
-                // component="div"
                 style={{
                   paddingRight: "20px",
                   paddingLeft: "20px",
@@ -485,7 +452,6 @@ const FinalLandingPage = () => {
                 <Typography
                   id="cryptoExplanation"
                   variant="h6"
-                  // component="div"
                   sx={{
                     width: "250px",
                     fontFamily: "Bree Serif !important",
@@ -493,7 +459,8 @@ const FinalLandingPage = () => {
                     color: "black",
                     paddingRight: "20px",
                     paddingLeft: "20px",
-                    fontSize: "1.1rem",
+                    fontSize: "1.1rem !important",
+                    lineHeight: "unset !important",
                   }}
                 >
                   With us, you will not miss the next flight to the moon.
@@ -513,7 +480,6 @@ const FinalLandingPage = () => {
                   <Typography
                     id=""
                     variant="h4"
-                    // component="div"
                     style={{
                       paddingRight: "20px",
                       paddingLeft: "20px",
@@ -560,10 +526,12 @@ const FinalLandingPage = () => {
                           width: "220px",
                           fontFamily: "Bree Serif !important",
                           font: "caption",
-                          color: "black",
+                          color: "#696969",
                           textAlign: "justify",
                           paddingTop: "10px",
                           paddingBottom: "20px",
+                          fontSize: "1.1rem !important",
+                          lineHeight: "unset !important",
                         }}
                       >
                         There are so many new coins emerging on the market
@@ -604,14 +572,15 @@ const FinalLandingPage = () => {
                       <Typography
                         id="cryptoFeatureExplanation1"
                         variant="h6"
-                        // component="div"
                         sx={{
                           width: "220px",
                           fontFamily: "Bree Serif !important",
                           font: "caption",
-                          color: "black",
+                          color: "#696969",
                           textAlign: "justify",
                           paddingTop: "10px",
+                          fontSize: "1.1rem !important",
+                          lineHeight: "unset !important",
                         }}
                       >
                         Want to know the next Bitcoin? Our top 5 ranking table
@@ -630,7 +599,7 @@ const FinalLandingPage = () => {
                     height: "300px",
                     backgroundColor: "white",
                   }}
-                ></Box>
+                />
               </Box>
               <Box id="cryptoButton3Box">
                 <Button
@@ -643,7 +612,7 @@ const FinalLandingPage = () => {
                     fontFamily: "Bree Serif",
                     fontWeight: "bold",
                   }}
-                  onClick={() => navigate("/forex")}
+                  onClick={() => navigate("/crypto")}
                 >
                   Go to Crypto
                 </Button>
@@ -689,7 +658,7 @@ const FinalLandingPage = () => {
                   width: "275px",
                   height: "200px",
                 }}
-              ></Box>
+              />
             </Box>
             <Box
               style={{
@@ -725,17 +694,19 @@ const FinalLandingPage = () => {
           flexDirection: "column",
         }}
       >
-        <Divider
-          id=""
-          style={{
-            color: "white",
-            padding: "20px",
-            fontFamily: "Bree Serif",
-            fontSize: "2rem",
-          }}
-        >
-          <Box>Why Choose Us?</Box>
-        </Divider>
+        <Box>
+          <Divider
+            id=""
+            style={{
+              color: "white",
+              padding: "20px",
+              fontFamily: "Bree Serif",
+              fontSize: "2rem",
+            }}
+          >
+            <Box>Why Choose Us?</Box>
+          </Divider>
+        </Box>
         <Box
           style={{
             display: "flex",
@@ -749,7 +720,6 @@ const FinalLandingPage = () => {
               <Typography
                 id="friendlyUI"
                 variant="h5"
-                // component="div"
                 style={{
                   paddingRight: "20px",
                   paddingLeft: "20px",
@@ -766,7 +736,6 @@ const FinalLandingPage = () => {
               <Typography
                 id="friendlyUIDesc"
                 variant="h6"
-                // component="div"
                 sx={{
                   width: "280px",
                   fontFamily: "Bree Serif !important",
@@ -774,7 +743,7 @@ const FinalLandingPage = () => {
                   color: "white",
                   paddingRight: "20px",
                   paddingLeft: "20px",
-                  fontSize: "1.1rem",
+                  fontSize: "1.1rem !important",
                 }}
               >
                 An interactable UI that is designed for a simple and
@@ -786,7 +755,6 @@ const FinalLandingPage = () => {
             <Typography
               id="allInOne"
               variant="h5"
-              // component="div"
               style={{
                 paddingRight: "20px",
                 paddingLeft: "20px",
@@ -801,7 +769,6 @@ const FinalLandingPage = () => {
             <Typography
               id="allInOneDesc"
               variant="h6"
-              // component="div"
               sx={{
                 width: "280px",
                 fontFamily: "Bree Serif !important",
@@ -809,7 +776,7 @@ const FinalLandingPage = () => {
                 color: "white",
                 paddingRight: "20px",
                 paddingLeft: "20px",
-                fontSize: "1.1rem",
+                fontSize: "1.1rem !important",
               }}
             >
               Discover variety of features provided such as the latest financial

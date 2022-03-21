@@ -2,9 +2,7 @@ let express = require("express");
 require("dotenv").config();
 let router = express.Router();
 const { MongoClient } = require("mongodb");
-
-const uri =
-  "mongodb+srv://bala:ABCxyz1234@cluster0.g5sfi.mongodb.net/Cluster0?retryWrites=true&w=majority";
+const uri = process.env.MONGO_URI;
 
 router.get("/test", (req, res) => {
   res.send({ status: "watchlist" });

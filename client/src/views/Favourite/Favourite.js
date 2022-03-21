@@ -25,7 +25,8 @@ function Favourite() {
           backgroundColor: "#f9f7f7",
           paddingLeft: "20px",
           paddingRight: "20px",
-          paddingBottom: "25px",
+          paddingBottom: "46px",
+          paddingTop: "46px",
         }}
       >
         <Box style={{ textAlign: "center", paddingTop: "20px" }}>
@@ -34,9 +35,9 @@ function Favourite() {
             variant="h5"
             // component="div"
             sx={{
-              fontFamily: "League Spartan",
+              fontFamily: "League Spartan !important",
               color: "black",
-              fontWeight: "bold",
+              fontWeight: "bold !important",
             }}
           >
             My Watchlist
@@ -54,7 +55,7 @@ function Favourite() {
             variant="h4"
             // component="div"
             sx={{
-              fontFamily: "Bree Serif",
+              fontFamily: "Bree Serif !important",
               color: "black",
               fontWeight: "",
             }}
@@ -102,7 +103,7 @@ function Favourite() {
                     variant="h6"
                     // component="div"
                     sx={{
-                      fontFamily: "Bree Serif",
+                      fontFamily: "Bree Serif !important",
                       color: "#999",
                       fontWeight: "",
                       width: 200,
@@ -150,7 +151,7 @@ function Favourite() {
             variant="h4"
             // component="div"
             sx={{
-              fontFamily: "Bree Serif",
+              fontFamily: "Bree Serif !important",
               color: "black",
               fontWeight: "",
             }}
@@ -196,7 +197,7 @@ function Favourite() {
                   variant="h6"
                   // component="div"
                   sx={{
-                    fontFamily: "Bree Serif",
+                    fontFamily: "Bree Serif !important",
                     color: "#999",
                     fontWeight: "",
                     width: 200,
@@ -220,8 +221,8 @@ function Favourite() {
                     backgroundColor: "#FFCE45",
                     color: "#184D47",
                     fontSize: "1rem",
-                    fontFamily: "Bree Serif",
-                    fontWeight: "bold",
+                    fontFamily: "Bree Serif ",
+                    fontWeight: "bold ",
                     height: "30px",
                   }}
                   onClick={() => navigate("/crypto")}

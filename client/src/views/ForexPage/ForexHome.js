@@ -17,6 +17,7 @@ function ForexHome() {
   const { generateSnackbar } = GeneralState();
 
   let param = Object.keys(data);
+  console.log("reached here");
 
   let navigate = useNavigate();
   useEffect(() => {

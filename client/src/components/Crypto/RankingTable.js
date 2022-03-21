@@ -56,14 +56,7 @@ function createData(name, detail, change) {
   return { name, detail, change };
 }
 
-const rows = [
-  createData("NTLA", "Intellia", "+18.78%"),
-  createData("LPSN", "LivePerson", "+3.14%"),
-  createData("LUNA", "LunaUS", "+2.88%"),
-  createData("BIGC", "BigCommerce", "+1.89%"),
-];
-
-export default function CustomizedTables({ loading, list, rowClass }) {
+export default function CustomizedTables({ loading, list }) {
   console.log(loading);
   console.log(list);
   let navigate = useNavigate();
@@ -112,8 +105,8 @@ export default function CustomizedTables({ loading, list, rowClass }) {
                   padding: "16px",
                   display: "flex",
                   justifyContent: "space-around",
-                  backgroundColor: "#184D47",
-                  color: "white",
+                  backgroundColor: "#FFCE45",
+                  color: "black",
                   fontSize: "1.1rem",
                   fontFamily: "League Spartan",
                   fontWeight: "bold",
@@ -138,6 +131,7 @@ export default function CustomizedTables({ loading, list, rowClass }) {
                         justifyContent="space-between"
                         style={{
                           justifyContent: "space-around",
+                          cursor: "pointer",
                         }}
                         onClick={(e) =>
                           navigate(`/details/crypto/${row.symbol}`, {
@@ -228,8 +222,8 @@ export default function CustomizedTables({ loading, list, rowClass }) {
                   padding: "16px",
                   display: "flex",
                   justifyContent: "space-around",
-                  backgroundColor: "#184D47",
-                  color: "white",
+                  backgroundColor: "#FFCE45",
+                  color: "black",
                   fontSize: "1.1rem",
                   fontFamily: "League Spartan",
                   fontWeight: "bold",
@@ -254,6 +248,7 @@ export default function CustomizedTables({ loading, list, rowClass }) {
                         justifyContent="space-between"
                         style={{
                           justifyContent: "space-around",
+                          cursor: "pointer",
                         }}
                         onClick={(e) =>
                           navigate(`/details/crypto/${row.symbol}`, {

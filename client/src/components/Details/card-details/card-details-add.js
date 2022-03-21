@@ -16,8 +16,6 @@ export default function CardDetailsAdd({
     if (watchList[market].length > 0) {
       return watchList[market].some((object) => object.symbol === symbol);
     } else {
-      console.log("logic failed");
-      console.log(symbol, market);
       return false;
     }
   };

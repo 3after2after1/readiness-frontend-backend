@@ -177,9 +177,9 @@ const LoginPage = () => {
             variant="h4"
             // component="div"
             sx={{
-              fontFamily: " League Spartan",
+              fontFamily: " League Spartan !important",
               color: "black",
-              fontWeight: "bold",
+              fontWeight: "bold !important",
             }}
           >
             It's TREX.

@@ -50,22 +50,17 @@
   #signUpButton1 {
     display: none;
   }
-  #forexButton1 {
-    display: none;
-  }
+
   #dashPic1 {
-    display: none;
-  }
-  #dashPic3 {
     display: none;
   }
   #cryptoButton1 {
     display: none;
   }
   #smartmockup {
-    /* background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-size: contain;
-    background-image: url("/public/smartmockups3.png"); */
+    background-image: url("/public/smartmockup.png");
   }
   #dashPic5 {
     display: none;
@@ -99,7 +94,7 @@
   }
   #dashPic4 {
     display: initial;
-    background-image: url("../../../public/cryptoHome5.png");
+    background-image: url("../../../public/cryptoHome1.png");
     background-repeat: no-repeat;
     background-size: cover;
     border: 2px solid #184d47;
@@ -118,15 +113,11 @@
   #signUpButton1 {
     display: none;
   }
-  #forexButton1 {
-    display: none;
-  }
+
   #dashPic1 {
     display: none;
   }
-  #dashPic3 {
-    display: none;
-  }
+
   #cryptoButton1 {
     display: none;
   }
@@ -142,15 +133,11 @@
   #signUpButton1 {
     display: none;
   }
-  #forexButton1 {
-    display: none;
-  }
+
   #dashPic1 {
     display: none;
   }
-  #dashPic3 {
-    display: none;
-  }
+
   #cryptoButton1 {
     display: none;
   }
@@ -195,11 +182,7 @@
     width: 400px;
     font-size: 1.1rem !important;
   }
-  #forexContentBox {
-    /* flex-direction: row !important;
-    align-items: initial !important;
-    justify-content: center; */
-  }
+
   #dashPic2 {
     width: 400px !important;
     height: 300px !important;
@@ -209,11 +192,7 @@
     height: 50px !important;
     font-size: 1.2rem !important;
   }
-  #cryptoContentBox {
-    /* flex-direction: row !important;
-    align-items: initial !important;
-    justify-content: center; */
-  }
+
   #cryptoExplanation {
     width: 400px;
     font-size: 1.1rem !important;
@@ -222,7 +201,7 @@
     display: initial;
     width: 400px !important;
     height: 300px !important;
-    background-image: url("../../../public/cryptoHome5.png");
+    background-image: url("../../../public/cryptoHome1.png");
     background-repeat: no-repeat;
     background-size: cover;
     border: 2px solid #184d47;
@@ -239,15 +218,11 @@
   #signUpButton1 {
     display: none;
   }
-  #forexButton1 {
-    display: none;
-  }
+
   #dashPic1 {
     display: none;
   }
-  #dashPic3 {
-    display: none;
-  }
+
   #cryptoButton1 {
     display: none;
   }
@@ -284,13 +259,7 @@
     width: 400px;
     font-size: 1rem !important;
   }
-  /* #forexFeature1 {
-    width: 250px !important;
-  } */
-  /* #forexFeatureExplanation1 {
-    width: 250px !important;
-    font-size: 1.1rem !important;
-  } */
+
   #forexButton2 {
     width: 400px !important;
     height: 50px !important;
@@ -316,7 +285,7 @@
   #dashPic4 {
     width: 400px !important;
     height: 300px !important;
-    background-image: url("../../../public/cryptoHome5.png");
+    background-image: url("../../../public/cryptoHome1.png");
     background-repeat: no-repeat;
     background-size: cover;
     border: 2px solid #184d47;
@@ -325,13 +294,11 @@
 }
 
 @media (min-width: 750px) {
-  /* #landingPageContent {
-    margin: 25px 100px 25px 100px;
-    box-shadow: 2px 2px 10px 2px #888888;
-  } */
-
   #firstsection {
     height: 600px !important;
+  }
+  #pictureBox1 {
+    justify-content: center;
   }
   #signUpContent {
     text-align: start;
@@ -357,6 +324,7 @@
   #smartmockup {
     height: 315px !important;
     width: 400px !important;
+    margin-top: 100px;
   }
   #signUpBox {
     padding-top: 70px !important;
@@ -396,16 +364,9 @@
   }
 
   #forexContentBox {
-    /* flex-direction: row !important;
-    align-items: initial !important;
-    justify-content: space-between !important; */
     width: 550px;
   }
-  #forexButton1 {
-    width: 420px;
-    height: 55px !important;
-    display: none;
-  }
+
   #forexButton2 {
     display: none;
   }
@@ -463,9 +424,6 @@
     justify-content: center;
   }
   #cryptoContentBox {
-    /* flex-direction: row !important;
-    align-items: initial !important;
-    justify-content: space-between !important; */
     width: 550px;
   }
   #cryptoButton3Box {
@@ -487,14 +445,11 @@
     display: initial;
     height: 315px !important;
     width: 550px !important;
-    background-image: url("../../../public/cryptoHome5.png");
+    background-image: url("../../../public/cryptoHome1.png");
     background-repeat: no-repeat;
     background-size: cover;
     border: 2px solid #184d47;
     border-radius: 0.5rem;
-  }
-  #dashPic3 {
-    display: none;
   }
   #dashBoxPic4 {
     padding-bottom: 0 !important;
@@ -541,6 +496,12 @@
   #typewrite {
     font-size: 5rem;
   }
+  #smartmockup {
+    height: 315px !important;
+    width: 500px !important;
+    margin-top: 50px !important;
+    background-size: cover !important;
+  }
   #sentence2 {
     font-size: 3rem;
   }
@@ -564,16 +525,9 @@
     width: 450px;
     padding-left: 25px;
     padding-top: 24px;
-    padding-right: 100px;
+    padding-right: 50px;
   }
-  /* #firstsection {
-    align-items: start !important;
-  }
-  #section23 {
-    padding: 100px 300px 100px 300px;
-  }
-  #thirdsection {
-  } */
+
   #forexAndDashboard {
     flex-direction: row !important;
     justify-content: center !important;
@@ -618,12 +572,7 @@
     height: 315px !important;
     width: 400px !important;
   }
-  /* #forexBox {
-    margin-left: 100px;
-  }
-  #cryptoBox {
-    margin-right: 100px;
-  } */
+
   #dashPic6 {
     display: initial;
     height: 415px !important;
@@ -655,11 +604,17 @@
   #secondsection {
     height: 1400px !important;
   }
+  #smartmockup {
+    height: 415px !important;
+    width: 700px !important;
+    background-size: cover;
+  }
   #forexAndDashboard {
     flex-direction: row !important;
     justify-content: center !important;
   }
   #dashPic1 {
+    margin-right: 20px;
     display: initial;
     height: 415px !important;
     width: 650px !important;
@@ -677,7 +632,7 @@
     display: initial;
     height: 415px !important;
     width: 650px !important;
-    background-image: url("../../../public/cryptoHome5.png");
+    background-image: url("../../../public/cryptoHome1.png");
     background-repeat: no-repeat;
     background-size: cover;
     border: 2px solid #184d47;
