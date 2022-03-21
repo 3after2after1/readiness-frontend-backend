@@ -161,6 +161,16 @@ ws.onmessage = (msg) => {
   if (msg.msg_type === "ping") {
     console.log("pong");
   }
+
+  // get tick_history error messages
+  if (msg.msg_type === "ticks_history") {
+    let symbol = msg.echo_req.ticks_history.replace("frx", "");
+    // console.log("error no symbol ", msg);
+    pub.publish(
+      "FOREX_ERROR_MESSAGES",
+      JSON.stringify({ symbol: symbol, error: msg.error.code, id: msg.req_id })
+    );
+  }
   // console.log("other msg", msg);
 };
 

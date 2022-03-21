@@ -9,7 +9,10 @@ export const getForexOHLCHistorical = (symbol, style, interval) => {
 
   const promiseHistorical = fetch(url, options)
     .then((resp) => resp.json())
-    .then((data) => data.data);
+    .then((data) => {
+      console.log("resp, ", data);
+      return data;
+    });
 
   return promiseHistorical;
 };

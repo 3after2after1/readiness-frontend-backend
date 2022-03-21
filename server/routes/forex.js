@@ -3,6 +3,7 @@ let router = express.Router();
 const Redis = require("ioredis");
 const hash = require("hash-it");
 const onFinished = require("on-finished");
+const { ms } = require("date-fns/locale");
 
 // get forex tick
 router.get("/tick", (req, res) => {
@@ -187,7 +188,7 @@ router.get("/historical", (req, res) => {
 
   pub.publish("GET_HISTORICAL_DATA", JSON.stringify(historicalDataQuery));
 
-  sub.subscribe("HISTORICAL_OHLC", (err, count) => {
+  sub.subscribe("HISTORICAL_OHLC", "FOREX_ERROR_MESSAGES", (err, count) => {
     if (err) {
       console.error("Failed to subscribe: %s", err.message);
     } else {
@@ -202,6 +203,10 @@ router.get("/historical", (req, res) => {
 
       res.json({ data: message.data });
       return sub.quit();
+    }
+
+    if (channel === "FOREX_ERROR_MESSAGES" && message.id === reqId) {
+      res.json({ symbol: symbol, error: message.error });
     }
   });
 });
