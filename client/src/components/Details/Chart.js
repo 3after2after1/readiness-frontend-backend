@@ -62,7 +62,6 @@ class ChartComponent extends React.Component {
   // accepts props: symbol
   componentDidMount() {
     if (this.props.market === "forex") {
-      // 58-68 (microservice) other all still client
       // getting historical forex data and starting a server sent event connection to get ticks - complete
       getForexOHLCHistorical(
         this.props.symbol,
@@ -99,7 +98,12 @@ class ChartComponent extends React.Component {
               newTick.date = new Date(newTick.date);
 
               // send current price to parent component (details) to display
-              this.props.getCurrentPrice(newTick.price);
+              this.props.getCurrentPrice(
+                this.generatePriceSummary(
+                  newTick.price,
+                  this.state.data[data.length - 1].close
+                )
+              );
 
               // check if new tick belongs to the same time group of last OHLC
               let sameTimeGroup = isCurrentTickTimeGroupSame(
@@ -147,7 +151,12 @@ class ChartComponent extends React.Component {
               newTick.date = new Date(newTick.date);
 
               // send current price to parent component (details) to display
-              this.props.getCurrentPrice(newTick.price);
+              this.props.getCurrentPrice(
+                this.generatePriceSummary(
+                  newTick.price,
+                  this.state.data[data.length - 1].close
+                )
+              );
 
               // check if new tick belongs to the same time group of last OHLC
               let sameTimeGroup = isCurrentTickTimeGroupSame(
@@ -178,6 +187,20 @@ class ChartComponent extends React.Component {
       tickConnection.connection.close();
       console.log("unmounting");
     }
+  };
+
+  // get price summary
+  generatePriceSummary = (currPrice, prevPrice) => {
+    let currentPrice = currPrice;
+    let previousPrice = prevPrice;
+    let priceChange = previousPrice ? currentPrice - previousPrice : null;
+
+    let priceSummary = {
+      current: currentPrice.toFixed(4),
+      priceChange: priceChange,
+    };
+
+    return priceSummary;
   };
 
   // change ohlc chart interval
@@ -277,11 +300,7 @@ class ChartComponent extends React.Component {
             alignItems: "center",
           }}
         >
-          <CircularProgress
-            style={{ color: "#184d47" }}
-            size="100px"
-            thickness="2"
-          />
+          <CircularProgress style={{ color: "#184d47" }} size="100px" />
         </div>
       );
     }
