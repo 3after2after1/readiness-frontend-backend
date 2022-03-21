@@ -30,6 +30,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
+import { last } from "react-stockcharts/lib/utils";
 
 // variable to contain server-set-events connection
 let tickConnection = null;
@@ -90,7 +91,7 @@ class ChartComponent extends React.Component {
             console.log("newtick msg ", newTick);
 
             if (newTick.error) {
-              console.log("receives error ", newTick.error);
+              // console.log("receives error ", newTick.error);
               this.setState({ error: newTick.error });
               tickConnection.connection.close();
             } else {
@@ -286,6 +287,52 @@ class ChartComponent extends React.Component {
     });
   };
 
+  // get data on load more
+  getMoreData = () => {
+    console.log("executing getting more data!! wohooo!");
+    let lastTime = this.state.data[0].date.getTime() / 1000;
+
+    if (this.props.market === "forex") {
+      getForexOHLCHistorical(
+        this.props.symbol,
+        this.state.chart === charts.candle_stick ? "candles" : "ticks",
+        this.state.interval.name,
+        lastTime
+      ).then((data) => {
+        data = data.data;
+        data = data.map((item) => {
+          item.date = new Date(item.date);
+          return item;
+        });
+        if (
+          data[data.length - 1].date.getTime() ===
+          this.state.data[0].date.getTime()
+        )
+          data.pop();
+        this.setState({ data: data.concat(this.state.data) });
+      });
+    } else {
+      getCryptoOHLCHistorical(
+        this.props.symbol,
+        this.state.interval.name,
+        lastTime
+      ).then((data) => {
+        data = data.data;
+        data = data.map((item) => {
+          item.date = new Date(item.date);
+          return item;
+        });
+        if (
+          data[data.length - 1].date.getTime() ===
+          this.state.data[0].date.getTime()
+        )
+          data.pop();
+
+        this.setState({ data: data.concat(this.state.data) });
+      });
+    }
+  };
+
   render() {
     // change interval options depending on market and chart type
     let intervalOptions = { ...candleIntervals };
@@ -318,6 +365,7 @@ class ChartComponent extends React.Component {
             type="hybrid"
             data={this.state.data}
             indicators={this.state.indicators}
+            onLoadMore={this.getMoreData}
           />
         )}
         {this.state.chart === charts.line_graph && (
@@ -325,6 +373,7 @@ class ChartComponent extends React.Component {
             type="hybrid"
             data={this.state.data}
             indicators={this.state.indicators}
+            onLoadMore={this.getMoreData}
           />
         )}
         <div>

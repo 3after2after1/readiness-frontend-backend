@@ -1,8 +1,8 @@
 import { BACKEND_DOMAIN } from "./backend";
 
 // get historical OHLC data
-export const getCryptoOHLCHistorical = (symbol, interval) => {
-  let url = `${BACKEND_DOMAIN}/crypto/historical?symbol=${symbol.toUpperCase()}&interval=${interval}`;
+export const getCryptoOHLCHistorical = (symbol, interval, lastDate = null) => {
+  let url = `${BACKEND_DOMAIN}/crypto/historical?symbol=${symbol.toUpperCase()}&interval=${interval}&lastDate=${lastDate}`;
   let options = {
     method: "GET",
   };

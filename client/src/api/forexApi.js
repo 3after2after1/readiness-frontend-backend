@@ -1,8 +1,13 @@
 import { BACKEND_DOMAIN } from "./backend";
 
 // get historical OHLC data
-export const getForexOHLCHistorical = (symbol, style, interval) => {
-  let url = `${BACKEND_DOMAIN}/forex/historical?symbol=${symbol.toUpperCase()}&style=${style}&interval=${interval}`;
+export const getForexOHLCHistorical = (
+  symbol,
+  style,
+  interval,
+  end = "latest"
+) => {
+  let url = `${BACKEND_DOMAIN}/forex/historical?symbol=${symbol.toUpperCase()}&style=${style}&interval=${interval}&end=${end}`;
   let options = {
     method: "GET",
   };
