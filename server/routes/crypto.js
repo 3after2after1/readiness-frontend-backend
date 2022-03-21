@@ -211,12 +211,13 @@ router.get("/tick", (req, res) => {
 
 // get historical data on symbol
 router.get("/historical", (req, res) => {
-  const { symbol, interval } = req.query;
+  const { symbol, interval, lastDate } = req.query;
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
   const historicalDataQuery = {
     symbol,
     interval,
     id: reqId,
+    lastDate: lastDate,
   };
 
   if (!symbol) {

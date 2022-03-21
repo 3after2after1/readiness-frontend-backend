@@ -95,8 +95,8 @@ sub.on("message", (channel, message) => {
 
   if (channel === "GET_HISTORICAL_DATA") {
     console.log("[GET-HIST-DATA] receive msg in get hist data channel");
-    const { symbol, style, interval, id } = message;
-    getHistoricalData(symbol, style, interval, id);
+    const { symbol, style, interval, id, end } = message;
+    getHistoricalData(symbol, style, interval, id, end);
   }
 });
 
@@ -171,7 +171,6 @@ ws.onmessage = (msg) => {
       JSON.stringify({ symbol: symbol, error: msg.error.code, id: msg.req_id })
     );
   }
-  // console.log("other msg", msg);
 };
 
 // listening to redis connection client count storage set events

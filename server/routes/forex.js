@@ -160,7 +160,7 @@ router.get("/info", (req, res) => {
 
 // get historical data on symbol
 router.get("/historical", (req, res) => {
-  const { symbol, style, interval } = req.query;
+  const { symbol, style, interval, end } = req.query;
   console.log("historical data req");
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
   const historicalDataQuery = {
@@ -168,6 +168,7 @@ router.get("/historical", (req, res) => {
     style,
     interval,
     id: reqId,
+    end: end,
   };
 
   if (!symbol || !style) {

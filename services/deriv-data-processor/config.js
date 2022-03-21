@@ -24,14 +24,14 @@ const subscribeTickStream = (symbol) => {
 };
 
 // get historical data
-const getHistoricalData = (symbol, style, interval, id) => {
-  console.log("sending get historical data req to deriv");
+const getHistoricalData = (symbol, style, interval, id, end = "latest") => {
+  console.log("sending get historical data req to deriv ", end);
   ws.send(
     JSON.stringify({
       ticks_history: "frx" + symbol.toUpperCase(),
       adjust_start_time: 1,
       count: 100,
-      end: "latest",
+      end: end,
       style: style,
       granularity:
         style === "candles"

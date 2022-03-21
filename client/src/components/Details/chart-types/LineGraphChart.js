@@ -36,7 +36,14 @@ import { chartIndicators } from "../../../utils/utils";
 
 class LineAndScatterChart extends React.Component {
   render() {
-    const { data: initialData, type, width, ratio, indicators } = this.props;
+    const {
+      data: initialData,
+      type,
+      width,
+      ratio,
+      indicators,
+      onLoadMore,
+    } = this.props;
     const margin = { left: 60, right: 60, top: 10, bottom: 20 };
 
     const height = 500;
@@ -154,6 +161,7 @@ class LineAndScatterChart extends React.Component {
           xAccessor={xAccessor}
           displayXAccessor={displayXAccessor}
           xScale={xScale}
+          onLoadMore={onLoadMore}
           xExtents={xExtents}
         >
           <Chart

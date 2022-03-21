@@ -36,12 +36,12 @@ const subscribeTickStream = (subs) => {
 const getHistoricalData = (
   symbol,
   interval,
-  limit = 200,
   lastDate = null,
+  limit = 200,
   toSymbol = "USD"
 ) => {
-  console.log("interval ", interval);
-  let toTs = lastDate ? `&toTs=${lastDate}` : "";
+  console.log("lastDate ", lastDate, typeof lastDate);
+  let toTs = lastDate != "null" && lastDate != null ? `&toTs=${lastDate}` : "";
   let url =
     `https://min-api.cryptocompare.com/data/v2/histo${OHLCIntervals[interval].unit}?fsym=${symbol}&tsym=${toSymbol}&limit=${limit}&aggregate=${OHLCIntervals[interval].value}&e=CCCAGG` +
     toTs +

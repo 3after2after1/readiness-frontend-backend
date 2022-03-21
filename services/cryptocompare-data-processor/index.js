@@ -95,11 +95,11 @@ sub.on("message", (channel, message) => {
 
   // get historical data reqs
   if (channel === "CRYPTO_GET_HISTORICAL_DATA") {
-    const { symbol, interval, id } = message;
+    const { symbol, interval, id, lastDate } = message;
 
-    getHistoricalData(symbol, interval).then((data) => {
+    getHistoricalData(symbol, interval, lastDate).then((data) => {
       if (data.Response === "Error") {
-        // console.log("receives error symbol ", data);
+        console.log("receives error symbol ", data);
         pub.publish(
           "CRYPTO_ERROR_MESSAGES",
           JSON.stringify({

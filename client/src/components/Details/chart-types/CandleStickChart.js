@@ -36,7 +36,14 @@ import {
 
 class CandleStickStockScaleChart extends React.Component {
   render() {
-    const { type, data: initialData, width, ratio, indicators } = this.props;
+    const {
+      type,
+      data: initialData,
+      width,
+      ratio,
+      indicators,
+      onLoadMore,
+    } = this.props;
     const margin = { left: 60, right: 60, top: 10, bottom: 20 };
 
     const height = 500;
@@ -164,6 +171,7 @@ class CandleStickStockScaleChart extends React.Component {
           xAccessor={xAccessor}
           displayXAccessor={displayXAccessor}
           xExtents={xExtents}
+          onLoadMore={onLoadMore}
         >
           <Chart
             id={1}
