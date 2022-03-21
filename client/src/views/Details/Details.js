@@ -19,14 +19,15 @@ function Details(props) {
   const [instrumentInfo, setInstrumentInfo] = useState({});
   //instrumentInfo has two properties, stats and desc
   const [currentPrice, setCurrentPrice] = useState("-");
+  const [previousPrice, setPreviousPrice] = useState("");
   const [priceChange, setPriceChange] = useState("-");
   const [percentagePriceChange, setPercentagePriceChange] = useState("-");
   const [symbolError, setSymbolError] = useState("");
+  const [priceSummary, setPriceSummary] = useState(null);
 
   let { market, symbol } = useParams();
   if (!market) market = props.market;
   if (!symbol) symbol = props.symbol;
-  console.log(useLocation());
   const location = useLocation();
   const { state } = useLocation();
   let imageInput = state
@@ -39,24 +40,25 @@ function Details(props) {
     symbol,
     market,
   };
-  const handleCurrentPrice = (price) => {
-    let previousPrice;
-    if (currentPrice) previousPrice = currentPrice;
-    setCurrentPrice(price);
-    if (previousPrice) {
-      setPriceChange(currentPrice - currentPrice);
-      setPercentagePriceChange((priceChange / previousPrice).toFixed(2) + "%");
-    }
-    setCurrentPrice(price);
-
-    console.log(
-      `c: ${currentPrice}, ch: ${priceChange}, %: ${percentagePriceChange}`
-    );
+  const handleCurrentPrice = (item) => {
+    console.log("receive item price summary: ", item);
+    setPriceSummary(item);
   };
 
   const handleInvalidSymbol = (error, market) => {
     console.log("handling error ", error);
     setSymbolError(error);
+  };
+
+  const PriceChange = ({ change }) => {
+    let style;
+    if (change > 0.0) {
+      style = { color: "green" };
+    } else if (change < 0.0) {
+      style = { color: "red" };
+    } else style = { color: "black" };
+
+    return <div style={style}>{change}</div>;
   };
 
   // get forex information
@@ -75,6 +77,7 @@ function Details(props) {
       // });
     }
   }, []);
+
   if (symbolError.toLowerCase() === "invalidsymbol") {
     return (
       <Navigate
@@ -113,17 +116,24 @@ function Details(props) {
                 <row>
                   <div className="company-box">
                     <span className="currency-price" id="currency-price">
-                      {currentPrice}
+                      {priceSummary
+                        ? Number(priceSummary.current).toFixed(4)
+                        : " - "}
                     </span>
                     <span className="currency" id="currency">
-                      USD{" "}
+                      USD
                     </span>
                     <span
                       className="currency-volatality"
                       id="currency-volatality"
                     >
-                      {" "}
-                      0.24(0.14%)
+                      {priceSummary
+                        ? priceSummary.priceChange !== null && (
+                            <PriceChange
+                              change={priceSummary.priceChange.toFixed(4)}
+                            />
+                          )
+                        : " - "}
                     </span>
                   </div>
                 </row>
