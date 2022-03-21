@@ -142,7 +142,7 @@ class ChartComponent extends React.Component {
             tickConnection = new CryptoTickConnection(this.props.symbol);
             tickConnection.connection.onmessage = (msg) => {
               console.log("new tick ", msg);
-              let newTick = JSON.parse(JSON.parse(msg.data));
+              let newTick = JSON.parse(msg.data);
               let lastOHLC = this.state.data[this.state.data.length - 1];
               newTick.date = new Date(newTick.date);
 
