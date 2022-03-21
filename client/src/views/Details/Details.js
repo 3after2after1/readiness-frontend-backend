@@ -54,7 +54,7 @@ function Details(props) {
     );
   };
 
-  const handleInvalidSymbol = (error) => {
+  const handleInvalidSymbol = (error, market) => {
     console.log("handling error ", error);
     setSymbolError(error);
   };
@@ -82,83 +82,90 @@ function Details(props) {
         state={{ from: location, error: "invalid symbol" }}
       />
     );
-  } else
+  } else if (symbolError.toLowerCase() === "marketnodata") {
     return (
-      <div className="main-container-details">
-        <div className="content">
-          <div className="content-title-details">
-            <div className="content-title-left">
-              <div className="icon-company" id="icon-company">
-                {state && (
-                  <img
-                    src={state.image || state.large}
-                    style={{ height: "4rem" }}
-                  />
-                )}
-              </div>
-              <div className="company-box">
-                <column>
-                  <row>
-                    <div id="company-name" className="company-name">
-                      {symbol.toUpperCase()}
-                    </div>
-                  </row>
-                  <row>
-                    <div className="company-box">
-                      <span className="currency-price" id="currency-price">
-                        {currentPrice}
-                      </span>
-                      <span className="currency" id="currency">
-                        USD{" "}
-                      </span>
-                      <span
-                        className="currency-volatality"
-                        id="currency-volatality"
-                      >
-                        {" "}
-                        0.24(0.14%)
-                      </span>
-                    </div>
-                  </row>
-                </column>
-              </div>
+      <Navigate
+        to="/crypto"
+        state={{ from: location, error: "no data exist" }}
+      />
+    );
+  }
+  return (
+    <div className="main-container-details">
+      <div className="content">
+        <div className="content-title-details">
+          <div className="content-title-left">
+            <div className="icon-company" id="icon-company">
+              {state && (
+                <img
+                  src={state.image || state.large}
+                  style={{ height: "4rem" }}
+                />
+              )}
             </div>
-
-            <div className="content-title-right-icon">
-              <CardDetailsAdd watchListData={watchListData} />
+            <div className="company-box">
+              <column>
+                <row>
+                  <div id="company-name" className="company-name">
+                    {symbol.toUpperCase()}
+                  </div>
+                </row>
+                <row>
+                  <div className="company-box">
+                    <span className="currency-price" id="currency-price">
+                      {currentPrice}
+                    </span>
+                    <span className="currency" id="currency">
+                      USD{" "}
+                    </span>
+                    <span
+                      className="currency-volatality"
+                      id="currency-volatality"
+                    >
+                      {" "}
+                      0.24(0.14%)
+                    </span>
+                  </div>
+                </row>
+              </column>
             </div>
           </div>
 
-          <Container>
-            <DetailsPage
-              market={market}
-              symbol={symbol}
-              getCurrentPrice={handleCurrentPrice}
-              handleSymbol={handleInvalidSymbol}
-            />
-          </Container>
-
-          <Container>
-            {Object.keys(instrumentInfo).length !== 0 ? (
-              market === markets.forex ? (
-                <DetailsStats
-                  dataStats={instrumentInfo.stats}
-                  dataDescription={instrumentInfo.description}
-                />
-              ) : (
-                "loading..."
-              )
-            ) : (
-              <LinearProgress style={{ background: "gold" }} />
-            )}
-          </Container>
+          <div className="content-title-right-icon">
+            <CardDetailsAdd watchListData={watchListData} />
+          </div>
         </div>
 
-        {/* <div classname="footer-content">
+        <Container>
+          <DetailsPage
+            market={market}
+            symbol={symbol}
+            getCurrentPrice={handleCurrentPrice}
+            handleSymbol={handleInvalidSymbol}
+          />
+        </Container>
+
+        <Container>
+          {Object.keys(instrumentInfo).length !== 0 ? (
+            market === markets.forex ? (
+              <DetailsStats
+                dataStats={instrumentInfo.stats}
+                dataDescription={instrumentInfo.description}
+              />
+            ) : (
+              "loading..."
+            )
+          ) : (
+            <LinearProgress style={{ background: "gold" }} />
+          )}
+        </Container>
+      </div>
+
+      {/* <div classname="footer-content">
         <Footer />
       </div> */}
-      </div>
-    );
+    </div>
+  );
 }
 
 export default Details;

@@ -73,7 +73,7 @@ class ChartComponent extends React.Component {
 
         if (data.error) {
           // this.setState({ error: data.error });
-          this.props.handleSymbol(data.error);
+          this.props.handleSymbol(data.error, "forex");
         } else {
           data = data.data;
           data = data.map((item) => {
@@ -127,40 +127,47 @@ class ChartComponent extends React.Component {
       // get historical data
       getCryptoOHLCHistorical(this.props.symbol, this.state.interval.name).then(
         (data) => {
-          data = data.map((item) => {
-            item.date = new Date(item.date);
-            return item;
-          });
-          this.setState({ data: data });
+          console.log("get crypto data ", data);
+          if (data.error) {
+            console.log("received error mesg");
+            this.props.handleSymbol(data.error, "crypto");
+          } else {
+            data = data.data;
+            data = data.map((item) => {
+              item.date = new Date(item.date);
+              return item;
+            });
+            this.setState({ data: data });
 
-          tickConnection = new CryptoTickConnection(this.props.symbol);
-          tickConnection.connection.onmessage = (msg) => {
-            console.log("new tick ", msg);
-            let newTick = JSON.parse(JSON.parse(msg.data));
-            let lastOHLC = this.state.data[this.state.data.length - 1];
-            newTick.date = new Date(newTick.date);
+            tickConnection = new CryptoTickConnection(this.props.symbol);
+            tickConnection.connection.onmessage = (msg) => {
+              console.log("new tick ", msg);
+              let newTick = JSON.parse(JSON.parse(msg.data));
+              let lastOHLC = this.state.data[this.state.data.length - 1];
+              newTick.date = new Date(newTick.date);
 
-            // send current price to parent component (details) to display
-            this.props.getCurrentPrice(newTick.price);
+              // send current price to parent component (details) to display
+              this.props.getCurrentPrice(newTick.price);
 
-            // check if new tick belongs to the same time group of last OHLC
-            let sameTimeGroup = isCurrentTickTimeGroupSame(
-              // this.state.interval,
-              this.state.interval,
-              lastOHLC,
-              newTick
-            );
+              // check if new tick belongs to the same time group of last OHLC
+              let sameTimeGroup = isCurrentTickTimeGroupSame(
+                // this.state.interval,
+                this.state.interval,
+                lastOHLC,
+                newTick
+              );
 
-            // if time group of previous OHLC and current tick same, update the previous OHLC, else create new OHLC
-            let newOHLC = null;
-            if (sameTimeGroup) {
-              updateLastOHLC(lastOHLC, newTick);
-            } else {
-              newOHLC = createOHLC(newTick);
-            }
+              // if time group of previous OHLC and current tick same, update the previous OHLC, else create new OHLC
+              let newOHLC = null;
+              if (sameTimeGroup) {
+                updateLastOHLC(lastOHLC, newTick);
+              } else {
+                newOHLC = createOHLC(newTick);
+              }
 
-            if (newOHLC) this.state.data.push(newOHLC);
-          };
+              if (newOHLC) this.state.data.push(newOHLC);
+            };
+          }
         }
       );
     }
