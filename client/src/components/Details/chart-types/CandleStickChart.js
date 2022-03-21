@@ -136,11 +136,18 @@ class CandleStickStockScaleChart extends React.Component {
       xAccessor(data[data.length - numCandlesOnDisplay]),
     ];
 
+    // prevent scroll on chart
     const changeScroll = () => {
       let position = document.body.style.position;
       document.body.style.position = position === "fixed" ? "static" : "fixed";
       document.body.style.width = "100%";
       document.body.style.overflowY = "scroll";
+    };
+
+    const candleAppearance = {
+      fill: function fill(d) {
+        return d.close > d.open ? "	rgb(50,205,50)" : "	rgb(238, 75, 43)";
+      },
     };
 
     return (
@@ -170,7 +177,7 @@ class CandleStickStockScaleChart extends React.Component {
             <YAxis axisAt="right" orient="right" ticks={5} {...yGrid} />
             <OHLCTooltip origin={[-40, 0]} />
 
-            <CandlestickSeries />
+            <CandlestickSeries {...candleAppearance} />
             {indicators.includes(chartIndicators.simple_moving_avg) && (
               <>
                 <LineSeries
