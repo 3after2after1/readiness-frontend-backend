@@ -11,6 +11,7 @@ const UserAccount = createContext();
 
 const UserContext = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userStatus, setUserStatus] = useState("unknown");
   const [username, setUsername] = useState(null);
   const [userRocketChatToken, setUserRocketChatToken] = useState(null);
 
@@ -49,8 +50,10 @@ const UserContext = ({ children }) => {
       console.log("auth state change");
       if (user) {
         setUser(user);
+        setUserStatus(true);
       } else {
         setUser(null);
+        setUserStatus(false);
       }
     });
 
@@ -130,6 +133,7 @@ const UserContext = ({ children }) => {
         username,
         userRocketChatToken,
         automatedRocketChatSSO,
+        userStatus,
       }}
     >
       {children}

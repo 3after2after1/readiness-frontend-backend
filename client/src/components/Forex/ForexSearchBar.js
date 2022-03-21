@@ -12,7 +12,9 @@ export default function ComboBox() {
     <Autocomplete
       disablePortal
       onChange={(event, value) => {
-        navigate(`/forex/${value}`);
+        console.log(value);
+        let symbol = value.replace("/", "");
+        navigate(`/details/forex/${symbol}`);
       }}
       id="combo-box-demo"
       options={options}

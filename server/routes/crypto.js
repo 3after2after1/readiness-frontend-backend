@@ -91,6 +91,36 @@ router.get("/info", async (req, res) => {
   }
 });
 
+router.get("/stats", async (req, res) => {
+  const { symbol } = req.query;
+  try {
+    const site_url = `https://services.intotheblock.com/api/${symbol}/signals`;
+    const { data } = await axios({
+      method: "GET",
+      url: site_url,
+    });
+    let signals = {};
+    data.signals.forEach(
+      ({ title, info, category, sentiment, value, score, thresholds }) => {
+        if (category === "on_chain") {
+          signals[title] = {
+            info,
+            sentiment,
+            value,
+            score,
+            thresholds,
+          };
+        }
+      }
+    );
+    res.send({ ...data, signals });
+  } catch (error) {
+    return res.status(404).json({
+      message: "Data not available",
+    });
+  }
+});
+
 // get crypto tick
 router.get("/tick", (req, res) => {
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());

@@ -35,7 +35,15 @@ export default function DetailsStats({ dataStats, dataDescription, market }) {
         >
           {/* <StatsForex statsData={dataStats} /> */}
           {/* forex stats using dataStats from ricky line 21 */}
-          <GaugeMeter />
+          {market === "crypto" ? (
+            dataStats ? (
+              <GaugeMeter data={dataStats} />
+            ) : (
+              <p>No data available at the moment</p>
+            )
+          ) : (
+            <StatsForex statsData={dataStats} />
+          )}
         </Box>
         <Box
           id="stats-contents-box"

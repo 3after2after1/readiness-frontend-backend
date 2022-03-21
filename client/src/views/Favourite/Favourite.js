@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "@mui/material/Card";
 import { Box, Button, Typography } from "@mui/material";
 import CardFav from "../../components/Favourite/CardFav";
@@ -8,7 +8,15 @@ import "./Favourite.css";
 
 function Favourite() {
   const navigate = useNavigate();
-  const { watchList } = WatchListState();
+  const { watchList, watchListInitializer } = WatchListState();
+  console.log(watchList);
+
+  useEffect(() => {
+    watchListInitializer();
+
+    return () => {};
+  }, []);
+
   return (
     <>
       <Box

@@ -75,7 +75,6 @@ router.get("/tick", (req, res) => {
           if (key === tick_channel) {
             //tick_channel is key_name
             redis.get(key).then((result, err) => {
-              console.log("result ", "result");
               res.write("data: " + JSON.stringify(result) + "\n\n");
             });
           }

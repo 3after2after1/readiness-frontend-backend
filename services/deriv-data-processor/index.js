@@ -108,7 +108,7 @@ ws.onmessage = (msg) => {
     //msg_type coming from deriv
     // console.log("tick ", msg);
     if (msg.error === undefined) {
-      console.log("tick");
+      // console.log("tick");
       let symbol = msg.tick.symbol.replace("frx", "");
       connectionItem.stream_id = msg.subscription.id;
       connectionItem.symbol = symbol;
@@ -156,7 +156,7 @@ ws.onmessage = (msg) => {
   }
 
   // get other msg types
-  console.log("other msg", msg);
+  // console.log("other msg", msg);
 };
 
 // listening to redis connection client count storage set events

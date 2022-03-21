@@ -13,8 +13,8 @@ ReactDOM.render(
     <UserContext>
       <GeneralContext>
         <WatchListContext>
-          <App />
-          {/* <App2 /> */}
+          {/* <App /> */}
+          <App2 />
         </WatchListContext>
       </GeneralContext>
     </UserContext>

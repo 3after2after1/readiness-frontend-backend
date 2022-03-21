@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   height: max-content;
-  width: 487px;
+  width: 200px;
   margin-left: 40px;
 }
 
@@ -152,7 +152,7 @@
   margin: 0 0.9rem;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 780px) {
   #main-indictor-container {
     width: inherit !important;
     display: flex !important;
@@ -161,41 +161,10 @@
   }
   #summary {
     /* display: inline-block !important; */
-    height: 45vh;
-    margin: 0 1rem;
+    height: 52vh;
+    width: 400px;
+    padding: 0 1rem;
   }
-}
-
-@media (max-width: 375px) {
-  #main-indictor-container {
-    width: inherit !important;
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap;
-  }
-  #summary {
-    /* display: inline-block !important; */
-    height: 45vh;
-    padding-right: 2rem;
-  }
-}
-
-@media (max-width: 425px) {
-  #main-indictor-container {
-    width: inherit !important;
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap;
-  }
-  #summary {
-    /* display: inline-block !important; */
-    height: 20vh;
-    padding-right: 2rem;
-  }
-  /* .gauge-chart1 {
-    color: blue;
-    height: 200px;
-  } */
 }
 
 @media (max-width: 540px) {
@@ -222,7 +191,7 @@
   }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 425px) {
   #main-indictor-container {
     width: inherit !important;
     display: flex !important;
@@ -231,8 +200,39 @@
   }
   #summary {
     /* display: inline-block !important; */
-    height: 52vh;
-    width: 400px;
-    padding: 0 1rem;
+    height: 20vh;
+    padding-right: 2rem;
+  }
+  /* .gauge-chart1 {
+    color: blue;
+    height: 200px;
+  } */
+}
+
+@media (max-width: 375px) {
+  #main-indictor-container {
+    width: inherit !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+  }
+  #summary {
+    /* display: inline-block !important; */
+    height: 45vh;
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 320px) {
+  #main-indictor-container {
+    width: inherit !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+  }
+  #summary {
+    /* display: inline-block !important; */
+    height: 45vh;
+    margin: 0 1rem;
   }
 }

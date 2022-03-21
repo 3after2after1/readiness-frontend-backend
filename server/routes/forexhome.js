@@ -149,7 +149,7 @@ router.get("/historicaldata", async (req, res) => {
           },
         };
       });
-      storage.set("forex-static-data", JSON.stringify(Obj), "EX", 3600);
+      storage.set("forex-static-data", JSON.stringify(Obj), "EX", 1000);
       res.send(Obj);
     }
   } catch (error) {

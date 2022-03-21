@@ -30,3 +30,18 @@ export const getCryptoInfo = async (name, symbol) => {
     }
   }
 };
+
+export const getCryptoStats = async (symbol) => {
+  let site_url = `${BACKEND_DOMAIN}/crypto/stats?symbol=${symbol}`;
+  try {
+    const { data } = await axios({
+      method: "GET",
+      url: site_url,
+    });
+    console.log("crypto stats", data);
+
+    return { stats: data };
+  } catch (error) {
+    return { stats: null };
+  }
+};

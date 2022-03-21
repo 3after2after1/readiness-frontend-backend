@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import GaugeChart from "react-gauge-chart";
+import { LinearProgress } from "@material-ui/core";
 import "./GaugeMeter.css";
-import axios from "axios";
 
-const GaugeMeter = () => {
+const GaugeMeter = ({ data }) => {
+  console.log("reached gauge", data);
   const chartStyle = {
     height: "50px",
     width: "280px",
@@ -29,20 +30,16 @@ const GaugeMeter = () => {
   const [stats, setStats] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("https://services.intotheblock.com/api/BTC/signals")
-      .then(({ data }) => {
-        console.log(data.summary.score);
-        setStats(data);
-      });
+    setStats(data);
   }, []);
 
   return (
     <>
       {stats === null ? (
-        <p>Loading...</p>
+        <LinearProgress style={{ background: "gold" }} />
       ) : (
         <div id="main-indictor-container">
+          {console.log("data reached", stats)}
           <div id="summary">
             {/* main gauge */}
             <h4 style={{ padding: "1rem 0" }}>Summary</h4>
@@ -112,16 +109,12 @@ const GaugeMeter = () => {
                   </p>
                 </h5>
                 <h5
-                  className={findSignalGivenThresholds(
-                    Object.values(stats.signals[1].thresholds),
-                    stats.signals[1].score
-                  )}
+                  className={stats.signals["Net Network Growth"]["sentiment"]}
                 >
-                  {(stats.signals[1].value * 100).toFixed(2)} %{" "}
-                  {findSignalGivenThresholds(
-                    Object.values(stats.signals[1].thresholds),
-                    stats.signals[1].score
-                  )}
+                  {(stats.signals["Net Network Growth"]["value"] * 100).toFixed(
+                    2
+                  )}{" "}
+                  % {stats.signals["Net Network Growth"]["sentiment"]}
                 </h5>
               </div>
 
@@ -132,17 +125,9 @@ const GaugeMeter = () => {
                     Change in “In the Money” addresses momentum signal
                   </p>
                 </h5>
-                <h5
-                  className={findSignalGivenThresholds(
-                    Object.values(stats.signals[2].thresholds),
-                    stats.signals[2].score
-                  )}
-                >
-                  {(stats.signals[2].value * 100).toFixed(2)} %{" "}
-                  {findSignalGivenThresholds(
-                    Object.values(stats.signals[2].thresholds),
-                    stats.signals[2].score
-                  )}
+                <h5 className={stats.signals["In the money"]["sentiment"]}>
+                  {(stats.signals["In the money"]["value"] * 100).toFixed(2)} %{" "}
+                  {stats.signals["In the money"]["sentiment"]}
                 </h5>
               </div>
 
@@ -154,17 +139,9 @@ const GaugeMeter = () => {
                     holders’ positions
                   </p>
                 </h5>
-                <h5
-                  className={findSignalGivenThresholds(
-                    Object.values(stats.signals[3].thresholds),
-                    stats.signals[3].score
-                  )}
-                >
-                  {(stats.signals[3].value * 100).toFixed(2)} %
-                  {findSignalGivenThresholds(
-                    Object.values(stats.signals[3].thresholds),
-                    stats.signals[3].score
-                  )}
+                <h5 className={stats.signals["Concentration"]["sentiment"]}>
+                  {(stats.signals["Concentration"]["value"] * 100).toFixed(2)} %{" "}
+                  {stats.signals["Concentration"]["sentiment"]}
                 </h5>
               </div>
 
@@ -177,90 +154,101 @@ const GaugeMeter = () => {
                   </p>
                 </h5>
                 <h5
-                  className={findSignalGivenThresholds(
-                    Object.values(stats.signals[4].thresholds),
-                    stats.signals[4].score
-                  )}
+                  className={stats.signals["Large Transactions"]["sentiment"]}
                 >
-                  {(stats.signals[4].value * 100).toFixed(2)} %
-                  {findSignalGivenThresholds(
-                    Object.values(stats.signals[4].thresholds),
-                    stats.signals[4].score
-                  )}
+                  {(stats.signals["Large Transactions"]["value"] * 100).toFixed(
+                    2
+                  )}{" "}
+                  % {stats.signals["Large Transactions"]["sentiment"]}
                 </h5>
               </div>
             </div>
           </div>
-          <div id="summary">
+          {/* <div id="summary">
             <h4 style={{ padding: "0.2rem 0" }}>Exchange Signals</h4>
-            <div className="gauge-chart2">
-              <GaugeChart
-                id="gauge-chart1"
-                nrOfLevels={300}
-                arcsLength={[0.4, 0.2, 0.4]}
-                colors={[
-                  "rgb(218, 78, 53)",
-                  "rgb(174,183,209)",
-                  "rgb(126, 211, 33)",
-                ]}
-                percent={stats.exchangeSummary.score}
-                arcPadding={0.02}
-                arcWidth={0.05}
-                style={subChartStyle}
-                hideText={true}
-                needleBaseColor={"lightgrey"}
-              />
-            </div>
-            <div className="sub-summary">
-              <div className="row2gauge">
-                <h5 className="textgauge">
-                  Smart Price
-                  <p className="hover">
-                    A variation of the mid-price where the average of the bid
-                    and ask prices is weighted according to their inverse volume
-                    (ie the bid is weighted with the volume posted at the ask,
-                    and the ask is weighted with the volume posted at the bid)
-                  </p>
-                </h5>
-                <h5
-                  className={findSignalGivenThresholds(
-                    Object.values(stats.signals[5].thresholds),
-                    stats.signals[5].score
-                  )}
-                >
-                  {(stats.signals[5].value * 100).toFixed(2)} %
-                  {findSignalGivenThresholds(
-                    Object.values(stats.signals[5].thresholds),
-                    stats.signals[5].score
-                  )}
-                </h5>
-              </div>
+            {stats.signals[5] ? (
+              <>
+                <div className="gauge-chart2">
+                  <GaugeChart
+                    id="gauge-chart1"
+                    nrOfLevels={300}
+                    arcsLength={[0.4, 0.2, 0.4]}
+                    colors={[
+                      "rgb(218, 78, 53)",
+                      "rgb(174,183,209)",
+                      "rgb(126, 211, 33)",
+                    ]}
+                    percent={stats.exchangeSummary.score}
+                    arcPadding={0.02}
+                    arcWidth={0.05}
+                    style={subChartStyle}
+                    hideText={true}
+                    needleBaseColor={"lightgrey"}
+                  />
+                </div>
+                <div className="sub-summary">
+                  <div className="row2gauge">
+                    <h5 className="textgauge">
+                      Smart Price
+                      <p className="hover">
+                        A variation of the mid-price where the average of the
+                        bid and ask prices is weighted according to their
+                        inverse volume (ie the bid is weighted with the volume
+                        posted at the ask, and the ask is weighted with the
+                        volume posted at the bid)
+                      </p>
+                    </h5>
+                    <h5
+                      className={findSignalGivenThresholds(
+                        Object.values(stats.signals[5].thresholds),
+                        stats.signals[5].score
+                      )}
+                    >
+                      {(stats.signals[5].value * 100).toFixed(2)} %
+                      {findSignalGivenThresholds(
+                        Object.values(stats.signals[5].thresholds),
+                        stats.signals[5].score
+                      )}
+                    </h5>
+                  </div>
 
-              <div className="row2gauge">
-                <h5 className="textgauge">
-                  Bid-Ask Volume Imbalance
-                  <p className="hover">
-                    Volume at the bid price - Volume at the ask price
-                  </p>
-                </h5>
-                <h5
-                  className={findSignalGivenThresholds(
-                    Object.values(stats.signals[6].thresholds),
-                    stats.signals[6].score
-                  )}
-                >
-                  {(stats.signals[6].value * 100).toFixed(2)} %
-                  {findSignalGivenThresholds(
-                    Object.values(stats.signals[6].thresholds),
-                    stats.signals[6].score
-                  )}
-                </h5>
-              </div>
+                  <div className="row2gauge">
+                    <h5 className="textgauge">
+                      Bid-Ask Volume Imbalance
+                      <p className="hover">
+                        Volume at the bid price - Volume at the ask price
+                      </p>
+                    </h5>
+                    <h5
+                      className={findSignalGivenThresholds(
+                        Object.values(stats.signals[6].thresholds),
+                        stats.signals[6].score
+                      )}
+                    >
+                      {(stats.signals[6].value * 100).toFixed(2)} %
+                      {findSignalGivenThresholds(
+                        Object.values(stats.signals[6].thresholds),
+                        stats.signals[6].score
+                      )}
+                    </h5>
+                  </div>
 
-              <div style={{ height: "2rem" }}></div>
-            </div>
-          </div>
-          <div id="summary">
+                  <div style={{ height: "2rem" }}></div>
+                </div>
+              </>
+            ) : (
+              <p
+                style={{
+                  width: "200px",
+                  alignText: "center",
+                  paddingLeft: "20px",
+                }}
+              >
+                No Exchange Signal
+              </p>
+            )}
+          </div> */}
+          {/* <div id="summary">
             <h4 style={{ padding: "5rem 0 1rem 0" }}>Derivatives</h4>
             <div className="gauge-chart2" style={{ paddingBottom: "2.9rem" }}>
               <GaugeChart
@@ -305,7 +293,7 @@ const GaugeMeter = () => {
 
               <div style={{ height: "7rem" }}></div>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </>
