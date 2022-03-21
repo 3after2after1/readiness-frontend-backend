@@ -21,6 +21,9 @@ const emoji = {
 };
 
 const CardHolder = ({ id, change, price, direction, range }) => {
+  let image = `https://etoro-cdn.etorostatic.com/market-avatars/${data[id]
+    .toLowerCase()
+    .replace("/", "-")}/70x70.png`;
   let navigate = useNavigate();
   return (
     <Card
@@ -31,7 +34,9 @@ const CardHolder = ({ id, change, price, direction, range }) => {
           id.length > 6
             ? id.replace("=X", "")
             : "USD".concat(id.replace("=X", ""));
-        navigate(`/details/forex/${link}`);
+        navigate(`/details/forex/${link}`, {
+          state: { image: image },
+        });
       }}
       sx={{
         width: 300,
@@ -54,11 +59,7 @@ const CardHolder = ({ id, change, price, direction, range }) => {
         }}
       >
         <Box style={{ paddingRight: "20px" }}>
-          <img
-            src={`https://etoro-cdn.etorostatic.com/market-avatars/${data[id]
-              .toLowerCase()
-              .replace("/", "-")}/70x70.png`}
-          />
+          <img src={image} />
         </Box>
         <Typography
           id="test"

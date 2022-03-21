@@ -22,7 +22,7 @@ services:
       - cache
     environment:
       NODE_ENV: ${NODE_ENV}
-      # MONGO_URI: ${MONGO_URI}
+      MONGO_URI: ${MONGO_URI}
       REDIS_HOST: cache
       REDIS_PORT: 6379
     networks:
@@ -72,32 +72,32 @@ services:
     networks:
       - library-mern-api
 
-  client:
-    restart: always
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+  # client:
+  #   restart: always
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
 
-    container_name: readiness-challenge-frontend
-    # ports:
-    #   - 3001:3000
-    depends_on:
-      - backend
-    networks:
-      - library-mern-api
+  #   container_name: readiness-challenge-frontend
+  #   # ports:
+  #   #   - 3001:3000
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - library-mern-api
 
-  nginx:
-    restart: always
-    depends_on:
-      - backend
-      #- client
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile.dev
-    ports:
-      - 8080:80
-    networks:
-      - library-mern-api
+  # nginx:
+  #   restart: always
+  #   depends_on:
+  #     - backend
+  #     #- client
+  #   build:
+  #     context: ./nginx
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - 8080:80
+  #   networks:
+  #     - library-mern-api
 
 networks:
   library-mern-api:

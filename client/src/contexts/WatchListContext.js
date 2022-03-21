@@ -1,9 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
-// import { watchListReducer } from "../reducer/reducer";
 import { UserState } from "../contexts/UserContext";
 import axios from "axios";
 import { BACKEND_DOMAIN } from "../api/backend";
-
 const WatchListContextAccess = createContext();
 
 const WatchListContext = ({ children }) => {
@@ -12,7 +10,18 @@ const WatchListContext = ({ children }) => {
     crypto: [],
   };
   const { user } = UserState();
-
+  const watchListInitializer = async () => {
+    // console.log("spamming!!!");
+    const identity = {
+      userId: user?.uid,
+    };
+    // const data = await axios
+    //   .get(`${BACKEND_DOMAIN}/watchlist/getwatchlist`, identity)
+    //   .then((response) => {
+    //     return response.data;
+    //   });
+    dispatch({ type: "INITIALISE", payload: data });
+  };
   const watchListReducer = (state, action) => {
     if (action.type === "ADD_ITEM") {
       //prepare data to pass to server endpoint to add to mongodb user collection based on userId
@@ -20,21 +29,24 @@ const WatchListContext = ({ children }) => {
         userId: user?.uid,
         market: action.payload.market,
         item: {
-          name: action.payload.symbol,
-          image: action.payload.image,
-          symbol: action.payload.symbol,
+          name: action.payload.item.name,
+          image: action.payload.item.image,
+          symbol: action.payload.item.symbol,
         },
       };
-      //   try {
-      //     axios
-      //       .post(`${BACKEND_DOMAIN}/watchlist/addsymbol`, newData)
-      //       .then((response) => {
-      //         console.log(response.status);
-      //         console.log(response.data);
-      //       });
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
+      console.log("newData before", newData);
+      // try {
+      //   console.log("newData before123");
+      //   axios
+      //     .post(`${BACKEND_DOMAIN}/watchlist/addsymbol`, newData)
+      //     .then((response) => {
+      //       console.log("NEW DATA");
+      //       console.log(response.status);
+      //       console.log(response.data);
+      //     });
+      // } catch (error) {
+      //   console.log(error);
+      // }
       const newItem = [...state[action.payload.market], action.payload.item];
       //create new array for forex/crypto by appending new item to existing array
       return {
@@ -54,16 +66,16 @@ const WatchListContext = ({ children }) => {
           symbol: action.payload.symbol,
         },
       };
-      //   try {
-      //     axios
-      //       .post(`${BACKEND_DOMAIN}/watchlist/removesymbol`, oldData)
-      //       .then((response) => {
-      //         console.log(response.status);
-      //         console.log(response.data);
-      //       });
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
+      // try {
+      //   axios
+      //     .post(`${BACKEND_DOMAIN}/watchlist/removesymbol`, oldData)
+      //     .then((response) => {
+      //       console.log(response.status);
+      //       console.log(response.data);
+      //     });
+      // } catch (error) {
+      //   console.log(error);
+      // }
       //filter out object from forex/crypto array based on object property: symbol (name of crypto/forex)
       const newItem = state[action.payload.market].filter((object) => {
         console.log("checking logic");
@@ -74,37 +86,37 @@ const WatchListContext = ({ children }) => {
       return { ...state, [action.payload.market]: newItem };
     }
     if (action.type === "INITIALISE") {
-      let data = null;
-      const identity = {
-        userId: user?.uid,
-      };
-      //   try {
-      //     data = axios
-      //       .get(`${BACKEND_DOMAIN}/watchlist/getwatchlist`, identity)
-      //       .then((response) => {
-      //         return response.data;
-      //       });
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
+      // const identity = {
+      //   userId: user?.uid,
+      // };
 
-      return data || console.log("data not loaded!");
+      return action.payload;
+    }
+
+    if (action.type === "CREATE_RECORD") {
+      console.log("checking payload for create", action.payload);
+      try {
+        axios
+          .post(`${BACKEND_DOMAIN}/watchlist/adduser`, action.payload)
+          .then((response) => {
+            console.log(response.status);
+            console.log(response.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(action.payload);
+      return action.payload.watchlist;
     }
 
     throw new Error("no matching action type");
   };
   const [watchList, dispatch] = useReducer(watchListReducer, defaultState);
-  //   useEffect(() => {
-  //     if(user){
-  //         dispatch({ type: "REMOVE_ITEM", payload: newItem });
-  //     }
-  //     else{
-  //         dispatch({ type: "RESET_ITEM", payload: newItem });
-  //     }
-  //   }, [user])
 
   return (
-    <WatchListContextAccess.Provider value={{ watchList, dispatch }}>
+    <WatchListContextAccess.Provider
+      value={{ watchList, dispatch, watchListInitializer }}
+    >
       {children}
     </WatchListContextAccess.Provider>
   );

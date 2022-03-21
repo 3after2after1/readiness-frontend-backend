@@ -3,33 +3,38 @@ require("dotenv").config();
 let router = express.Router();
 const { MongoClient } = require("mongodb");
 
-const uri = process.env.MONGO_URI;
+const uri =
+  "mongodb+srv://bala:ABCxyz1234@cluster0.g5sfi.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
 router.get("/test", (req, res) => {
   res.send({ status: "watchlist" });
 });
 
-router.put("/addsymbol", async (req, res) => {
+router.post("/addsymbol", async (req, res) => {
   //add new symbol into watchlist based on market and userId
   const client = new MongoClient(uri);
-  const { userId, market, symbol } = req.body;
+  const {
+    userId,
+    market,
+    item: { symbol },
+  } = req.body;
 
   try {
     await client.connect();
     const database = client.db("app-data");
     const users = database.collection("users");
-
+    console.log("multiple times called API add symbol");
     const updatedUser =
       market == "forex"
         ? await users.updateOne(
-            { user_id: userId },
+            { user: userId },
             { $push: { "watchlist.forex": symbol } }
           )
         : await users.updateOne(
-            { user_id: userId },
+            { user: userId },
             { $push: { "watchlist.crypto": symbol } }
           );
-
+    console.log("adding success", updatedUser);
     res.send(updatedUser);
   } catch (error) {
     console.log(error);
@@ -38,10 +43,14 @@ router.put("/addsymbol", async (req, res) => {
   }
 });
 
-router.put("/removesymbol", async (req, res) => {
+router.post("/removesymbol", async (req, res) => {
   //remove existing symbol from watchlist based on market and userId
   const client = new MongoClient(uri);
-  const { userId, market, symbol } = req.body;
+  const {
+    userId,
+    market,
+    item: { symbol },
+  } = req.body;
 
   try {
     await client.connect();
@@ -51,11 +60,11 @@ router.put("/removesymbol", async (req, res) => {
     const updatedUser =
       market == "forex"
         ? await users.updateOne(
-            { user_id: userId },
+            { user: userId },
             { $pull: { "watchlist.forex": { name: `${symbol}` } } }
           )
         : await users.updateOne(
-            { user_id: userId },
+            { user: userId },
             { $pull: { "watchlist.crypto": { name: `${symbol}` } } }
           );
 
@@ -102,15 +111,13 @@ router.get("/getwatchlist", async (req, res) => {
 });
 
 router.post("/adduser", async (req, res) => {
-  //   const { id, symbol } = req.body;
-  console.log("body", req.body);
   const client = new MongoClient(uri);
   try {
     await client.connect();
     const database = client.db("app-data");
     const users = database.collection("users");
-    users.insertOne(req.body);
-    res.send(req.body);
+    const insertedUser = await users.insertOne(req.body);
+    res.send(insertedUser);
   } catch (error) {
     console.log(error);
   } finally {

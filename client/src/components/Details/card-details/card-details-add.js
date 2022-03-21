@@ -12,10 +12,8 @@ export default function CardDetailsAdd({
 }) {
   const checkIfItemExist = (symbol, market) => {
     //check if symbol already exist in favourites
-    console.log("checking array", watchList[market]);
+
     if (watchList[market].length > 0) {
-      console.log("logic worked");
-      console.log(watchList[market]);
       return watchList[market].some((object) => object.symbol === symbol);
     } else {
       console.log("logic failed");
@@ -27,6 +25,7 @@ export default function CardDetailsAdd({
   const [btn, setBtn] = React.useState(checkIfItemExist(symbol, market));
 
   const handleClick = () => {
+    console.log("called button click multiple times");
     setBtn((btn) => {
       if (btn) {
         //remove
@@ -57,9 +56,8 @@ export default function CardDetailsAdd({
     });
   };
   React.useEffect(() => {
-    console.log(watchList);
     return () => {};
-  }, [watchList]);
+  }, []);
 
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">

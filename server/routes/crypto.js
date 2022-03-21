@@ -1,15 +1,12 @@
 let express = require("express");
 require("dotenv").config();
-let router = express.Router();
-const { MongoClient } = require("mongodb");
 const { TrendingCoins, CoinList } = require("../api/coingeckoApi");
 const Redis = require("ioredis");
 const axios = require("axios");
 const hash = require("hash-it");
 const onFinished = require("on-finished");
-
-const uri = process.env.MONGO_URI;
-console.log(uri);
+const cheerio = require("cheerio");
+let router = express.Router();
 
 router.get("/table", async (req, res) => {
   const storage = new Redis({
@@ -30,8 +27,9 @@ router.get("/table", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  } finally {
+    storage.quit();
   }
-  storage.quit();
 });
 
 router.get("/trending", async (req, res) => {
@@ -62,8 +60,65 @@ router.get("/trending", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  } finally {
+    storage.quit();
   }
-  storage.quit();
+});
+
+// get crypto info
+router.get("/info", async (req, res) => {
+  const { name } = req.query;
+
+  try {
+    console.log("name of crypto", name);
+    const site_url = `https://coinmarketcap.com/currencies/${name}/`;
+    const { data } = await axios({
+      method: "GET",
+      url: site_url,
+    });
+    const $ = cheerio.load(data);
+    const elemSelector1 =
+      "#__next > div.bywovg-1.fUzJes > div.main-content > div.sc-57oli2-0.comDeo.cmc-body-wrapper > div > div.sc-16r8icm-0.jKrmxw.container > div > div.sc-16r8icm-0.sc-19zk94m-1.gRSJaB > div.sc-16r8icm-0.dSXRna > div.sc-16r8icm-0.fwiaiu > div > div > div > div:nth-child(4) > div > div > p:nth-child(2)";
+    let temp1 = $(elemSelector1).html();
+    const elemSelector2 =
+      "#__next > div.bywovg-1.fUzJes > div.main-content > div.sc-57oli2-0.comDeo.cmc-body-wrapper > div > div.sc-16r8icm-0.jKrmxw.container > div > div.sc-16r8icm-0.sc-19zk94m-1.gRSJaB > div.sc-16r8icm-0.dSXRna > div.sc-16r8icm-0.fwiaiu > div > div > div > div:nth-child(4) > div > div > p:nth-child(3)";
+    let temp2 = $(elemSelector2).html();
+    res.send([temp1, temp2]);
+  } catch (err) {
+    return res.status(404).json({
+      message: "Data not available",
+    });
+  }
+});
+
+router.get("/stats", async (req, res) => {
+  const { symbol } = req.query;
+  try {
+    const site_url = `https://services.intotheblock.com/api/${symbol}/signals`;
+    const { data } = await axios({
+      method: "GET",
+      url: site_url,
+    });
+    let signals = {};
+    data.signals.forEach(
+      ({ title, info, category, sentiment, value, score, thresholds }) => {
+        if (category === "on_chain") {
+          signals[title] = {
+            info,
+            sentiment,
+            value,
+            score,
+            thresholds,
+          };
+        }
+      }
+    );
+    res.send({ ...data, signals });
+  } catch (error) {
+    return res.status(404).json({
+      message: "Data not available",
+    });
+  }
 });
 
 // get crypto tick

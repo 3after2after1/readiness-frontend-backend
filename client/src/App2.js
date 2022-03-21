@@ -14,10 +14,11 @@ import CryptoPage from "./views/CryptoPage/CryptoPage";
 import Details from "./views/Details/Details";
 import SnackBarNotify from "./components/SnackBarNotify";
 import Footer from "./components/Footer/Footer";
-// import NotFound from "./views/NotFound";
+import ErrorPage from "./views/ErrorPage/ErrorPage";
 import AboutUs from "./views/AboutUs/AboutUs";
 import Favourite from "./views/Favourite/Favourite";
 import RequireAuth from "./views/RequireAuth";
+import ForexHome from "./views/ForexPage/ForexHome";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -51,11 +52,12 @@ const App = () => {
             ></Route>
             <Route path="/emailverify" element={<EmailVerify />}></Route>
             <Route path="/crypto" element={<CryptoPage />} />
+            <Route path="/forex" element={<ForexHome />} />
             <Route element={<RequireAuth />}>
               <Route path="/details/:market/:symbol" element={<Details />} />
               <Route path="/favourite" element={<Favourite />}></Route>
             </Route>
-            {/* <Route path="*" element={<NotFound />} /> */}
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Box>
         <SnackBarNotify />
