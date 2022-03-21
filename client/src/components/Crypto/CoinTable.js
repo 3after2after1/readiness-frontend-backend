@@ -82,7 +82,7 @@ const CoinTable = () => {
     row: {
       backgroundColor: "rgb(247, 247, 247)",
       cursor: "pointer",
-      "&:hover": { backgroundColor: "rgb(173, 173, 173)" },
+      "&:hover": { backgroundColor: "#d3d3d3" },
       fontFamily: "Monstserrat",
       "& .hide": {
         "@media (max-width: 900px)": {
@@ -92,7 +92,7 @@ const CoinTable = () => {
     },
     pagination: {
       "& .MuiPaginationItem-root": {
-        backgroundColor: "gold",
+        backgroundColor: "#d3d3d3",
         color: "black",
       },
       "& .Mui-selected": {
@@ -141,7 +141,7 @@ const CoinTable = () => {
             <Table>
               <TableHead
                 style={{
-                  background: "#184D47",
+                  background: "#FFCE45",
                 }}
               >
                 <TableRow className={classes.head}>
@@ -155,7 +155,7 @@ const CoinTable = () => {
                   ].map((head) => (
                     <TableCell
                       style={{
-                        color: "white",
+                        color: "black",
                         fontWeight: "bold",
                         fontFamily: "League Spartan",
                         fontSize: "1.2rem",
@@ -245,7 +245,7 @@ const CoinTable = () => {
                         <TableCell
                           align="center"
                           style={{
-                            color: profit > 0 ? "rgb(14, 203, 129)" : "red",
+                            color: profit > 0 ? "rgb(61, 174, 35)" : "red",
                             fontWeight: "bold",
                             fontSize: "1rem",
                           }}
@@ -258,7 +258,7 @@ const CoinTable = () => {
                           className="hide"
                           style={{
                             color:
-                              profit_7days > 0 ? "rgb(14, 203, 129)" : "red",
+                              profit_7days > 0 ? "rgb(61, 174, 35)" : "red",
                             fontWeight: "bold",
                             fontSize: "1rem",
                           }}
@@ -282,15 +282,13 @@ const CoinTable = () => {
                           <Sparklines data={row.sparkline_in_7d?.price}>
                             <SparklinesLine
                               color={
-                                profit_7days > 0 ? "rgb(14, 203, 129)" : "red"
+                                profit_7days > 0 ? "rgb(61, 174, 35)" : "red"
                               }
                             />
                             <SparklinesSpots
                               style={{
                                 fill:
-                                  profit_7days > 0
-                                    ? "rgb(14, 203, 129)"
-                                    : "red",
+                                  profit_7days > 0 ? "rgb(61, 174, 35)" : "red",
                               }}
                             />
                           </Sparklines>
