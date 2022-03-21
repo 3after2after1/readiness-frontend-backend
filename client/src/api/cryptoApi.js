@@ -9,7 +9,7 @@ export const getCryptoOHLCHistorical = (symbol, interval) => {
 
   const promiseHistorical = fetch(url, options)
     .then((resp) => resp.json())
-    .then((data) => data.data);
+    .then((data) => data);
 
   return promiseHistorical;
 };

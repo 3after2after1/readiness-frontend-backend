@@ -4,7 +4,12 @@ import DetailsComment from "./card-details-comment";
 import Box from "@mui/material/Box";
 import "./card-details.css";
 
-export default function DetailsPage({ market, symbol, getCurrentPrice }) {
+export default function DetailsPage({
+  market,
+  symbol,
+  getCurrentPrice,
+  handleSymbol,
+}) {
   return (
     <Box id="top-container-details" gap="20px">
       <div
@@ -33,6 +38,7 @@ export default function DetailsPage({ market, symbol, getCurrentPrice }) {
             symbol={symbol}
             market={market}
             getCurrentPrice={getCurrentPrice}
+            handleSymbol={handleSymbol}
           />
         </Box>
 

@@ -48,9 +48,7 @@ const getHistoricalData = (
     `&api_key=` +
     CC_API_KEY;
 
-  const promiseHistorical = axios
-    .get(url)
-    .then((response) => response.data.Data.Data);
+  const promiseHistorical = axios.get(url).then((response) => response.data);
   return promiseHistorical;
 };
 

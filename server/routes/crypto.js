@@ -184,19 +184,27 @@ router.get("/historical", (req, res) => {
     "CRYPTO_GET_HISTORICAL_DATA",
     JSON.stringify(historicalDataQuery)
   );
-  sub.subscribe("CRYPTO_HISTORICAL_OHLC", (err, count) => {
-    if (err) {
-      console.error("Failed to subscribe: %s", err.message);
-    } else {
-      console.log(`Subscribed successfully! Num of sub channels: ${count}`);
+  sub.subscribe(
+    "CRYPTO_HISTORICAL_OHLC",
+    "CRYPTO_ERROR_MESSAGES",
+    (err, count) => {
+      if (err) {
+        console.error("Failed to subscribe: %s", err.message);
+      } else {
+        console.log(`Subscribed successfully! Num of sub channels: ${count}`);
+      }
     }
-  });
+  );
   sub.on("message", (channel, message) => {
     message = JSON.parse(message);
 
     if (channel === "CRYPTO_HISTORICAL_OHLC" && message.id === reqId) {
       res.json({ data: message.data });
       return sub.quit();
+    }
+
+    if (channel === "CRYPTO_ERROR_MESSAGES" && message.id === reqId) {
+      res.json({ symbol: symbol, error: message.error });
     }
   });
 });

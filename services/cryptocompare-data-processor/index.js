@@ -98,9 +98,22 @@ sub.on("message", (channel, message) => {
     const { symbol, interval, id } = message;
 
     getHistoricalData(symbol, interval).then((data) => {
-      let processedData = processHistoricalOHLC(data);
-      let message = { data: processedData, id: id };
-      pub.publish("CRYPTO_HISTORICAL_OHLC", JSON.stringify(message));
+      if (data.Response === "Error") {
+        // console.log("receives error symbol ", data);
+        pub.publish(
+          "CRYPTO_ERROR_MESSAGES",
+          JSON.stringify({
+            symbol: symbol,
+            error: "MarketNoData",
+            id: id,
+          })
+        );
+      } else {
+        data = data.Data.Data;
+        let processedData = processHistoricalOHLC(data);
+        let message = { data: processedData, id: id };
+        pub.publish("CRYPTO_HISTORICAL_OHLC", JSON.stringify(message));
+      }
     });
   }
 });
