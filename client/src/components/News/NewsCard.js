@@ -143,8 +143,8 @@ const NewsCard = ({ data }) => {
                   >
                     <CardContent
                       style={{
-                        backgroundColor: "#184D47",
-                        color: "white",
+                        backgroundColor: "#FFCE45",
+                        color: "black",
                         minHeight: "130px",
                       }}
                     >
