@@ -35,7 +35,6 @@ const CardFav = ({ item, market }) => {
         margin: "10px 0 0 0 ",
         height: 200,
       }}
-      onClick={() => navigate(`/details/${market}/${item.symbol}`)}
     >
       <img
         src={item?.image}
@@ -48,11 +47,18 @@ const CardFav = ({ item, market }) => {
         className="cardfavtitle"
         sx={{
           fontFamily: "Bree Serif !important",
-          color: "#999",
+          color: "white",
+          backgroundColor: "black",
           fontWeight: "2rem !important",
         }}
-        style={{ textAlign: "center", fontFamily: "Bree Serif" }}
-        title={item?.symbol}
+        style={{
+          textAlign: "center",
+          fontFamily: "Bree Serif",
+          cursor: "pointer",
+          marginBottom: "1rem",
+        }}
+        title={item?.symbol.toUpperCase()}
+        onClick={() => navigate(`/details/${market}/${item.symbol}`)}
       />
 
       <CardDetailsAdd watchListData={watchListData} />
