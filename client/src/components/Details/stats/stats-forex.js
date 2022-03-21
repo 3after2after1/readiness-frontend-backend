@@ -52,116 +52,139 @@ const getBgColor = (strength) => {
 };
 
 export default function StatsForex({ statsData }) {
-  return (
-    <Grid container spacing={2}>
-      <Grid className="" item xs={12} lg={7}>
-        <div className="stats-group">
-          <div>
-            <h3>Support and Resistance</h3>
-          </div>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              {statsData ? (
-                statsData.support.map((item, index) => {
-                  return (
-                    <DataTablet
-                      name={item.s}
-                      value={item.value}
-                      strength={item.strength}
-                      key={item.s + index.toString()}
-                    />
-                  );
-                })
-              ) : (
-                <p>loading...</p>
-              )}
-            </Grid>
-            <Grid item xs={6}>
-              {statsData ? (
-                statsData.resist.map((item, index) => {
-                  return (
-                    <DataTablet
-                      name={item.r}
-                      value={item.value}
-                      strength={item.strength}
-                      key={item.r + index.toString()}
-                    />
-                  );
-                })
-              ) : (
-                <p>loading...</p>
-              )}
-            </Grid>
-          </Grid>
-          <div className="strength-indicators-group">
-            <Grid container justifyContent="center" spacing={2}>
-              {strengths.map((strength, index) => {
-                return (
-                  <Grid item xs={4} key={strength + index.toString()}>
-                    <StrengthIndicatorTablet strength={strength} />
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </div>
-        </div>
-      </Grid>
-      <Grid item xs={12} lg={5}>
-        <div className="stats-group">
-          <div>
-            <h3>Pivot Points</h3>
-          </div>
-          <Grid container spacing={0} key="grid-0">
-            <Grid item xs={4}>
-              {statsData ? (
-                statsData.pivot.map((item, index) => {
-                  if (item.pivot.toLowerCase() === "p") {
+  if (
+    (statsData.support.length === 0 || statsData.resist.length === 0) &&
+    statsData.pivot.length === 0
+  ) {
+    return (
+      <div
+        style={{
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        Sorry! Data is currently unavailable!
+      </div>
+    );
+  } else
+    return (
+      <Grid container spacing={2}>
+        {statsData.support.length !== 0 && statsData.resist.length !== 0 && (
+          <Grid className="" item xs={12} lg={7}>
+            <div className="stats-group">
+              <div>
+                <h3>Support and Resistance</h3>
+              </div>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  {statsData ? (
+                    statsData.support.map((item, index) => {
+                      return (
+                        <DataTablet
+                          name={item.s}
+                          value={item.value}
+                          strength={item.strength}
+                          key={item.s + index.toString()}
+                        />
+                      );
+                    })
+                  ) : (
+                    <p>loading...</p>
+                  )}
+                </Grid>
+                <Grid item xs={6}>
+                  {statsData ? (
+                    statsData.resist.map((item, index) => {
+                      return (
+                        <DataTablet
+                          name={item.r}
+                          value={item.value}
+                          strength={item.strength}
+                          key={item.r + index.toString()}
+                        />
+                      );
+                    })
+                  ) : (
+                    <p>loading...</p>
+                  )}
+                </Grid>
+              </Grid>
+              <div className="strength-indicators-group">
+                <Grid container justifyContent="center" spacing={2}>
+                  {strengths.map((strength, index) => {
                     return (
-                      <DataTablet
-                        name={item.pivot}
-                        value={item.point}
-                        key={item.pivot + index.toString()}
-                      />
+                      <Grid item xs={4} key={strength + index.toString()}>
+                        <StrengthIndicatorTablet strength={strength} />
+                      </Grid>
                     );
-                  } else return null;
-                })
-              ) : (
-                <p>loading...</p>
-              )}
-            </Grid>
+                  })}
+                </Grid>
+              </div>
+            </div>
           </Grid>
-          <Grid container spacing={0} key="grid-1">
-            {statsData ? (
-              statsData.pivot.map((item, index) => {
-                if (item.pivot.toLowerCase().includes("s")) {
-                  return (
-                    <Grid item xs={4} key={item.pivot + index.toString()}>
-                      <DataTablet name={item.pivot} value={item.point} />
-                    </Grid>
-                  );
-                } else return null;
-              })
-            ) : (
-              <p>loading...</p>
-            )}
-          </Grid>
-          <Grid container spacing={0} key="grid-2">
-            {statsData ? (
-              statsData.pivot.map((item, index) => {
-                if (item.pivot.toLowerCase().includes("r")) {
-                  return (
-                    <Grid item xs={4} key={item.pivot + index.toString()}>
-                      <DataTablet name={item.pivot} value={item.point} />
-                    </Grid>
-                  );
-                } else return null;
-              })
-            ) : (
-              <p>loading...</p>
-            )}
-          </Grid>
-        </div>
+        )}
+
+        <Grid item xs={12} lg={5}>
+          {statsData.pivot.length !== 0 && (
+            <div className="stats-group">
+              <div>
+                <h3>Pivot Points</h3>
+              </div>
+              <Grid container spacing={0} key="grid-0">
+                <Grid item xs={4}>
+                  {statsData ? (
+                    statsData.pivot.map((item, index) => {
+                      if (item.pivot.toLowerCase() === "p") {
+                        return (
+                          <DataTablet
+                            name={item.pivot}
+                            value={item.point}
+                            key={item.pivot + index.toString()}
+                          />
+                        );
+                      } else return null;
+                    })
+                  ) : (
+                    <p>loading...</p>
+                  )}
+                </Grid>
+              </Grid>
+              <Grid container spacing={0} key="grid-1">
+                {statsData ? (
+                  statsData.pivot.map((item, index) => {
+                    if (item.pivot.toLowerCase().includes("s")) {
+                      return (
+                        <Grid item xs={4} key={item.pivot + index.toString()}>
+                          <DataTablet name={item.pivot} value={item.point} />
+                        </Grid>
+                      );
+                    } else return null;
+                  })
+                ) : (
+                  <p>loading...</p>
+                )}
+              </Grid>
+              <Grid container spacing={0} key="grid-2">
+                {statsData ? (
+                  statsData.pivot.map((item, index) => {
+                    if (item.pivot.toLowerCase().includes("r")) {
+                      return (
+                        <Grid item xs={4} key={item.pivot + index.toString()}>
+                          <DataTablet name={item.pivot} value={item.point} />
+                        </Grid>
+                      );
+                    } else return null;
+                  })
+                ) : (
+                  <p>loading...</p>
+                )}
+              </Grid>
+            </div>
+          )}
+        </Grid>
       </Grid>
-    </Grid>
-  );
+    );
 }
