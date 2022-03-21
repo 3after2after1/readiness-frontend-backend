@@ -4,8 +4,7 @@ const { MongoClient } = require("mongodb");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-export const uri = process.env.MONGO_URI;
-console.log(uri);
+const uri = process.env.MONGO_URI;
 const app = express();
 app.use(cors());
 
@@ -34,3 +33,5 @@ app.get("/test", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+module.exports = uri;
