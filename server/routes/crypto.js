@@ -127,7 +127,7 @@ router.get("/tick", (req, res) => {
   let { symbol } = req.query;
   symbol = symbol.toUpperCase();
   res.setHeader("Content-Type", "text/event-stream");
-
+  res.setHeader("Access-Control-Allow-Origin", "*");
   // initialize redis connections
   const sub = new Redis({
     host: "cache",

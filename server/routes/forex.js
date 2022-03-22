@@ -10,6 +10,7 @@ router.get("/tick", (req, res) => {
   let reqId = hash(req.rawHeaders.toString() + Date.now().toString());
   const { symbol } = req.query;
   res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   console.log("receive tick req");
   // initialize redis connections
   const sub = new Redis({
