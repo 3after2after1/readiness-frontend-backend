@@ -72,10 +72,21 @@ export default function DetailsStats({ dataStats, dataDescription, market }) {
                 fontFamily: "Bree Serif",
                 fontSize: "0.9rem",
                 margin: "0",
+                textAlign: "justify",
               }}
             ></p>
           ) : (
-            <p>{dataDescription}</p>
+            <p
+              style={{
+                fontFamily: "Bree Serif",
+                fontSize: "0.9rem",
+                margin: "0",
+                padding: "0.5rem",
+                textAlign: "justify",
+              }}
+            >
+              {dataDescription}
+            </p>
           )}
 
           {/* line 36 : dataDescription is desc for the symbol */}

@@ -8,16 +8,17 @@ import NewsComponent from "../../components/News/NewsComponent";
 import "./ForexHome.css";
 import { GeneralState } from "../../contexts/GeneralContext";
 import { BACKEND_DOMAIN } from "../../api/backend";
+import { LinearProgress, CircularProgress } from "@material-ui/core";
 const data = require("./majorPair.json");
 
 function ForexHome() {
   const [stonks, setStonks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [range, setRange] = useState("day");
   const location = useLocation();
   const { generateSnackbar } = GeneralState();
 
   let param = Object.keys(data);
-  console.log("reached here");
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -37,7 +38,8 @@ function ForexHome() {
     let sse = new EventSource(`${BACKEND_DOMAIN}/forexhome/tick`);
     sse.onmessage = (event) => {
       let next = JSON.parse(JSON.parse(event.data));
-      // console.log("event stream:", next);
+
+      console.log("event stream:", next);
       setStonks((current) => {
         let stonk = current.find((stonk) => stonk.id === next.id);
         if (stonk) {
@@ -65,11 +67,12 @@ function ForexHome() {
           ];
         }
       });
+      setLoading(false);
     };
     return () => {
       console.log("connection closed");
       sse.close();
-      setStonks([]);
+      // setStonks([]);
     };
   }, []);
 
@@ -127,10 +130,17 @@ function ForexHome() {
             justifyContent: "center",
           }}
         >
-          {stonks.map((stonk) => (
-            <Card {...stonk} range={range} />
-          ))}
-
+          {" "}
+          {/* <p>Loading....</p> */}
+          {loading ? (
+            <CircularProgress style={{ color: "black" }} size="100px" />
+          ) : (
+            <>
+              {stonks.map((stonk) => (
+                <Card {...stonk} range={range} />
+              ))}
+            </>
+          )}
           <div style={{ height: "400px" }}></div>
         </Box>
       </Box>
