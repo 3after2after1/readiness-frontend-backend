@@ -131,6 +131,7 @@ ws.onmessage = (msg) => {
         change: tick.change,
         price: tick.price,
       };
+      // console.log("tick ", processedTick);
       redis.set(tickKey, JSON.stringify(processedTick));
     });
   }
