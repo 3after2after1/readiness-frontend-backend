@@ -1,0 +1,59 @@
+version: "3.7"
+x-aws-vpc: ${AWS_VPC}
+x-aws-cluster: ${AWS_ECS_CLUSTER}
+x-aws-loadbalancer: ${AWS_ELB}
+
+volumes:
+  uploads:
+  data:
+  nodejsvol:
+
+services:
+  nodejs:
+    build: ./rocketnodejsapi
+    command: npm start
+    volumes:
+      - nodejsvol:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - 3032:3032
+    depends_on: [rocketchat]
+
+  rocketchat:
+    image: rocket.chat:4.5.0
+    restart: on-failure
+    volumes:
+      - uploads:/app/uploads
+    environment:
+      MONGO_URL: mongodb://mongo:27017/rocketchat?replicaSet=rs0
+      MONGO_OPLOG_URL: mongodb://mongo:27017/local?replicaSet=rs0
+      ROOT_URL: ${ROOT_URL:-http://localhost}
+      PORT: ${PORT:-3000}
+    depends_on: [mongo]
+    ports:
+      - target: ${PORT:-3000}
+        published: ${ROCKET_HOST_PORT:-3005}
+        protocol: tcp
+        mode: host
+
+  mongo:
+    image: bitnami/mongodb:4.4
+    restart: on-failure
+    volumes:
+      - data:/bitnami/mongodb
+    environment:
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_NAME: rs0
+      MONGODB_PORT_NUMBER: "27017"
+      MONGODB_INITIAL_PRIMARY_HOST: mongo
+      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: "27017"
+      MONGODB_ADVERTISED_HOSTNAME: mongo
+      MONGODB_ENABLE_JOURNAL: "true"
+      ALLOW_EMPTY_PASSWORD: ${ALLOW_EMPTY_PASSWORD:-yes}
+      MONGODB_ROOT_USER: ${MONGODB_ROOT_USER}
+      MONGODB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
+      MONGODB_USERNAME: ${MONGODB_USERNAME}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+
+networks:
+  rocketchatapp:
