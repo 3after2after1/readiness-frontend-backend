@@ -15,7 +15,6 @@ export const getForexOHLCHistorical = (
   const promiseHistorical = fetch(url, options)
     .then((resp) => resp.json())
     .then((data) => {
-      console.log("resp, ", data);
       return data;
     });
 

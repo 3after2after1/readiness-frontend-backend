@@ -8,7 +8,6 @@ import {
   isCurrentTickTimeGroupSame,
   updateLastOHLC,
   createOHLC,
-  markets,
 } from "../../utils/utils";
 
 import {
@@ -30,7 +29,6 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
-import { last } from "react-stockcharts/lib/utils";
 
 // variable to contain server-set-events connection
 let tickConnection = null;
@@ -69,8 +67,6 @@ class ChartComponent extends React.Component {
         "candles",
         this.state.interval.name
       ).then((data) => {
-        console.log("data received: ", data);
-
         if (data.error) {
           // this.setState({ error: data.error });
           this.props.handleSymbol(data.error, "forex");
@@ -88,10 +84,8 @@ class ChartComponent extends React.Component {
           tickConnection.connection.onmessage = (msg) => {
             let newTick = JSON.parse(msg.data);
             // let newTick = JSON.parse(JSON.parse(msg.data));
-            console.log("newtick msg ", newTick);
 
             if (newTick.error) {
-              // console.log("receives error ", newTick.error);
               this.setState({ error: newTick.error });
               tickConnection.connection.close();
             } else {
@@ -99,7 +93,6 @@ class ChartComponent extends React.Component {
               newTick.date = new Date(newTick.date);
 
               // send current price to parent component (details) to display
-              console.log("last ohlc ", this.state.data[data.length - 1]);
               this.props.getCurrentPrice(
                 this.generatePriceSummary(
                   newTick.price,
@@ -133,9 +126,7 @@ class ChartComponent extends React.Component {
       // get historical data
       getCryptoOHLCHistorical(this.props.symbol, this.state.interval.name).then(
         (data) => {
-          console.log("get crypto data ", data);
           if (data.error) {
-            console.log("received error mesg");
             this.props.handleSymbol(data.error, "crypto");
           } else {
             data = data.data;
@@ -147,7 +138,6 @@ class ChartComponent extends React.Component {
 
             tickConnection = new CryptoTickConnection(this.props.symbol);
             tickConnection.connection.onmessage = (msg) => {
-              console.log("new tick ", msg);
               let newTick = JSON.parse(msg.data);
               let lastOHLC = this.state.data[this.state.data.length - 1];
               newTick.date = new Date(newTick.date);
@@ -187,7 +177,6 @@ class ChartComponent extends React.Component {
   componentWillUnmount = () => {
     if (tickConnection !== null) {
       tickConnection.connection.close();
-      console.log("unmounting");
     }
   };
 
@@ -289,7 +278,6 @@ class ChartComponent extends React.Component {
 
   // get data on load more
   getMoreData = () => {
-    console.log("executing getting more data!! wohooo!");
     let lastTime = this.state.data[0].date.getTime() / 1000;
 
     if (this.props.market === "forex") {
