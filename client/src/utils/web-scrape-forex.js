@@ -1,5 +1,7 @@
+import { BACKEND_DOMAIN } from "../api/backend";
+
 export const getFrxInfo = (symbol) => {
-  let url = `http://localhost:5000/forex/info?symbol=${symbol}`;
+  let url = `${BACKEND_DOMAIN}/forex/info?symbol=${symbol}`;
   let options = {
     method: "GET",
   };
