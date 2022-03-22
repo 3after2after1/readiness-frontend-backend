@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import DetailsPage from "../../components/Details/card-details/card-details";
 import CardDetailsAdd from "../../components/Details/card-details/card-details-add";
 import DetailsStats from "../../components/Details/card-details/card-details-stats";
-// import DetailsStatsContent from "../../components/details-stats-content";
 import Container from "@mui/material/Box";
 import { useParams } from "react-router";
 import { markets } from "../../utils/utils";
@@ -11,19 +10,12 @@ import { useLocation } from "react-router-dom";
 import { getCryptoInfo, getCryptoStats } from "../../utils/web-scrape-crypto";
 import "./Details.css";
 import { LinearProgress } from "@material-ui/core";
-import { useNavigate, Outlet, Navigate } from "react-router-dom";
-
-// using client-web-scraper
-// import { getForexInfo } from "../../utils/backup/scrape-forex-info";
+import { Navigate } from "react-router-dom";
 
 function Details(props) {
   //  watchListInitializer();
   const [instrumentInfo, setInstrumentInfo] = useState({});
   //instrumentInfo has two properties, stats and desc
-  const [currentPrice, setCurrentPrice] = useState("-");
-  const [previousPrice, setPreviousPrice] = useState("");
-  const [priceChange, setPriceChange] = useState("-");
-  const [percentagePriceChange, setPercentagePriceChange] = useState("-");
   const [symbolError, setSymbolError] = useState("");
   const [priceSummary, setPriceSummary] = useState(null);
 
@@ -56,12 +48,10 @@ function Details(props) {
     market,
   };
   const handleCurrentPrice = (item) => {
-    console.log("receive item price summary: ", item);
     setPriceSummary(item);
   };
 
   const handleInvalidSymbol = (error, market) => {
-    console.log("handling error ", error);
     setSymbolError(error);
   };
 
@@ -84,15 +74,9 @@ function Details(props) {
       getFrxInfo(symbol).then((data) => {
         setInstrumentInfo(data);
       });
-
-      // getForexInfo(symbol.substr(0, 3), symbol.substring(3)).then((data) => {
-      //   setInstrumentInfo(data);
-      //   console.log(data);
-      // });
     } else {
       getCryptoInfo(nameInput.toLowerCase(), symbol.toLocaleLowerCase()).then(
         (data) => {
-          console.log("scrape data ", data);
           setInstrumentInfo((prev) => {
             return { ...prev, description: data.description };
           });
@@ -100,7 +84,6 @@ function Details(props) {
       );
 
       getCryptoStats(symbol.toUpperCase()).then((data) => {
-        // console.log("stats data ", data);
         setInstrumentInfo((prev) => {
           return { ...prev, stats: data.stats };
         });
@@ -186,7 +169,6 @@ function Details(props) {
         </Container>
 
         <Container>
-          {/* {console.log("instrumentinfo ", instrumentInfo)} */}
           {Object.keys(instrumentInfo).length !== 0 ? (
             market === markets.forex ? (
               <DetailsStats

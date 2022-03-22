@@ -100,7 +100,7 @@ export const isCurrentTickTimeGroupSame = (interval, lastOHLC, tick) => {
       tickTimeGroup = tick.date.getDate();
       break;
     default:
-      console.log("error in interval");
+    // console.log("error in interval");
   }
 
   if (
