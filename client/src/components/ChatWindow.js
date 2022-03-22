@@ -7,8 +7,6 @@ const ChatWindow = () => {
 
   const onMyFrameLoad = async () => {
     const chatbox = document.getElementById("rocket");
-    console.log("FRAME REFRESH");
-    console.log(userRocketChatToken);
     if (user !== null && username !== null && userRocketChatToken !== null) {
       chatbox.contentWindow.postMessage(
         {
